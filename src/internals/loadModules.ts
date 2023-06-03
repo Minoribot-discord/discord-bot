@@ -6,6 +6,26 @@ interface Module {
   init: (bot: CustomBot) => CustomBot | Promise<CustomBot>;
 }
 
+async function loadModules(bot: CustomBot): Promise<CustomBot> {
+  // imports modules from the module folder and adds them into a collection (bot.loadedModules)
+  bot.logger.info(
+    "Started importing all modules and adding them to the module cache",
+  );
+  await importModules(bot);
+  bot.logger.info(
+    `Successfully imported ${bot.loadedModules.size} modules\n${
+      bot.loadedModules.map((module) => module.name).join(" - ")
+    }`,
+  );
+
+  // execute the init method of each module, one by one
+  bot.logger.info("Started initializing modules");
+  await initializeModules(bot);
+  bot.logger.info("Finished initializing modules");
+
+  return bot;
+}
+
 async function importModules(bot: CustomBot) {
   for await (const entry of fs.walk("./src/modules/")) {
     if (entry.isFile) {
@@ -24,7 +44,7 @@ async function importModules(bot: CustomBot) {
   }
 }
 
-async function initModules(bot: CustomBot) {
+async function initializeModules(bot: CustomBot) {
   for (const module of bot.loadedModules.values()) {
     try {
       await module.init(bot);
@@ -33,12 +53,6 @@ async function initModules(bot: CustomBot) {
       bot.logger.error(error);
     }
   }
-}
-
-async function loadModules(bot: CustomBot): Promise<CustomBot> {
-  await importModules(bot);
-  await initModules(bot);
-  return bot;
 }
 
 export { loadModules };

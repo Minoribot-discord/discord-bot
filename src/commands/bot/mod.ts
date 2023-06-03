@@ -1,3 +1,11 @@
-import { CmdCategory } from "internals/loadCommands.ts";
+import { CommandCategory } from "internals/classes/CommandCategory.ts";
+import { CustomBot } from "internals/client.ts";
 
-const botCategory: CmdCategory = { name: "bot",  };
+export default class BotCategory extends CommandCategory {
+  name = "bot";
+  description = "";
+
+  constructor(bot: CustomBot) {
+    super(bot);
+  }
+}

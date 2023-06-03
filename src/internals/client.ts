@@ -10,6 +10,8 @@ import {
   enableValidationsPlugin,
 } from "deps";
 import { Module } from "./loadModules.ts";
+import { Command } from "./classes/Command.ts";
+import { CommandCategory } from "./classes/CommandCategory.ts";
 const { discordToken } = botConfig;
 
 const baseBot = createBot({ token: discordToken });
@@ -26,17 +28,17 @@ type CustomBot = typeof botWithValidationsPlugin & {
   config: BotConfig;
   logger: typeof logger;
   loadedModules: Collection<string, Module>;
-  loadedCommands: Collection<string, any>;
-  loadedCmdCategories: Collection<string, any>;
+  loadedCommands: Collection<string, Command>;
+  loadedCmdCategories: Collection<string, CommandCategory>;
 };
 
 // implement the custom properties to the bot object
 const customBot = botWithValidationsPlugin as CustomBot;
 customBot.config = botConfig;
 customBot.logger = logger;
-customBot.loadedModules = new Collection<string, Module>();
-customBot.loadedCommands = new Collection<string, any>();
-customBot.loadedCmdCategories = new Collection<string, any>();
+customBot.loadedModules = new Collection();
+customBot.loadedCommands = new Collection();
+customBot.loadedCmdCategories = new Collection();
 
 export { customBot };
 export type { CustomBot };
