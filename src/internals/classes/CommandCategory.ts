@@ -5,7 +5,7 @@ import { Command } from "./Command.ts";
 class CommandCategory {
   name = "";
   description = "";
-  commands = new Collection<string, Command>();
+  commands: Command[] = [];
   constructor(public bot: CustomBot) {}
 }
 

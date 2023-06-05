@@ -12,7 +12,7 @@ async function loadCommands(bot: CustomBot) {
 
   for (const category of bot.loadedCmdCategories.array()) {
     const pathToCategory = `${pathToCommandDirectory}/${category.name}`;
-    await importCommands(pathToCategory, bot);
+    await importCommands(bot, pathToCategory, category);
   }
 }
 
@@ -22,7 +22,6 @@ async function importCategories(bot: CustomBot) {
   for await (
     const categoryEntry of Deno.readDir(`./src/${pathToCommandDirectory}`)
   ) {
-    console.log(categoryEntry.name);
     if (categoryEntry.isDirectory || categoryEntry.isSymlink) {
       const pathToCategory = `${pathToCommandDirectory}/${categoryEntry.name}`;
       const { default: category_ } = await import(
@@ -37,18 +36,32 @@ async function importCategories(bot: CustomBot) {
 }
 
 async function importCommands(
-  pathToCategory: string,
   bot: CustomBot,
+  pathToCategory: string,
+  category: CommandCategory,
 ) {
   for await (const entry of Deno.readDir(`./src/${pathToCategory}`)) {
-    console.log(entry.name);
-
     if (entry.isFile && (entry.name !== "mod.ts")) {
       const { default: command_ } = await import(
         `../${pathToCategory}/${entry.name}`
       );
 
       const command: Command = new command_(bot);
+      command.filePath = `${
+        pathToCategory.replace(`${pathToCommandDirectory}/`, "")
+      }/${entry.name}`;
+
+      if (bot.loadedCommands.has(command.name)) {
+        throw new Error(
+          `two commands with the same name (${command.name}),` +
+            `${command.filePath} | ${bot
+              .loadedCommands.get(command.name)?.filePath}`,
+        );
+      }
+
+      category.commands.push(command);
+
+      bot.loadedCommands.set(command.name, command);
     }
   }
 }

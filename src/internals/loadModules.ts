@@ -6,6 +6,8 @@ interface Module {
   init: (bot: CustomBot) => CustomBot | Promise<CustomBot>;
 }
 
+const pathToModuleDirectory = "modules";
+
 async function loadModules(bot: CustomBot): Promise<CustomBot> {
   // imports modules from the module folder and adds them into a collection (bot.loadedModules)
   bot.logger.info(
@@ -27,11 +29,11 @@ async function loadModules(bot: CustomBot): Promise<CustomBot> {
 }
 
 async function importModules(bot: CustomBot) {
-  for await (const entry of fs.walk("./src/modules/")) {
+  for await (const entry of Deno.readDir(`./src/${pathToModuleDirectory}/`)) {
     if (entry.isFile) {
       try {
         const { default: module_ } = await import(
-          `../../${entry.path}`
+          `../${pathToModuleDirectory}/${entry.name}`
         );
 
         const module: Module = module_;
@@ -46,12 +48,9 @@ async function importModules(bot: CustomBot) {
 
 async function initializeModules(bot: CustomBot) {
   for (const module of bot.loadedModules.values()) {
-    try {
-      await module.init(bot);
-      bot.logger.info(`Module ${module.name} initialized`);
-    } catch (error) {
-      bot.logger.error(error);
-    }
+    console.log(module);
+    await module.init(bot);
+    bot.logger.info(`Module ${module.name} initialized`);
   }
 }
 

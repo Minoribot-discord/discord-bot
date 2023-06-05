@@ -12,9 +12,9 @@ import {
 import { Module } from "./loadModules.ts";
 import { Command } from "./classes/Command.ts";
 import { CommandCategory } from "./classes/CommandCategory.ts";
-const { discordToken } = botConfig;
+const { discordToken, intents } = botConfig;
 
-const baseBot = createBot({ token: discordToken });
+const baseBot = createBot({ token: discordToken, intents });
 const botWithCache = enableCachePlugin(baseBot);
 enableCacheSweepers(botWithCache);
 const botWithHelpersPlugin = enableHelpersPlugin(botWithCache);

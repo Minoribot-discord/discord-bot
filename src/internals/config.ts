@@ -1,14 +1,42 @@
-import { dotenv } from "deps";
+import { dotenv, GatewayIntents } from "deps";
 
 interface BotConfig {
   discordToken: string;
+  supportGuildId: bigint;
+  intents: GatewayIntents;
+  refreshCommands: boolean;
 }
+
+// @ts-ignore:
+let intents: BotConfig["intents"] = 0;
+([
+  "Guilds",
+  "GuildMembers",
+  "GuildPresences",
+  "GuildMessages",
+  "MessageContent",
+] as Array<keyof typeof GatewayIntents>) //
+  .map((intent) => intents |= GatewayIntents[intent]);
 
 const env = await dotenv.load();
 
-const botConfig: BotConfig = {
-  discordToken: env.DISCORD_TOKEN,
-};
+function convertEnvVarToBoolean(envVarName: string): boolean {
+  const envVar = env[envVarName];
+  if (!envVar || envVar === "false") return false;
+  else if (envVar === "true") return true;
+  else {
+    throw new Error(
+      `${envVarName} environment variable needs to be a boolean value`,
+    );
+  }
+}
 
+const botConfig: BotConfig = {
+  discordToken: env["DISCORD_TOKEN"],
+  supportGuildId: BigInt(env["SUPPORT_GUILD_ID"]),
+  intents,
+  refreshCommands: convertEnvVarToBoolean("REFRESH_COMMANDS"),
+};
+console.log(botConfig.refreshCommands);
 export { botConfig };
 export type { BotConfig };
