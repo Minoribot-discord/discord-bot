@@ -2,5 +2,6 @@
   "deno.enable": true,
   "editor.formatOnSave": true,
   "deno.config": "deno.jsonc",
-  "deno.unstable": true
+  "deno.unstable": true,
+  "discord.lowerDetailsEditing": "Workspace: semi-secret project"
 }
