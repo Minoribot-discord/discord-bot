@@ -1,7 +1,6 @@
 import {
   Interaction,
   InteractionCallbackData,
-  InteractionResponse,
   InteractionResponseTypes,
 } from "deps";
 import { CustomBot } from "../client.ts";

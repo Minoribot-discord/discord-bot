@@ -18,6 +18,7 @@ class Command {
 
   constructor(public bot: CustomBot) {}
 
+  // deno-lint-ignore no-unused-vars
   execute(context: Context) {
     throw new Error("Function not implemented");
   }

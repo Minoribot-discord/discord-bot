@@ -1,4 +1,3 @@
-import { fs } from "deps";
 import { CustomBot } from "./client.ts";
 import { Command } from "./classes/Command.ts";
 import { CommandCategory } from "./classes/CommandCategory.ts";

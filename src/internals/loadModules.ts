@@ -1,5 +1,4 @@
 import { CustomBot } from "client";
-import { fs } from "deps";
 
 interface Module {
   name: string;

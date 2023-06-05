@@ -1,4 +1,3 @@
-import { Collection } from "../../../deps.ts";
 import { CustomBot } from "../client.ts";
 import { Command } from "./Command.ts";
 
