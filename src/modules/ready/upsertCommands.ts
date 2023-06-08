@@ -5,7 +5,6 @@ import { Command, CommandScope } from "internals/classes/Command.ts";
 // submodule for the ready event, that handles refreshing application commands in the API
 export default async function upsertCommandsSubmodule(bot: CustomBot) {
   await bot.utils.delay(3000);
-  console.log("guilds", Array.from(bot.guilds.keys()));
 
   if (bot.config.refreshCommands) {
     await purgeAllApplicationCommands(bot);
@@ -61,7 +60,7 @@ async function handleGuildScopedCommands(bot: CustomBot) {
   for (const [guildId, commands] of guildScopedCommands) {
     await bot.helpers.upsertGuildApplicationCommands(
       guildId,
-      commands.map((command) => command.APIApplicationCommand),
+      commands.map((command) => command.discordApplicationCommand),
     );
   }
 
@@ -75,7 +74,9 @@ async function handleSupportGuildScopedCommands(bot: CustomBot) {
 
   await bot.helpers.upsertGuildApplicationCommands(
     bot.config.supportGuildId,
-    supportGuildScopedCommands.map((command) => command.APIApplicationCommand),
+    supportGuildScopedCommands.map((command) =>
+      command.discordApplicationCommand
+    ),
   );
 
   bot.logger.info(
@@ -89,7 +90,7 @@ async function handleGlobalScopedCommands(bot: CustomBot) {
   );
 
   await bot.helpers.upsertGlobalApplicationCommands(
-    globalScopedCommands.map((command) => command.APIApplicationCommand),
+    globalScopedCommands.map((command) => command.discordApplicationCommand),
   );
 
   bot.logger.info("Successfully upserted global scoped commands to the API");

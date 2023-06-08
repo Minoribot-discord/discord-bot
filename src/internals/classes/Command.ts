@@ -1,5 +1,9 @@
-import { ApplicationCommandTypes, CreateApplicationCommand } from "deps";
-import { CustomBot } from "../client.ts";
+import {
+  ApplicationCommandOption,
+  ApplicationCommandOptionTypes,
+  ApplicationCommandTypes,
+  CreateApplicationCommand,
+} from "deps";
 import { Context } from "./Context.ts";
 
 enum CommandScope {
@@ -7,29 +11,126 @@ enum CommandScope {
   GUILD,
   SUPPORT,
 }
-class Command {
-  filePath = "";
-  name = "";
-  description = "";
-  category = "";
-  type: ApplicationCommandTypes = ApplicationCommandTypes.ChatInput;
-  scope: CommandScope = CommandScope.SUPPORT;
-  guildIds: bigint[] = [];
 
-  constructor(public bot: CustomBot) {}
+interface BaseCommandParams {
+  name: string;
+  description: string;
+  options?: ApplicationCommandOption[];
+}
+class BaseCommand {
+  name: string;
+  description: string;
+  options: ApplicationCommandOption[] = [];
+
+  constructor(params: BaseCommandParams) {
+    this.name = params.name;
+    this.description = params.description;
+    if (params.options) this.options = params.options;
+  }
 
   // deno-lint-ignore no-unused-vars
   execute(context: Context) {
-    throw new Error("Function not implemented");
+    throw new Error("Function not implemented.");
+  }
+}
+
+interface CommandParams extends BaseCommandParams {
+  scope: CommandScope;
+  type?: ApplicationCommandTypes;
+  guildIds?: bigint[];
+  subCommands?: (SubCommand | SubCommandGroup)[];
+}
+
+class Command extends BaseCommand {
+  filePath = "";
+  category = "";
+  type: ApplicationCommandTypes = ApplicationCommandTypes.ChatInput;
+  scope: CommandScope = CommandScope.SUPPORT;
+  subCommands: (SubCommand | SubCommandGroup)[] = [];
+
+  guildIds: bigint[] = [];
+
+  constructor(params: CommandParams) {
+    super(params);
+
+    const { scope, type, guildIds, subCommands } = params;
+    this.scope = scope;
+    if (type) this.type = type;
+    if (guildIds) this.guildIds = guildIds;
+    if (subCommands) this.subCommands = subCommands;
+
+    convertSubCommandsIntoOptions(this, this.subCommands);
   }
 
-  get APIApplicationCommand(): CreateApplicationCommand {
+  get discordApplicationCommand(): CreateApplicationCommand {
     return {
       name: this.name,
       description: this.description,
       type: this.type,
+      options: this.options,
     };
   }
 }
 
-export { Command, CommandScope };
+function convertSubCommandsIntoOptions(
+  parent: Command | SubCommandGroup,
+  subCommands: (SubCommand | SubCommandGroup)[],
+) {
+  parent.options = [
+    ...parent.options,
+    ...subCommands.map((subCommand) => {
+      subCommand.parent = parent;
+
+      return subCommand.discordOption;
+    }),
+  ];
+}
+
+interface SubCommandGroupParams extends BaseCommandParams {
+  subCommands: SubCommand[];
+}
+class SubCommandGroup extends BaseCommand {
+  parent!: Command;
+  type = ApplicationCommandOptionTypes.SubCommandGroup;
+  subCommands: SubCommand[] = [];
+
+  constructor(params: SubCommandGroupParams) {
+    super(params);
+
+    this.subCommands = params.subCommands;
+
+    convertSubCommandsIntoOptions(this, this.subCommands);
+  }
+
+  get discordOption(): ApplicationCommandOption {
+    return {
+      type: this.type,
+      description: this.description,
+      name: this.name,
+      options: this.options,
+    };
+  }
+}
+
+// deno-lint-ignore no-empty-interface
+interface SubCommandParams extends BaseCommandParams {}
+
+class SubCommand extends BaseCommand {
+  parent!: Command | SubCommandGroup;
+  type = ApplicationCommandOptionTypes.SubCommand;
+
+  constructor(params: SubCommandParams) {
+    super(params);
+  }
+
+  get discordOption(): ApplicationCommandOption {
+    return {
+      type: this.type,
+      description: this.description,
+      name: this.name,
+      options: this.options,
+    };
+  }
+}
+
+export { Command, CommandScope, SubCommand, SubCommandGroup };

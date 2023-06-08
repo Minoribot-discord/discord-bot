@@ -1,12 +1,33 @@
-import { Command, CommandScope } from "internals/classes/Command.ts";
-import { CustomBot } from "internals/client.ts";
+import {
+  Command,
+  CommandScope,
+  SubCommand,
+  SubCommandGroup,
+} from "internals/classes/Command.ts";
 
 export default class InfoCommand extends Command {
-  name = "info";
-  description = "Display some info about the bot";
-  scope = CommandScope.SUPPORT;
+  constructor() {
+    super({
+      name: "info",
+      description: "Display some info about the bot",
+      scope: CommandScope.SUPPORT,
+      subCommands: [new TestSubCommandGroup()],
+    });
+  }
+}
 
-  constructor(bot: CustomBot) {
-    super(bot);
+class TestSubCommandGroup extends SubCommandGroup {
+  constructor() {
+    super({
+      name: "test",
+      description: "test",
+      subCommands: [new TestSubCommand()],
+    });
+  }
+}
+
+class TestSubCommand extends SubCommand {
+  constructor() {
+    super({ name: "testsubcmd", description: "test" });
   }
 }
