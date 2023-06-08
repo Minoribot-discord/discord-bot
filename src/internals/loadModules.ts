@@ -47,7 +47,6 @@ async function importModules(bot: CustomBot) {
 
 async function initializeModules(bot: CustomBot) {
   for (const module of bot.loadedModules.values()) {
-    console.log(module);
     await module.init(bot);
     bot.logger.info(`Module ${module.name} initialized`);
   }

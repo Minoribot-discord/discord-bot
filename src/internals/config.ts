@@ -37,6 +37,6 @@ const botConfig: BotConfig = {
   intents,
   refreshCommands: convertEnvVarToBoolean("REFRESH_COMMANDS"),
 };
-console.log(botConfig.refreshCommands);
+
 export { botConfig };
 export type { BotConfig };
