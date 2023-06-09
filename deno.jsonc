@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "start": "deno run --unstable --allow-net --allow-read --allow-write --allow-env ./mod.ts",
+    "start": "deno run --unstable --allow-net='discord.com/api,gateway.discord.gg' --allow-read='./' --allow-write='./' --allow-env ./mod.ts",
     "start-r": "deno task start --refreshcommands"
   },
   "imports": {
