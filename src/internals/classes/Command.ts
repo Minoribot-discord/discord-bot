@@ -16,21 +16,25 @@ interface BaseCommandParams {
   name: string;
   description: string;
   options?: ApplicationCommandOption[];
+  execute?: (context: Context) => void | Promise<void>;
 }
 class BaseCommand {
   name: string;
   description: string;
   options: ApplicationCommandOption[] = [];
 
-  constructor(params: BaseCommandParams) {
-    this.name = params.name;
-    this.description = params.description;
-    if (params.options) this.options = params.options;
-  }
-
   // deno-lint-ignore no-unused-vars
   execute(context: Context) {
     throw new Error("Function not implemented.");
+  }
+
+  constructor(params: BaseCommandParams) {
+    const { name, description, options, execute } = params;
+
+    this.name = name;
+    this.description = description;
+    if (options) this.options = options;
+    if (execute) this.execute = execute;
   }
 }
 
