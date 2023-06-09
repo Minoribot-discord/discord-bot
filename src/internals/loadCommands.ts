@@ -1,5 +1,5 @@
 import { CustomBot } from "./client.ts";
-import { Command } from "./classes/Command.ts";
+import { Command, SubCommand, SubCommandGroup } from "./classes/Command.ts";
 import { CommandCategory } from "./classes/CommandCategory.ts";
 
 const pathToCommandDirectory = "commands";
@@ -61,6 +61,34 @@ async function importCommands(
       category.commands.push(command);
 
       bot.loadedCommands.set(command.name, command);
+
+      await recursiveLoadSubCommands(bot, command);
+    }
+  }
+}
+
+async function recursiveLoadSubCommands(
+  bot: CustomBot,
+  command: Command | SubCommandGroup,
+) {
+  for (const subCommand of command.subCommands) {
+    if (subCommand instanceof SubCommandGroup) {
+      bot.loadedSubCommands.set(
+        `${subCommand.parent.name}/${subCommand.name}`,
+        subCommand,
+      );
+      await recursiveLoadSubCommands(bot, subCommand);
+    } else if (subCommand instanceof SubCommand) {
+      let key = "";
+
+      if (subCommand.parent instanceof SubCommandGroup) {
+        key =
+          `${subCommand.parent.parent.name}/${subCommand.parent.name}/${subCommand.name}`;
+      } else {
+        key = `${subCommand.parent.name}/${subCommand.parent}`;
+      }
+
+      bot.loadedSubCommands.set(key, subCommand);
     }
   }
 }

@@ -19,7 +19,7 @@ export default class InfoCommand extends Command {
 class TestSubCommandGroup extends SubCommandGroup {
   constructor() {
     super({
-      name: "test",
+      name: "testgroup",
       description: "test",
       subCommands: [new TestSubCommand()],
     });

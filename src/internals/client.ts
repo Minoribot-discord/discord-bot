@@ -10,7 +10,7 @@ import {
   enableValidationsPlugin,
 } from "deps";
 import { Module } from "./loadModules.ts";
-import { Command } from "./classes/Command.ts";
+import { Command, SubCommand, SubCommandGroup } from "./classes/Command.ts";
 import { CommandCategory } from "./classes/CommandCategory.ts";
 const { discordToken, intents } = botConfig;
 
@@ -29,6 +29,7 @@ type CustomBot = typeof botWithValidationsPlugin & {
   logger: typeof logger;
   loadedModules: Collection<string, Module>;
   loadedCommands: Collection<string, Command>;
+  loadedSubCommands: Collection<string, (SubCommandGroup | SubCommand)>;
   loadedCmdCategories: Collection<string, CommandCategory>;
 };
 
@@ -38,6 +39,7 @@ customBot.config = botConfig;
 customBot.logger = logger;
 customBot.loadedModules = new Collection();
 customBot.loadedCommands = new Collection();
+customBot.loadedSubCommands = new Collection();
 customBot.loadedCmdCategories = new Collection();
 
 export { customBot };
