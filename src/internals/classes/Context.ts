@@ -3,7 +3,7 @@ import {
   InteractionCallbackData,
   InteractionResponseTypes,
 } from "deps";
-import { CustomBot } from "../client.ts";
+import { CustomBot } from "../CustomBotType.ts";
 import {
   getOrFetchGuild,
   getOrFetchMember,

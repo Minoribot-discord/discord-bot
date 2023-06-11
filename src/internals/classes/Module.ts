@@ -1,4 +1,4 @@
-import { CustomBot } from "../client.ts";
+import { CustomBot } from "../CustomBotType.ts";
 
 interface ModuleParams {
   name: string;

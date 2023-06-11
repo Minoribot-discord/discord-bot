@@ -32,4 +32,3 @@ customBot.loadedCmdCategories = new Collection();
 customBot.loadedInhibitors = new Collection();
 
 export { customBot };
-export type { CustomBot };

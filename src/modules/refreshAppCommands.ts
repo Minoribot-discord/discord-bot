@@ -1,6 +1,6 @@
 import { Collection } from "deps";
 import { Command, CommandScope, Module } from "classes";
-import { CustomBot } from "client";
+import { CustomBot } from "internals/CustomBotType.ts";
 
 export default new Module({
   name: "refreshApplicationCommands",

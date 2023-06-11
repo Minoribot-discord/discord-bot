@@ -1,5 +1,5 @@
 import { Inhibitor } from "./classes/classes.ts";
-import { CustomBot } from "./client.ts";
+import { CustomBot } from "./CustomBotType.ts";
 import { fs } from "deps";
 const pathToInhibitorDirectory = "inhibitors";
 

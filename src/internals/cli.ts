@@ -1,5 +1,5 @@
 import { flags } from "deps";
-import { CustomBot } from "./client.ts";
+import { CustomBot } from "./CustomBotType.ts";
 type args = flags.Args & { refreshcommands?: boolean };
 
 function readStartupCommandLineArgs(bot: CustomBot) {
