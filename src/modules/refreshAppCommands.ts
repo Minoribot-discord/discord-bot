@@ -1,18 +1,28 @@
-import { CustomBot } from "client";
 import { Collection } from "deps";
-import { Command, CommandScope } from "internals/classes/Command.ts";
+import { Command, CommandScope, Module } from "classes";
+import { CustomBot } from "client";
 
-// submodule for the ready event, that handles refreshing application commands in the API
-export default async function upsertCommandsSubmodule(bot: CustomBot) {
-  await bot.utils.delay(3000);
+export default new Module({
+  name: "refreshApplicationCommands",
+  priority: 0,
+  init: (bot: CustomBot) => {
+    const { ready } = bot.events;
 
-  if (bot.config.refreshCommands) {
-    await purgeAllApplicationCommands(bot);
-    await handleSupportGuildScopedCommands(bot);
-    await handleGuildScopedCommands(bot);
-    await handleGlobalScopedCommands(bot);
-  }
-}
+    bot.events.ready = async (_bot, payload, rawPayload) => {
+      ready(_bot, payload, rawPayload);
+
+      await bot.utils.delay(3000);
+
+      if (bot.config.refreshCommands) {
+        await purgeAllApplicationCommands(bot);
+        await handleSupportGuildScopedCommands(bot);
+        await handleGuildScopedCommands(bot);
+        await handleGlobalScopedCommands(bot);
+      }
+    };
+    return bot;
+  },
+});
 
 async function purgeAllApplicationCommands(bot: CustomBot) {
   bot.logger.info("Purging guild application commands from the API");

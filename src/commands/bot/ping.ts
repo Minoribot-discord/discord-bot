@@ -1,4 +1,4 @@
-import { Command, CommandScope } from "internals/classes/Command.ts";
+import { Command, CommandScope } from "classes";
 
 export default class PingCommand extends Command {
   constructor() {

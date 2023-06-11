@@ -6,6 +6,9 @@
   "imports": {
     "deps": "./deps.ts",
     "client": "./src/internals/client.ts",
-    "internals/": "./src/internals/"
+    "internals/": "./src/internals/",
+    "utils/": "./src/utils/",
+    "utils": "./src/utils/utils.ts",
+    "classes": "./src/internals/classes/classes.ts"
   }
 }

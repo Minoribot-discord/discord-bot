@@ -1,6 +1,10 @@
 import { CustomBot } from "./client.ts";
-import { Command, SubCommand, SubCommandGroup } from "./classes/Command.ts";
-import { CommandCategory } from "./classes/CommandCategory.ts";
+import {
+  Command,
+  CommandCategory,
+  SubCommand,
+  SubCommandGroup,
+} from "./classes/classes.ts";
 
 const pathToCommandDirectory = "commands";
 
@@ -14,8 +18,6 @@ async function loadCommands(bot: CustomBot) {
     await importCommands(bot, pathToCategory, category);
   }
 }
-
-export { loadCommands };
 
 async function importCategories(bot: CustomBot) {
   for await (
@@ -92,3 +94,5 @@ async function recursiveLoadSubCommands(
     }
   }
 }
+
+export { loadCommands };

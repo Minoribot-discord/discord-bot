@@ -1,4 +1,4 @@
-import { CommandCategory } from "internals/classes/CommandCategory.ts";
+import { CommandCategory } from "classes";
 import { CustomBot } from "internals/client.ts";
 
 export default class BotCategory extends CommandCategory {

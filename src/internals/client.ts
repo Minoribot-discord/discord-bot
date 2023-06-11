@@ -1,4 +1,4 @@
-import { BotConfig, botConfig } from "./config.ts";
+import { botConfig } from "./config.ts";
 import { logger } from "./logger.ts";
 import {
   Collection,
@@ -9,9 +9,7 @@ import {
   enablePermissionsPlugin,
   enableValidationsPlugin,
 } from "deps";
-import { Module } from "./loadModules.ts";
-import { Command, SubCommand, SubCommandGroup } from "./classes/Command.ts";
-import { CommandCategory } from "./classes/CommandCategory.ts";
+import { CustomBot } from "./CustomBotType.ts";
 const { discordToken, intents } = botConfig;
 
 const baseBot = createBot({ token: discordToken, intents });
@@ -22,16 +20,6 @@ const botWithPermissionsPlugin = enablePermissionsPlugin(botWithHelpersPlugin);
 const botWithValidationsPlugin = enableValidationsPlugin(
   botWithPermissionsPlugin,
 );
-
-// custom type for the bot so we can add custom properties
-type CustomBot = typeof botWithValidationsPlugin & {
-  config: BotConfig;
-  logger: typeof logger;
-  loadedModules: Collection<string, Module>;
-  loadedCommands: Collection<string, Command>;
-  loadedSubCommands: Collection<string, (SubCommandGroup | SubCommand)>;
-  loadedCmdCategories: Collection<string, CommandCategory>;
-};
 
 // implement the custom properties to the bot object
 const customBot = botWithValidationsPlugin as CustomBot;

@@ -1,15 +1,10 @@
-import {
-  Command,
-  CommandScope,
-  SubCommand,
-  SubCommandGroup,
-} from "internals/classes/Command.ts";
+import { Command, CommandScope, SubCommand, SubCommandGroup } from "classes";
 
 export default class InfoCommand extends Command {
   constructor() {
     super({
       name: "info",
-      description: "Display some info about the bot",
+      description: "Mostra informacions sobre el bot.",
       scope: CommandScope.SUPPORT,
       subCommands: [new TestSubCommandGroup()],
     });

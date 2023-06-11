@@ -1,9 +1,5 @@
-import { CustomBot } from "client";
-
-interface Module {
-  name: string;
-  init: (bot: CustomBot) => CustomBot | Promise<CustomBot>;
-}
+import { CustomBot } from "./client.ts";
+import { Module } from "./classes/Module.ts";
 
 const pathToModuleDirectory = "modules";
 
@@ -46,11 +42,13 @@ async function importModules(bot: CustomBot) {
 }
 
 async function initializeModules(bot: CustomBot) {
-  for (const module of bot.loadedModules.values()) {
+  const modules = Array.from(bot.loadedModules.values());
+  const sortedModules = modules.sort((a, b) => a.priority - b.priority);
+  console.log(sortedModules);
+  for (const module of sortedModules) {
     await module.init(bot);
     bot.logger.info(`Module ${module.name} initialized`);
   }
 }
 
-export { loadModules };
-export type { Module };
+export { loadModules, Module };

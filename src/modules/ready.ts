@@ -1,19 +1,17 @@
-import { Module } from "internals/loadModules.ts";
-import handleReadySubmodules from "./ready/mod.ts";
+import { Module } from "classes";
 
-const readyModule: Module = {
+export default new Module({
   name: "ready",
+  priority: 999,
   init: (bot) => {
     const { ready } = bot.events;
-    bot.events.ready = async (_bot, payload, rawPayload) => {
-      ready(_bot, payload, rawPayload);
 
-      await handleReadySubmodules(bot);
+    bot.events.ready = async (_bot, payload, rawPayload) => {
+      await ready(_bot, payload, rawPayload);
 
       bot.logger.info("Bot is ready");
     };
+
     return bot;
   },
-};
-
-export default readyModule;
+});
