@@ -9,11 +9,6 @@ async function loadModules(bot: CustomBot): Promise<CustomBot> {
     "Started importing all modules and adding them to the module cache",
   );
   await importModules(bot);
-  bot.logger.info(
-    `Successfully imported ${bot.loadedModules.size} modules\n${
-      bot.loadedModules.map((module) => module.name).join(" - ")
-    }`,
-  );
 
   // execute the init method of each module, one by one
   bot.logger.info("Started initializing modules");
@@ -44,7 +39,7 @@ async function importModules(bot: CustomBot) {
 async function initializeModules(bot: CustomBot) {
   const modules = Array.from(bot.loadedModules.values());
   const sortedModules = modules.sort((a, b) => a.priority - b.priority);
-  console.log(sortedModules);
+
   for (const module of sortedModules) {
     await module.init(bot);
     bot.logger.info(`Module ${module.name} initialized`);
