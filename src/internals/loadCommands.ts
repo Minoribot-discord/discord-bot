@@ -23,7 +23,7 @@ async function importCategories(bot: CustomBot) {
   for await (
     const categoryEntry of Deno.readDir(`./src/${pathToCommandDirectory}`)
   ) {
-    if (categoryEntry.isDirectory || categoryEntry.isSymlink) {
+    if (categoryEntry.isDirectory) {
       const pathToCategory = `${pathToCommandDirectory}/${categoryEntry.name}`;
       const { default: category_ } = await import(
         `../${pathToCategory}/mod.ts`
