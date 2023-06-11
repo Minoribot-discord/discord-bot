@@ -11,9 +11,9 @@ export default new Module({
     bot.events.ready = async (_bot, payload, rawPayload) => {
       ready(_bot, payload, rawPayload);
 
-      await bot.utils.delay(3000);
-
       if (bot.config.refreshCommands) {
+        await bot.utils.delay(3000);
+
         await purgeAllApplicationCommands(bot);
         await handleSupportGuildScopedCommands(bot);
         await handleGuildScopedCommands(bot);
