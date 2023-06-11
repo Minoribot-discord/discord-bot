@@ -29,6 +29,7 @@ customBot.loadedModules = new Collection();
 customBot.loadedCommands = new Collection();
 customBot.loadedSubCommands = new Collection();
 customBot.loadedCmdCategories = new Collection();
+customBot.loadedInhibitors = new Collection();
 
 export { customBot };
 export type { CustomBot };

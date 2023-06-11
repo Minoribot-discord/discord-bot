@@ -16,12 +16,14 @@ interface BaseCommandParams {
   name: string;
   description: string;
   options?: ApplicationCommandOption[];
+  inhibitorStrings?: string[];
   execute?: (context: Context) => void | Promise<void>;
 }
 class BaseCommand {
   name: string;
   description: string;
   options: ApplicationCommandOption[] = [];
+  inhibitorStrings: string[] = [];
 
   // deno-lint-ignore no-unused-vars
   execute(context: Context) {
@@ -29,11 +31,18 @@ class BaseCommand {
   }
 
   constructor(params: BaseCommandParams) {
-    const { name, description, options, execute } = params;
+    const {
+      name,
+      description,
+      options,
+      inhibitorStrings,
+      execute,
+    } = params;
 
     this.name = name;
     this.description = description;
     if (options) this.options = options;
+    if (inhibitorStrings) this.inhibitorStrings = inhibitorStrings;
     if (execute) this.execute = execute;
   }
 }
@@ -137,4 +146,4 @@ class SubCommand extends BaseCommand {
   }
 }
 
-export { Command, CommandScope, SubCommand, SubCommandGroup };
+export { BaseCommand, Command, CommandScope, SubCommand, SubCommandGroup };

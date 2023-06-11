@@ -1,10 +1,12 @@
 import { CustomBot } from "./client.ts";
 import {
+  BaseCommand,
   Command,
   CommandCategory,
   SubCommand,
   SubCommandGroup,
 } from "./classes/classes.ts";
+import { Collection } from "deps";
 
 const pathToCommandDirectory = "commands";
 
@@ -16,6 +18,34 @@ async function loadCommands(bot: CustomBot) {
   for (const category of bot.loadedCmdCategories.array()) {
     const pathToCategory = `${pathToCommandDirectory}/${category.name}`;
     await importCommands(bot, pathToCategory, category);
+  }
+
+  for (const command of bot.loadedCommands.array()) {
+    await recursiveLoadSubCommands(bot, command);
+  }
+
+  const incorrectInhibitorsPerCommand = checkIncorrectInhibitors(
+    bot,
+    new Collection<string, BaseCommand>([
+      ...bot.loadedSubCommands.entries(),
+      ...bot.loadedCommands.entries(),
+    ]),
+  );
+
+  if (incorrectInhibitorsPerCommand.size > 0) {
+    let string_ = "Incorrect of missing inhibitors detected:\n";
+
+    for (
+      const [command, incorrectInhibitors] of incorrectInhibitorsPerCommand
+    ) {
+      string_ = string_ + "\n";
+      string_ = string_ + `${command} : ${incorrectInhibitors.join(" - ")}`;
+    }
+
+    bot.logger.error(string_);
+    throw new Error(
+      "Cannot continue, incorrect or missing inhibitors detected",
+    );
   }
 }
 
@@ -63,8 +93,6 @@ async function importCommands(
       category.commands.push(command);
 
       bot.loadedCommands.set(command.name, command);
-
-      await recursiveLoadSubCommands(bot, command);
     }
   }
 }
@@ -93,6 +121,31 @@ async function recursiveLoadSubCommands(
       bot.loadedSubCommands.set(key, subCommand);
     }
   }
+}
+
+function checkIncorrectInhibitors(
+  bot: CustomBot,
+  baseCommands: Collection<string, BaseCommand>,
+) {
+  const nonExistentInhibitors = new Collection<string, string[]>();
+
+  for (const [commandName, command] of baseCommands.entries()) {
+    if (command.inhibitorStrings.length === 0) continue;
+
+    const commandNonExistentInhibitors: string[] = [];
+
+    for (const inhibitorName of command.inhibitorStrings) {
+      if (!bot.loadedInhibitors.has(inhibitorName)) {
+        commandNonExistentInhibitors.push(inhibitorName);
+      }
+    }
+
+    if (commandNonExistentInhibitors.length > 0) {
+      nonExistentInhibitors.set(commandName, commandNonExistentInhibitors);
+    }
+  }
+
+  return nonExistentInhibitors;
 }
 
 export { loadCommands };

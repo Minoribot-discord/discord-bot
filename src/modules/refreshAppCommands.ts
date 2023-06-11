@@ -20,6 +20,7 @@ export default new Module({
         await handleGlobalScopedCommands(bot);
       }
     };
+
     return bot;
   },
 });
