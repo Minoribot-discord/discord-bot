@@ -1,7 +1,9 @@
 import {
   Interaction,
   InteractionCallbackData,
+  InteractionResponse,
   InteractionResponseTypes,
+  Message,
 } from "deps";
 import { CustomBot } from "../CustomBotType.ts";
 import {
@@ -20,6 +22,9 @@ class Context {
   authorId: bigint;
   guildId: bigint | undefined;
 
+  deferred = false;
+  replied = false;
+
   constructor(params: ContextParams) {
     const { bot, interaction } = params;
 
@@ -30,12 +35,40 @@ class Context {
     this.guildId = interaction.guildId;
   }
 
-  reply(data: InteractionCallbackData) {
-    this.bot.helpers.sendPrivateInteractionResponse(
+  sendInteractionResponse(options: InteractionResponse) {
+    return this.bot.helpers.sendInteractionResponse(
       this.interaction.id,
       this.interaction.token,
-      { type: InteractionResponseTypes.ChannelMessageWithSource, data },
+      options,
     );
+  }
+
+  async defer() {
+    await this.sendInteractionResponse({
+      type: InteractionResponseTypes.DeferredChannelMessageWithSource,
+    });
+    this.deferred = true;
+  }
+
+  async reply(
+    data: string | InteractionCallbackData,
+    wait = false,
+  ): Promise<Message | undefined> {
+    if (typeof data === "string") data = { content: data };
+
+    let responseMessage: Message | undefined;
+    if (this.replied) {
+      responseMessage = await this.#replyFollowup(data);
+    } else {
+      responseMessage = await this.#replyOriginal(data);
+      if (wait) {
+        responseMessage = await this.bot.helpers.getOriginalInteractionResponse(
+          this.interaction.token,
+        );
+      }
+    }
+
+    return responseMessage;
   }
 
   get author() {
@@ -59,6 +92,31 @@ class Context {
     }
 
     return getOrFetchGuild(this.bot, this.guildId);
+  }
+
+  async #replyOriginal(data: InteractionCallbackData) {
+    if (!this.deferred) {
+      await this.sendInteractionResponse(
+        { type: InteractionResponseTypes.ChannelMessageWithSource, data },
+      );
+    } else {
+      return await this.bot.helpers.editOriginalInteractionResponse(
+        this.interaction.token,
+        data,
+      );
+    }
+
+    this.replied = true;
+  }
+
+  #replyFollowup(data: InteractionCallbackData) {
+    return this.bot.helpers.sendFollowupMessage(
+      this.interaction.token,
+      // @ts-ignore: "type" property not needed
+      {
+        data,
+      },
+    );
   }
 }
 
