@@ -5,6 +5,7 @@ import {
   CreateApplicationCommand,
 } from "deps";
 import { Context } from "./Context.ts";
+import { Inhibitor } from "./classes.ts";
 
 enum CommandScope {
   GLOBAL,
@@ -26,6 +27,7 @@ class BaseCommand {
   description: string;
   options: ApplicationCommandOption[] = [];
   inhibitorStrings: string[] = [];
+  inhibitors: Inhibitor[] = [];
 
   execute: CommandExecuteFunc;
 

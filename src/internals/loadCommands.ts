@@ -24,7 +24,7 @@ async function loadCommands(bot: CustomBot) {
     await recursiveLoadSubCommands(bot, command);
   }
 
-  const incorrectInhibitorsPerCommand = checkIncorrectInhibitors(
+  const incorrectInhibitorsPerCommand = checkNonExistentInhibitors(
     bot,
     new Collection<string, BaseCommand>([
       ...bot.loadedSubCommands.entries(),
@@ -123,7 +123,7 @@ async function recursiveLoadSubCommands(
   }
 }
 
-function checkIncorrectInhibitors(
+function checkNonExistentInhibitors(
   bot: CustomBot,
   baseCommands: Collection<string, BaseCommand>,
 ) {
@@ -137,6 +137,8 @@ function checkIncorrectInhibitors(
     for (const inhibitorName of command.inhibitorStrings) {
       if (!bot.loadedInhibitors.has(inhibitorName)) {
         commandNonExistentInhibitors.push(inhibitorName);
+      } else {
+        command.inhibitors.push(bot.loadedInhibitors.get(inhibitorName)!);
       }
     }
 
