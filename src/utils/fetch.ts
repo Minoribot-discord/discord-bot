@@ -28,7 +28,7 @@ async function getOrFetchMember(
   memberId: bigint,
 ) {
   let member = bot.members.get(
-    bot.transformers.snowflake(`${guildId}.${memberId}`),
+    bot.transformers.snowflake(`${guildId}${memberId}`),
   );
 
   if (!member) {
@@ -37,7 +37,7 @@ async function getOrFetchMember(
 
     guild.members.set(memberId, member);
     bot.members.set(
-      bot.transformers.snowflake(`${guildId}.${memberId}`),
+      bot.transformers.snowflake(`${guildId}${memberId}`),
       member,
     );
   }
