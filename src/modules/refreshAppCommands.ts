@@ -9,7 +9,7 @@ export default new Module({
     const { ready } = bot.events;
 
     bot.events.ready = async (_bot, payload, rawPayload) => {
-      ready(_bot, payload, rawPayload);
+      await ready(_bot, payload, rawPayload);
 
       if (bot.config.refreshCommands) {
         await bot.utils.delay(3000);

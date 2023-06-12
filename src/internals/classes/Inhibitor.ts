@@ -21,6 +21,10 @@ class Inhibitor {
       return false;
     });
   }
+
+  errorMessage() {
+    return this.name;
+  }
 }
 
 export { Inhibitor };

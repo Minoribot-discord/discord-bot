@@ -1,4 +1,4 @@
-import { Command, CommandScope, SubCommand, SubCommandGroup } from "classes";
+import { Command, CommandExecuteFunc, CommandScope } from "classes";
 
 export default class InfoCommand extends Command {
   constructor() {
@@ -6,23 +6,14 @@ export default class InfoCommand extends Command {
       name: "info",
       description: "Mostra informacions sobre el bot.",
       scope: CommandScope.SUPPORT,
-      subCommands: [new TestSubCommandGroup()],
+      inhibitorStrings: ["isAuthorAdmin"],
+      execute,
     });
   }
 }
 
-class TestSubCommandGroup extends SubCommandGroup {
-  constructor() {
-    super({
-      name: "testgroup",
-      description: "test",
-      subCommands: [new TestSubCommand()],
-    });
-  }
-}
+const execute: CommandExecuteFunc = async (context) => {
+  await context.reply("Informacions sobre el bot blablabla", true);
 
-class TestSubCommand extends SubCommand {
-  constructor() {
-    super({ name: "testsubcmd", description: "test" });
-  }
-}
+  await context.reply("test followup response");
+};
