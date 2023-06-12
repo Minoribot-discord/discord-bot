@@ -1,18 +1,18 @@
 import { CustomBot } from "../CustomBotType.ts";
 
+type InitFunc = (bot: CustomBot) => CustomBot | Promise<CustomBot>;
+
 interface ModuleParams {
   name: string;
   priority?: number;
-  init: (bot: CustomBot) => CustomBot | Promise<CustomBot>;
+  init: InitFunc;
 }
 
 class Module {
   name: string;
   priority = 0;
 
-  init(bot: CustomBot): CustomBot | Promise<CustomBot> {
-    return bot;
-  }
+  init: InitFunc;
 
   constructor(params: ModuleParams) {
     const { name, priority, init } = params;
@@ -21,9 +21,9 @@ class Module {
     if (priority) {
       this.priority = priority;
     }
-    if (init) {
-      this.init = init;
-    }
+    this.init = init.bind(this) || ((bot: CustomBot) => {
+      return bot;
+    });
   }
 }
 

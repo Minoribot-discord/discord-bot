@@ -12,12 +12,14 @@ enum CommandScope {
   SUPPORT,
 }
 
+type CommandExecuteFunc = (context: Context) => void | Promise<void>;
+
 interface BaseCommandParams {
   name: string;
   description: string;
   options?: ApplicationCommandOption[];
   inhibitorStrings?: string[];
-  execute?: (context: Context) => void | Promise<void>;
+  execute?: CommandExecuteFunc;
 }
 class BaseCommand {
   name: string;
@@ -25,10 +27,7 @@ class BaseCommand {
   options: ApplicationCommandOption[] = [];
   inhibitorStrings: string[] = [];
 
-  // deno-lint-ignore no-unused-vars
-  execute(context: Context) {
-    throw new Error("Function not implemented.");
-  }
+  execute: CommandExecuteFunc;
 
   constructor(params: BaseCommandParams) {
     const {
@@ -43,7 +42,9 @@ class BaseCommand {
     this.description = description;
     if (options) this.options = options;
     if (inhibitorStrings) this.inhibitorStrings = inhibitorStrings;
-    if (execute) this.execute = execute;
+    this.execute = execute?.bind(this) || ((_context: Context) => {
+      throw new Error("Function not implemented.");
+    });
   }
 }
 
@@ -147,3 +148,4 @@ class SubCommand extends BaseCommand {
 }
 
 export { BaseCommand, Command, CommandScope, SubCommand, SubCommandGroup };
+export type { CommandExecuteFunc };

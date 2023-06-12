@@ -1,24 +1,25 @@
 import { Context } from "./Context.ts";
 
+type InhibitorExecuteFunc = (context: Context) => boolean | Promise<boolean>;
+
 interface InhibitorParams {
   name: string;
-  execute: (context: Context) => boolean | Promise<boolean>;
+  execute: InhibitorExecuteFunc;
   // errorMessageKey: string;
 }
 class Inhibitor {
   name: string;
   errorMessageKey = "";
 
-  // deno-lint-ignore no-unused-vars
-  execute(context: Context): boolean | Promise<boolean> {
-    return false;
-  }
+  execute: InhibitorExecuteFunc;
 
   constructor(params: InhibitorParams) {
     const { name, execute } = params;
 
     this.name = name;
-    this.execute = execute;
+    this.execute = execute.bind(this) || ((_context: Context) => {
+      return false;
+    });
   }
 }
 
