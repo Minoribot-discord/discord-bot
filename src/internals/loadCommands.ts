@@ -1,4 +1,5 @@
 import { CustomBot } from "./CustomBotType.ts";
+import { CommandScope } from "./classes/Command.ts";
 import {
   BaseCommand,
   Command,
@@ -81,6 +82,9 @@ async function importCommands(
       command.filePath = `${
         pathToCategory.replace(`${pathToCommandDirectory}/`, "")
       }/${entry.name}`;
+      if (bot.config.devMode) {
+        command.scope = CommandScope.SUPPORT;
+      }
 
       if (bot.commands.has(command.name)) {
         throw new Error(

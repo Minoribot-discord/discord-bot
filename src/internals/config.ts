@@ -5,6 +5,7 @@ interface BotConfig {
   supportGuildId: bigint;
   intents: GatewayIntents;
   refreshCommands: boolean;
+  devMode: boolean;
 }
 
 // @ts-ignore:
@@ -36,6 +37,7 @@ const botConfig: BotConfig = {
   supportGuildId: BigInt(env["SUPPORT_GUILD_ID"]),
   intents,
   refreshCommands: convertEnvVarToBoolean("REFRESH_COMMANDS"),
+  devMode: convertEnvVarToBoolean("DEV_MODE"),
 };
 
 export { botConfig };
