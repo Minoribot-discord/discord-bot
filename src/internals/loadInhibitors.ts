@@ -12,7 +12,7 @@ async function loadInhibitors(bot: CustomBot) {
 
       const inhibitor: Inhibitor = inhibitor_;
 
-      bot.loadedInhibitors.set(inhibitor.name, inhibitor);
+      bot.inhibitors.set(inhibitor.name, inhibitor);
     }
   }
 }

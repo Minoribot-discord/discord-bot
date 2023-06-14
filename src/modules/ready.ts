@@ -38,16 +38,16 @@ export default new Module({
       let string_ = "";
 
       string_ = string_ +
-        `${bot.loadedCmdCategories.size} command categories\n`;
+        `${bot.cmdCategories.size} command categories\n`;
 
       string_ = string_ +
-        `${bot.loadedCommands.size} commands (${bot.loadedSubCommands.size} subcommands/groups)\n`;
+        `${bot.commands.size} commands (${bot.subCommands.size} subcommands/groups)\n`;
 
       string_ = string_ +
-        `${bot.loadedInhibitors.size} inhibitors\n`;
+        `${bot.inhibitors.size} inhibitors\n`;
 
       string_ = string_ +
-        `${bot.loadedModules.size} modules`;
+        `${bot.modules.size} modules`;
 
       bot.logger.info(string_);
     };

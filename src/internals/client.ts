@@ -25,10 +25,10 @@ const botWithValidationsPlugin = enableValidationsPlugin(
 const customBot = botWithValidationsPlugin as CustomBot;
 customBot.config = botConfig;
 customBot.logger = logger;
-customBot.loadedModules = new Collection();
-customBot.loadedCommands = new Collection();
-customBot.loadedSubCommands = new Collection();
-customBot.loadedCmdCategories = new Collection();
-customBot.loadedInhibitors = new Collection();
+customBot.modules = new Collection();
+customBot.commands = new Collection();
+customBot.subCommands = new Collection();
+customBot.cmdCategories = new Collection();
+customBot.inhibitors = new Collection();
 
 export { customBot };

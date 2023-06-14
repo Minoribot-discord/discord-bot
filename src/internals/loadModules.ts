@@ -28,7 +28,7 @@ async function importModules(bot: CustomBot) {
 
         const module: Module = module_;
 
-        bot.loadedModules.set(module.name, module);
+        bot.modules.set(module.name, module);
       } catch (error) {
         bot.logger.error(error);
       }
@@ -37,7 +37,7 @@ async function importModules(bot: CustomBot) {
 }
 
 async function initializeModules(bot: CustomBot) {
-  const modules = Array.from(bot.loadedModules.values());
+  const modules = Array.from(bot.modules.values());
   const sortedModules = modules.sort((a, b) => a.priority - b.priority);
 
   for (const module of sortedModules) {

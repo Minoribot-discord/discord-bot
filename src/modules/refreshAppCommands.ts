@@ -50,7 +50,7 @@ async function handleGuildScopedCommands(bot: CustomBot) {
 
   // iterate over guild scoped commands
   for (
-    const command of bot.loadedCommands.filter((command) =>
+    const command of bot.commands.filter((command) =>
       command.scope === CommandScope.GUILD
     ).values()
   ) {
@@ -79,7 +79,7 @@ async function handleGuildScopedCommands(bot: CustomBot) {
 }
 
 async function handleSupportGuildScopedCommands(bot: CustomBot) {
-  const supportGuildScopedCommands = bot.loadedCommands.filter((command) =>
+  const supportGuildScopedCommands = bot.commands.filter((command) =>
     command.scope === CommandScope.SUPPORT
   );
 
@@ -96,7 +96,7 @@ async function handleSupportGuildScopedCommands(bot: CustomBot) {
 }
 
 async function handleGlobalScopedCommands(bot: CustomBot) {
-  const globalScopedCommands = bot.loadedCommands.filter((command) =>
+  const globalScopedCommands = bot.commands.filter((command) =>
     command.scope === CommandScope.GLOBAL
   );
 

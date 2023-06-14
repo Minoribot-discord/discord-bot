@@ -32,7 +32,7 @@ async function handleApplicationCommand(
 ) {
   const data = interaction.data;
   if (!data) return;
-  const mainCommand = bot.loadedCommands.get(interaction.data!.name);
+  const mainCommand = bot.commands.get(interaction.data!.name);
   if (!mainCommand) return;
 
   const commandsToExecute: BaseCommand[] = [mainCommand];
@@ -82,7 +82,7 @@ function checkForSubCommands(
 ) {
   getCommandString = `${getCommandString}/${option.name}`;
 
-  const subCommandOrGroup = bot.loadedSubCommands.get(
+  const subCommandOrGroup = bot.subCommands.get(
     getCommandString,
   );
   if (!subCommandOrGroup) {

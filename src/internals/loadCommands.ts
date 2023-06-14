@@ -15,20 +15,20 @@ async function loadCommands(bot: CustomBot) {
 
   await importCategories(bot);
 
-  for (const category of bot.loadedCmdCategories.array()) {
+  for (const category of bot.cmdCategories.array()) {
     const pathToCategory = `${pathToCommandDirectory}/${category.name}`;
     await importCommands(bot, pathToCategory, category);
   }
 
-  for (const command of bot.loadedCommands.array()) {
+  for (const command of bot.commands.array()) {
     await recursiveLoadSubCommands(bot, command);
   }
 
   const incorrectInhibitorsPerCommand = checkNonExistentInhibitors(
     bot,
     new Collection<string, BaseCommand>([
-      ...bot.loadedSubCommands.entries(),
-      ...bot.loadedCommands.entries(),
+      ...bot.subCommands.entries(),
+      ...bot.commands.entries(),
     ]),
   );
 
@@ -61,7 +61,7 @@ async function importCategories(bot: CustomBot) {
 
       const category: CommandCategory = new category_(bot);
 
-      bot.loadedCmdCategories.set(category.name, category);
+      bot.cmdCategories.set(category.name, category);
     }
   }
 }
@@ -82,17 +82,17 @@ async function importCommands(
         pathToCategory.replace(`${pathToCommandDirectory}/`, "")
       }/${entry.name}`;
 
-      if (bot.loadedCommands.has(command.name)) {
+      if (bot.commands.has(command.name)) {
         throw new Error(
           `two commands with the same name (${command.name}),` +
             `${command.filePath} | ${bot
-              .loadedCommands.get(command.name)?.filePath}`,
+              .commands.get(command.name)?.filePath}`,
         );
       }
 
       category.commands.push(command);
 
-      bot.loadedCommands.set(command.name, command);
+      bot.commands.set(command.name, command);
     }
   }
 }
@@ -103,7 +103,7 @@ async function recursiveLoadSubCommands(
 ) {
   for (const subCommand of command.subCommands) {
     if (subCommand instanceof SubCommandGroup) {
-      bot.loadedSubCommands.set(
+      bot.subCommands.set(
         `${subCommand.parent.name}/${subCommand.name}`,
         subCommand,
       );
@@ -118,7 +118,7 @@ async function recursiveLoadSubCommands(
         key = `${subCommand.parent.name}/${subCommand.parent}`;
       }
 
-      bot.loadedSubCommands.set(key, subCommand);
+      bot.subCommands.set(key, subCommand);
     }
   }
 }
@@ -135,10 +135,10 @@ function checkNonExistentInhibitors(
     const commandNonExistentInhibitors: string[] = [];
 
     for (const inhibitorName of command.inhibitorStrings) {
-      if (!bot.loadedInhibitors.has(inhibitorName)) {
+      if (!bot.inhibitors.has(inhibitorName)) {
         commandNonExistentInhibitors.push(inhibitorName);
       } else {
-        command.inhibitors.push(bot.loadedInhibitors.get(inhibitorName)!);
+        command.inhibitors.push(bot.inhibitors.get(inhibitorName)!);
       }
     }
 

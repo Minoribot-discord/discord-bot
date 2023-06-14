@@ -14,11 +14,11 @@ import {
 type CustomBot = BotWithHelpersPlugin<BotWithCache> & {
   config: BotConfig;
   logger: typeof logger;
-  loadedModules: Collection<string, Module>;
-  loadedCommands: Collection<string, Command>;
-  loadedSubCommands: Collection<string, (SubCommandGroup | SubCommand)>;
-  loadedCmdCategories: Collection<string, CommandCategory>;
-  loadedInhibitors: Collection<string, Inhibitor>;
+  modules: Collection<string, Module>;
+  commands: Collection<string, Command>;
+  subCommands: Collection<string, (SubCommandGroup | SubCommand)>;
+  cmdCategories: Collection<string, CommandCategory>;
+  inhibitors: Collection<string, Inhibitor>;
 };
 
 export type { CustomBot };
