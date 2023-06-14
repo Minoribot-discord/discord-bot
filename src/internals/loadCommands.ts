@@ -93,6 +93,14 @@ async function importCommands(
               .commands.get(command.name)?.filePath}`,
         );
       }
+      if (
+        (command.scope === CommandScope.GUILD) &&
+        (command.guildIds.length === 0)
+      ) {
+        throw new Error(
+          `Guild scoped command "${command.name}" needs to have at least one guild id`,
+        );
+      }
 
       category.commands.push(command);
 

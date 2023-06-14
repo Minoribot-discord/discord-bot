@@ -54,12 +54,6 @@ async function handleGuildScopedCommands(bot: CustomBot) {
       command.scope === CommandScope.GUILD
     ).values()
   ) {
-    if (command.guildIds.length === 0) {
-      throw new Error(
-        `Guild scope command "${command.name}" needs to have at least one guild id`,
-      );
-    }
-
     for (const guildId of command.guildIds) {
       const commandsForOneGuild = guildScopedCommands.get(guildId) || [];
       commandsForOneGuild.push(command);
