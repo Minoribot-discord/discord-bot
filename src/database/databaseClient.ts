@@ -1,5 +1,5 @@
 import { mongo_atlas_sdk } from "deps";
-import { botConfig } from "../config.ts";
+import { botConfig } from "internals/config.ts";
 const { MongoClient } = mongo_atlas_sdk;
 
 const { mongo: { appId, appKey, clusterName } } = botConfig;
