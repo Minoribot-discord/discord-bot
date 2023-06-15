@@ -6,6 +6,13 @@ interface BotConfig {
   intents: GatewayIntents;
   refreshCommands: boolean;
   devMode: boolean;
+  mongo: MongoConfig;
+}
+
+interface MongoConfig {
+  appId: string;
+  clusterName: string;
+  appKey: string;
 }
 
 // @ts-ignore:
@@ -32,12 +39,19 @@ function convertEnvVarToBoolean(envVarName: string): boolean {
   }
 }
 
+const mongoConfig: MongoConfig = {
+  appId: env["MONGO_APP_ID"],
+  clusterName: env["MONGO_CLUSTER_NAME"],
+  appKey: env["MONGO_APP_KEY"],
+};
+
 const botConfig: BotConfig = {
   discordToken: env["DISCORD_TOKEN"],
   supportGuildId: BigInt(env["SUPPORT_GUILD_ID"]),
   intents,
   refreshCommands: convertEnvVarToBoolean("REFRESH_COMMANDS"),
   devMode: convertEnvVarToBoolean("DEV_MODE"),
+  mongo: mongoConfig,
 };
 
 export { botConfig };
