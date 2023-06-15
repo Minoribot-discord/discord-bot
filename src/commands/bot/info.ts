@@ -1,4 +1,4 @@
-import { Command, CommandExecuteFunc, CommandScope } from "classes";
+import { Command, CommandExecuteFunc, CommandScope } from "structures";
 import { Embed } from "deps";
 
 export default class InfoCommand extends Command {
@@ -14,7 +14,7 @@ export default class InfoCommand extends Command {
   }
 }
 
-const infoEmbed: Embed = {};
+const infoEmbed: Embed = { title: "Informacions " };
 
 const execute: CommandExecuteFunc = async (context) => {
   await context.reply({ embeds: [infoEmbed] });

@@ -1,4 +1,4 @@
-import { CustomBot } from "../CustomBotType.ts";
+import { CustomBot } from "./CustomBot.ts";
 
 type InitFunc = (bot: CustomBot) => CustomBot | Promise<CustomBot>;
 

@@ -1,4 +1,4 @@
-import { CommandCategory } from "classes";
+import { CommandCategory } from "structures";
 import { CustomBot } from "internals";
 
 export default class BotCategory extends CommandCategory {

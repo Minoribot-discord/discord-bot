@@ -1,5 +1,5 @@
 import { flags } from "deps";
-import { CustomBot } from "./CustomBotType.ts";
+import { CustomBot } from "structures";
 type args = flags.Args & {
   refreshcommands?: boolean;
   r?: boolean;

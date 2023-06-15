@@ -1,4 +1,4 @@
-import { CustomBot } from "../CustomBotType.ts";
+import { CustomBot } from "./CustomBot.ts";
 import { Command } from "./Command.ts";
 
 interface CommandCategoryParams {

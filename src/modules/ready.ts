@@ -1,4 +1,4 @@
-import { Module } from "classes";
+import { Module } from "structures";
 
 export default new Module({
   name: "ready",

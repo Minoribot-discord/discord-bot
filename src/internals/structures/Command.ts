@@ -6,7 +6,7 @@ import {
   PermissionStrings,
 } from "deps";
 import { Context } from "./Context.ts";
-import { Inhibitor } from "./classes.ts";
+import { Inhibitor } from "./structures.ts";
 
 enum CommandScope {
   GLOBAL,

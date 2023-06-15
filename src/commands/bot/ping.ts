@@ -1,4 +1,4 @@
-import { Command, CommandScope } from "classes";
+import { Command, CommandScope } from "structures";
 
 export default class PingCommand extends Command {
   constructor() {

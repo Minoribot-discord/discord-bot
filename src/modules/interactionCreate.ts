@@ -1,4 +1,4 @@
-import { BaseCommand, Context, Inhibitor, Module } from "classes";
+import { BaseCommand, Context, Inhibitor, Module } from "structures";
 import {
   ApplicationCommandOptionTypes,
   Interaction,

@@ -1,5 +1,4 @@
-import { CustomBot } from "./CustomBotType.ts";
-import { Module } from "classes";
+import { CustomBot, Module } from "structures";
 
 const pathToModuleDirectory = "modules";
 
@@ -46,4 +45,4 @@ async function initializeModules(bot: CustomBot) {
   }
 }
 
-export { loadModules, Module };
+export { loadModules };

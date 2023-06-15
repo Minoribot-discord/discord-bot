@@ -1,12 +1,12 @@
-import { CustomBot } from "./CustomBotType.ts";
 import {
   BaseCommand,
   Command,
   CommandCategory,
   CommandScope,
+  CustomBot,
   SubCommand,
   SubCommandGroup,
-} from "classes";
+} from "structures";
 import { Collection } from "deps";
 
 const pathToCommandDirectory = "commands";

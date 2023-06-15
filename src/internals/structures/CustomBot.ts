@@ -1,6 +1,6 @@
 import { BotWithCache, BotWithHelpersPlugin, Collection } from "deps";
-import { BotConfig } from "./config.ts";
-import { logger } from "./logger.ts";
+import { BotConfig } from "../config.ts";
+import { logger } from "../logger.ts";
 import {
   Command,
   CommandCategory,
@@ -8,7 +8,7 @@ import {
   Module,
   SubCommand,
   SubCommandGroup,
-} from "classes";
+} from "structures";
 
 // custom type for the bot so we can add custom properties
 type CustomBot = BotWithHelpersPlugin<BotWithCache> & {

@@ -1,5 +1,5 @@
 import { Collection } from "deps";
-import { Command, CommandScope, Module } from "classes";
+import { Command, CommandScope, Module } from "structures";
 import { CustomBot } from "internals";
 
 export default new Module({

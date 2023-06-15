@@ -9,7 +9,7 @@ import {
   enablePermissionsPlugin,
   enableValidationsPlugin,
 } from "deps";
-import { CustomBot } from "./CustomBotType.ts";
+import { CustomBot } from "structures";
 const { discordToken, intents } = botConfig;
 
 const baseBot = createBot({ token: discordToken, intents });

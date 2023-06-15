@@ -1,5 +1,4 @@
-import { Inhibitor } from "classes";
-import { CustomBot } from "./CustomBotType.ts";
+import { CustomBot, Inhibitor } from "structures";
 import { fs } from "deps";
 const pathToInhibitorDirectory = "inhibitors";
 
