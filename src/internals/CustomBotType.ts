@@ -8,7 +8,7 @@ import {
   Module,
   SubCommand,
   SubCommandGroup,
-} from "./classes/classes.ts";
+} from "classes";
 
 // custom type for the bot so we can add custom properties
 type CustomBot = BotWithHelpersPlugin<BotWithCache> & {

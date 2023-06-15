@@ -1,8 +1,10 @@
 import { startBot } from "deps";
-import { customBot } from "internals/client.ts";
-import { loadCommands } from "internals/loadCommands.ts";
-import { loadInhibitors } from "internals/loadInhibitors.ts";
-import { loadModules } from "internals/loadModules.ts";
+import {
+  customBot,
+  loadCommands,
+  loadInhibitors,
+  loadModules,
+} from "internals";
 
 async function start() {
   if (customBot.config.devMode) {

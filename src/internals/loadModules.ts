@@ -1,5 +1,5 @@
 import { CustomBot } from "./CustomBotType.ts";
-import { Module } from "./classes/Module.ts";
+import { Module } from "classes";
 
 const pathToModuleDirectory = "modules";
 

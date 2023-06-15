@@ -1,4 +1,4 @@
-import { CustomBot } from "internals/CustomBotType.ts";
+import { CustomBot } from "internals";
 
 async function getOrFetchUser(bot: CustomBot, userId: bigint) {
   let user = bot.users.get(userId);

@@ -6,11 +6,7 @@ import {
   Message,
 } from "deps";
 import { CustomBot } from "../CustomBotType.ts";
-import {
-  getOrFetchGuild,
-  getOrFetchMember,
-  getOrFetchUser,
-} from "utils/fetch.ts";
+import { getOrFetchGuild, getOrFetchMember, getOrFetchUser } from "utils";
 
 interface ContextParams {
   bot: CustomBot;

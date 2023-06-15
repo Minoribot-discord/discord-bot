@@ -5,7 +5,7 @@ import {
   InteractionDataOption,
   InteractionTypes,
 } from "deps";
-import { CustomBot } from "internals/CustomBotType.ts";
+import { CustomBot } from "internals";
 
 export default new Module({
   name: "handleInteractions",

@@ -4,10 +4,9 @@
   },
   "imports": {
     "deps": "./deps.ts",
-    "client": "./src/internals/client.ts",
-    "internals/": "./src/internals/",
-    "utils/": "./src/utils/",
+    "internals": "./src/internals/internals.ts",
     "utils": "./src/utils/utils.ts",
-    "classes": "./src/internals/classes/classes.ts"
+    "classes": "./src/internals/classes/classes.ts",
+    "database": "./src/database/database.ts"
   }
 }
