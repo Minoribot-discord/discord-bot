@@ -6,6 +6,7 @@ export default class PingCommand extends Command {
       name: "ping",
       description: "pong",
       scope: CommandScope.SUPPORT,
+      dmPermission: true,
     });
   }
 }

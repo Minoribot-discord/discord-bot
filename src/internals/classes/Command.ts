@@ -3,6 +3,7 @@ import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
   CreateApplicationCommand,
+  PermissionStrings,
 } from "deps";
 import { Context } from "./Context.ts";
 import { Inhibitor } from "./classes.ts";
@@ -55,6 +56,8 @@ interface CommandParams extends BaseCommandParams {
   type?: ApplicationCommandTypes;
   guildIds?: bigint[];
   subCommands?: (SubCommand | SubCommandGroup)[];
+  dmPermission?: boolean;
+  defaultMemberPermissions?: PermissionStrings[];
 }
 
 class Command extends BaseCommand {
@@ -63,17 +66,30 @@ class Command extends BaseCommand {
   type: ApplicationCommandTypes = ApplicationCommandTypes.ChatInput;
   scope: CommandScope = CommandScope.SUPPORT;
   subCommands: (SubCommand | SubCommandGroup)[] = [];
+  dmPermission = false;
+  defaultMemberPermissions: PermissionStrings[] | undefined;
 
   guildIds: bigint[] = [];
 
   constructor(params: CommandParams) {
     super(params);
 
-    const { scope, type, guildIds, subCommands } = params;
+    const {
+      scope,
+      type,
+      guildIds,
+      subCommands,
+      dmPermission,
+      defaultMemberPermissions,
+    } = params;
     this.scope = scope;
     if (type) this.type = type;
     if (guildIds) this.guildIds = guildIds;
     if (subCommands) this.subCommands = subCommands;
+    if (dmPermission) this.dmPermission = dmPermission;
+    if (defaultMemberPermissions) {
+      this.defaultMemberPermissions = defaultMemberPermissions;
+    }
 
     convertSubCommandsIntoOptions(this, this.subCommands);
   }
@@ -84,6 +100,8 @@ class Command extends BaseCommand {
       description: this.description,
       type: this.type,
       options: this.options,
+      dmPermission: this.dmPermission,
+      defaultMemberPermissions: this.defaultMemberPermissions,
     };
   }
 }

@@ -1,4 +1,5 @@
 import { Command, CommandExecuteFunc, CommandScope } from "classes";
+import { Embed } from "deps";
 
 export default class InfoCommand extends Command {
   constructor() {
@@ -6,14 +7,15 @@ export default class InfoCommand extends Command {
       name: "info",
       description: "Mostra informacions sobre el bot.",
       scope: CommandScope.SUPPORT,
-      inhibitorStrings: ["isAuthorAdmin"],
+      defaultMemberPermissions: ["ADMINISTRATOR"],
+      dmPermission: true,
       execute,
     });
   }
 }
 
-const execute: CommandExecuteFunc = async (context) => {
-  await context.reply("Informacions sobre el bot blablabla", true);
+const infoEmbed: Embed = {};
 
-  await context.reply("test followup response");
+const execute: CommandExecuteFunc = async (context) => {
+  await context.reply({ embeds: [infoEmbed] });
 };
