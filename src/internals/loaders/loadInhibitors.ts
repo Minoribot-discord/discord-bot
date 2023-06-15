@@ -7,7 +7,9 @@ async function loadInhibitors(bot: CustomBot) {
 
   for await (const walkEntry of fs.walk(`./src/${pathToInhibitorDirectory}`)) {
     if (walkEntry.isFile) {
-      const { default: inhibitor_ } = await import(`../../${walkEntry.path}`);
+      const { default: inhibitor_ } = await import(
+        `../../../${walkEntry.path}`
+      );
 
       const inhibitor: Inhibitor = inhibitor_;
 

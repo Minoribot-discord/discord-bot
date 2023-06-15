@@ -22,7 +22,7 @@ async function importModules(bot: CustomBot) {
     if (entry.isFile) {
       try {
         const { default: module_ } = await import(
-          `../${pathToModuleDirectory}/${entry.name}`
+          `../../${pathToModuleDirectory}/${entry.name}`
         );
 
         const module: Module = module_;

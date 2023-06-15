@@ -57,7 +57,7 @@ async function importCategories(bot: CustomBot) {
     if (categoryEntry.isDirectory) {
       const pathToCategory = `${pathToCommandDirectory}/${categoryEntry.name}`;
       const { default: category_ } = await import(
-        `../${pathToCategory}/mod.ts`
+        `../../${pathToCategory}/mod.ts`
       );
 
       const category: CommandCategory = new category_(bot);
@@ -75,7 +75,7 @@ async function importCommands(
   for await (const entry of Deno.readDir(`./src/${pathToCategory}`)) {
     if (entry.isFile && (entry.name !== "mod.ts")) {
       const { default: command_ } = await import(
-        `../${pathToCategory}/${entry.name}`
+        `../../${pathToCategory}/${entry.name}`
       );
 
       const command: Command = new command_(bot);
