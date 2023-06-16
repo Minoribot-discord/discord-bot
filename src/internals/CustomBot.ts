@@ -9,11 +9,13 @@ import {
   SubCommand,
   SubCommandGroup,
 } from "structures";
+import { DatabaseWrapper } from "database";
 
 // custom type for the bot so we can add custom properties
 type CustomBot = BotWithHelpersPlugin<BotWithCache> & {
   config: BotConfig;
   logger: typeof logger;
+  database: DatabaseWrapper;
   modules: Collection<string, Module>;
   commands: Collection<string, Command>;
   subCommands: Collection<string, (SubCommandGroup | SubCommand)>;

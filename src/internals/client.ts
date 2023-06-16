@@ -10,6 +10,7 @@ import {
   enableValidationsPlugin,
 } from "deps";
 import { CustomBot } from "internals";
+import { DatabaseWrapper } from "./database/database.ts";
 const { discordToken, intents } = botConfig;
 
 const baseBot = createBot({ token: discordToken, intents });
@@ -25,6 +26,7 @@ const botWithValidationsPlugin = enableValidationsPlugin(
 const customBot = botWithValidationsPlugin as CustomBot;
 customBot.config = botConfig;
 customBot.logger = logger;
+customBot.database = new DatabaseWrapper(customBot);
 customBot.modules = new Collection();
 customBot.commands = new Collection();
 customBot.subCommands = new Collection();

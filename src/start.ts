@@ -13,6 +13,8 @@ async function start() {
     );
   }
 
+  customBot.database.init();
+
   // load all the inhibitors
   // they're basically filters/conditions for commands
   await loadInhibitors(customBot);
