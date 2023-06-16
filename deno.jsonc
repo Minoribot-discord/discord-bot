@@ -7,6 +7,6 @@
     "internals": "./src/internals/internals.ts",
     "utils": "./src/utils/utils.ts",
     "structures": "./src/internals/structures/structures.ts",
-    "database": "./src/database/database.ts"
+    "database": "./src/internals/database/database.ts"
   }
 }
