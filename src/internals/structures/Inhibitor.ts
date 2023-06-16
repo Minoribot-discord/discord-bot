@@ -1,4 +1,4 @@
-import { Context } from "./Context.ts";
+import { Context } from "internals";
 
 type InhibitorExecuteFunc = (context: Context) => boolean | Promise<boolean>;
 

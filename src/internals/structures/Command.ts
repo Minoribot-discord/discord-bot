@@ -5,8 +5,7 @@ import {
   CreateApplicationCommand,
   PermissionStrings,
 } from "deps";
-import { Context } from "./Context.ts";
-import { Inhibitor } from "./structures.ts";
+import { Context, Inhibitor } from "internals";
 
 enum CommandScope {
   GLOBAL,

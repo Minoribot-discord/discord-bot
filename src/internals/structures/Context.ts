@@ -5,7 +5,7 @@ import {
   InteractionResponseTypes,
   Message,
 } from "deps";
-import { CustomBot } from "./CustomBot.ts";
+import { CustomBot } from "internals";
 import { getOrFetchGuild, getOrFetchMember, getOrFetchUser } from "utils";
 
 interface ContextParams {

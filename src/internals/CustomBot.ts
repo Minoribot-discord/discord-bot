@@ -1,6 +1,6 @@
 import { BotWithCache, BotWithHelpersPlugin, Collection } from "deps";
-import { BotConfig } from "../config.ts";
-import { logger } from "../logger.ts";
+import { BotConfig } from "./config.ts";
+import { logger } from "./logger.ts";
 import {
   Command,
   CommandCategory,
