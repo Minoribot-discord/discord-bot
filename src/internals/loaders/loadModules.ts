@@ -1,11 +1,12 @@
-import { CustomBot, Module } from "structures";
+import { CustomBot } from "internals";
+import { Module } from "structures";
 
-const pathToModuleDirectory = "modules";
+const pathToModuleDirectory = "plugins/modules";
 
 async function loadModules(bot: CustomBot): Promise<CustomBot> {
   // imports modules from the module folder and adds them into a collection (bot.loadedModules)
   bot.logger.info(
-    "Started importing all modules and adding them to the module cache",
+    "Started loading modules",
   );
   await importModules(bot);
 
@@ -22,7 +23,7 @@ async function importModules(bot: CustomBot) {
     if (entry.isFile) {
       try {
         const { default: module_ } = await import(
-          `../../${pathToModuleDirectory}/${entry.name}`
+          `${pathToModuleDirectory}/${entry.name}`
         );
 
         const module: Module = module_;

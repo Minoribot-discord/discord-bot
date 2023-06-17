@@ -4,9 +4,11 @@
   },
   "imports": {
     "deps": "./deps.ts",
+    "plugins/": "./src/plugins/",
     "internals": "./src/internals/internals.ts",
-    "utils": "./src/utils/utils.ts",
+    "utils": "./src/internals/utils/utils.ts",
     "structures": "./src/internals/structures/structures.ts",
-    "database": "./src/internals/database/database.ts"
+    "database": "./src/internals/database/database.ts",
+    "i18n": "./src/internals/i18n/i18n.ts"
   }
 }

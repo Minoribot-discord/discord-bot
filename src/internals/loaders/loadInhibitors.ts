@@ -1,6 +1,7 @@
-import { CustomBot, Inhibitor } from "structures";
+import { CustomBot } from "internals";
+import { Inhibitor } from "structures";
 import { fs } from "deps";
-const pathToInhibitorDirectory = "inhibitors";
+const pathToInhibitorDirectory = "plugins/inhibitors";
 
 async function loadInhibitors(bot: CustomBot) {
   bot.logger.info("Started loading inhibitors");
@@ -8,7 +9,7 @@ async function loadInhibitors(bot: CustomBot) {
   for await (const walkEntry of fs.walk(`./src/${pathToInhibitorDirectory}`)) {
     if (walkEntry.isFile) {
       const { default: inhibitor_ } = await import(
-        `../../../${walkEntry.path}`
+        `${pathToInhibitorDirectory}/${walkEntry.path}`
       );
 
       const inhibitor: Inhibitor = inhibitor_;
