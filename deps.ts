@@ -6,6 +6,6 @@ export * from "https://deno.land/x/discordeno@18.0.1/mod.ts";
 export * from "https://deno.land/x/discordeno@18.0.1/plugins/mod.ts";
 export {
   Collection as MongoCollection,
+  Database,
   MongoClient,
-  ObjectId,
-} from "https://deno.land/x/atlas_sdk@v1.1.1/mod.ts";
+} from "https://deno.land/x/atlas_sdk@v1.1.1/client.ts";

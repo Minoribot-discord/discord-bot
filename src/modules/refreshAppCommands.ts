@@ -2,6 +2,8 @@ import { Collection } from "deps";
 import { Command, CommandScope, Module } from "structures";
 import { CustomBot } from "internals";
 
+let refreshedAlready = false;
+
 export default new Module({
   name: "refreshApplicationCommands",
   priority: 0,
@@ -11,13 +13,14 @@ export default new Module({
     bot.events.ready = async (_bot, payload, rawPayload) => {
       await ready(_bot, payload, rawPayload);
 
-      if (bot.config.refreshCommands) {
+      if (bot.config.refreshCommands && !refreshedAlready) {
         await bot.utils.delay(3000);
 
         await purgeAllApplicationCommands(bot);
         await handleSupportGuildScopedCommands(bot);
         await handleGuildScopedCommands(bot);
         await handleGlobalScopedCommands(bot);
+        refreshedAlready = true;
       }
     };
 
