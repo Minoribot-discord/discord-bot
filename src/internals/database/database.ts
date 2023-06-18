@@ -1,1 +1,1 @@
-export * from "./databaseWrapper.ts";
+export * from "./DatabaseWrapper.ts";
