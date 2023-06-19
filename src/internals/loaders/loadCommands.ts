@@ -14,6 +14,10 @@ const pathToCommandDirectory = "plugins/commands";
 async function loadCommands(bot: CustomBot) {
   bot.logger.info("Started loading commands");
 
+  bot.commands.clear();
+  bot.subCommands.clear();
+  bot.cmdCategories.clear();
+
   await importCategories(bot);
 
   for (const category of bot.cmdCategories.array()) {

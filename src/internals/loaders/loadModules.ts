@@ -4,14 +4,20 @@ import { Module } from "structures";
 const pathToModuleDirectory = "plugins/modules";
 
 async function loadModules(bot: CustomBot): Promise<CustomBot> {
-  // imports modules from the module folder and adds them into a collection (bot.loadedModules)
   bot.logger.info(
     "Started loading modules",
   );
+
+  bot.modules.clear();
+
+  /*
+     imports modules from the module folder
+     and adds them into a collection (bot.modules)
+  */
   await importModules(bot);
 
-  // execute the init method of each module, one by one
   bot.logger.info("Started initializing modules");
+  // execute the init method of each module, one by one
   await initializeModules(bot);
   bot.logger.info("Finished initializing modules");
 
