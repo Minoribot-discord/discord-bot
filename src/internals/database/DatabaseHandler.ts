@@ -1,6 +1,9 @@
 import { Database, MongoClient } from "deps";
 import { CustomBot } from "internals";
+import { ConfigDb } from "./databases/databases_mod.ts";
 // import type { CustomBot } from "internals";
+
+const devModePrefix = "DEV_";
 
 class DatabaseHandler {
   resolveReady!: (value: void | Promise<void>) => void;
@@ -8,18 +11,18 @@ class DatabaseHandler {
     this.resolveReady = res;
   });
 
-  dbClient!: MongoClient;
-  // deprecated
-  database!: Database;
-  databases!: {};
+  mongo!: MongoClient;
+  databases!: {
+    config: ConfigDb;
+  };
 
   constructor(public bot: CustomBot) {}
 
   init() {
     this.bot.logger.info("Initializing database");
-    const { mongo: { appId, appKey, clusterName }, devMode } = this.bot.config;
+    const { mongo: { appId, appKey, clusterName } } = this.bot.config;
 
-    this.dbClient = new MongoClient({
+    this.mongo = new MongoClient({
       endpoint: `https://data.mongodb-api.com/app/${appId}/endpoint/data/v1`,
       dataSource: clusterName, // e.g. "Cluster0"
       auth: {
@@ -27,12 +30,11 @@ class DatabaseHandler {
       },
     });
 
-    const devModePrefix = devMode ? "DEV_" : "";
-    this.database = this.dbClient.database(`${devModePrefix}discord_bot`);
+    this.databases = { config: new ConfigDb(this) };
 
     this.bot.logger.info("Database initialized");
     this.resolveReady();
   }
 }
 
-export { DatabaseHandler };
+export { DatabaseHandler, devModePrefix };

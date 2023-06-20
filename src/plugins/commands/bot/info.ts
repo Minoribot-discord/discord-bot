@@ -17,7 +17,6 @@ export default class InfoCommand extends Command {
 const execute: CommandExecuteFunc = async (context) => {
   const infoEmbed: Embed = {
     title: context.i18n.translate("COMMAND.APP.INFO.INFOEMBED.TITLE"),
-    
   };
   await context.reply({ embeds: [infoEmbed] });
 };
