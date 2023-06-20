@@ -119,32 +119,6 @@ function convertSubCommandsIntoOptions(
   ];
 }
 
-interface SubCommandGroupParams extends BaseCommandParams {
-  subCommands: SubCommand[];
-}
-class SubCommandGroup extends BaseCommand {
-  parent!: Command;
-  type = ApplicationCommandOptionTypes.SubCommandGroup;
-  subCommands: SubCommand[] = [];
-
-  constructor(params: SubCommandGroupParams) {
-    super(params);
-
-    this.subCommands = params.subCommands;
-
-    convertSubCommandsIntoOptions(this, this.subCommands);
-  }
-
-  get discordOption(): ApplicationCommandOption {
-    return {
-      type: this.type,
-      description: this.description,
-      name: this.name,
-      options: this.options,
-    };
-  }
-}
-
 // deno-lint-ignore no-empty-interface
 interface SubCommandParams extends BaseCommandParams {}
 
@@ -163,6 +137,22 @@ class SubCommand extends BaseCommand {
       name: this.name,
       options: this.options,
     };
+  }
+}
+
+interface SubCommandGroupParams extends SubCommandParams {
+  subCommands: SubCommand[];
+}
+class SubCommandGroup extends SubCommand {
+  type = ApplicationCommandOptionTypes.SubCommandGroup;
+  subCommands: SubCommand[] = [];
+
+  constructor(params: SubCommandGroupParams) {
+    super(params);
+
+    this.subCommands = params.subCommands;
+
+    convertSubCommandsIntoOptions(this, this.subCommands);
   }
 }
 
