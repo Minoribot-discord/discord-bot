@@ -47,7 +47,10 @@ export default new Module({
         `${bot.inhibitors.size} inhibitors\n`;
 
       string_ = string_ +
-        `${bot.modules.size} modules`;
+        `${bot.modules.size} modules\n`;
+
+      string_ = string_ +
+        `${bot.locales.size} locals`;
 
       bot.logger.info(string_);
     };

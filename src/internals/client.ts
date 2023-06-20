@@ -1,5 +1,3 @@
-import { botConfig } from "./config.ts";
-import { logger } from "./logger.ts";
 import {
   Collection,
   createBot,
@@ -9,8 +7,13 @@ import {
   enablePermissionsPlugin,
   enableValidationsPlugin,
 } from "deps";
-import { CustomBot } from "internals";
-import { DatabaseWrapper } from "./database/database.ts";
+import {
+  botConfig,
+  CustomBot,
+  DatabaseWrapper,
+  I18nHandler,
+  logger,
+} from "internals";
 const { discordToken, intents } = botConfig;
 
 const baseBot = createBot({ token: discordToken, intents });
@@ -27,10 +30,12 @@ const customBot = botWithValidationsPlugin as CustomBot;
 customBot.config = botConfig;
 customBot.logger = logger;
 customBot.database = new DatabaseWrapper(customBot);
+customBot.i18n = new I18nHandler(customBot);
 customBot.modules = new Collection();
 customBot.commands = new Collection();
 customBot.subCommands = new Collection();
 customBot.cmdCategories = new Collection();
+customBot.locales = new Collection();
 customBot.inhibitors = new Collection();
 
 export { customBot };

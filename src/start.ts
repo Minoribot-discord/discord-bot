@@ -3,6 +3,7 @@ import {
   customBot,
   loadCommands,
   loadInhibitors,
+  loadLocales,
   loadModules,
 } from "internals";
 
@@ -18,6 +19,11 @@ async function start() {
   // load all the inhibitors
   // they're basically filters/conditions for commands
   await loadInhibitors(customBot);
+
+  // load all the locales, basically the languages
+  await loadLocales(customBot);
+
+  customBot.i18n.init();
 
   // load all the commands
   await loadCommands(customBot);

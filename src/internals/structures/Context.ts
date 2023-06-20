@@ -5,7 +5,7 @@ import {
   InteractionResponseTypes,
   Message,
 } from "deps";
-import { CustomBot } from "internals";
+import { CustomBot, getArgsLocaleKey, Locale, LocaleKeys } from "internals";
 import { getOrFetchGuild, getOrFetchMember, getOrFetchUser } from "utils";
 
 interface ContextParams {
@@ -15,6 +15,9 @@ interface ContextParams {
 class Context {
   bot: CustomBot;
   interaction: Interaction;
+
+  i18n: I18nContextHandler;
+
   authorId: bigint;
   guildId: bigint | undefined;
 
@@ -29,6 +32,8 @@ class Context {
 
     this.authorId = interaction.user.id;
     this.guildId = interaction.guildId;
+
+    this.i18n = new I18nContextHandler({ parent: this });
   }
 
   sendInteractionResponse(options: InteractionResponse) {
@@ -116,4 +121,30 @@ class Context {
   }
 }
 
-export { Context };
+interface I18nContextHandlerParams {
+  parent: Context;
+}
+class I18nContextHandler {
+  bot: CustomBot;
+  parent: Context;
+  locale: Locale;
+
+  constructor(params: I18nContextHandlerParams) {
+    const { parent } = params;
+
+    this.bot = parent.bot;
+    this.parent = parent;
+    this.locale = parent.bot.locales.get("cat-central") || (() => {
+      throw new Error("Cannot find locale cat-central");
+    })();
+  }
+
+  translate<K extends LocaleKeys>(
+    key: K,
+    params?: getArgsLocaleKey<K>,
+  ) {
+    return this.bot.i18n.translate<K>(this.locale, key, params);
+  }
+}
+
+export { Context, I18nContextHandler };
