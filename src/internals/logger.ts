@@ -35,7 +35,6 @@ const logger = log.getLogger();
 
 const flushFn = () => {
   fileHandler.flush();
-  fileHandler;
 };
 setInterval(flushFn, 2 * 1000);
 

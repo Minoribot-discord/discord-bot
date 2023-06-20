@@ -5,10 +5,10 @@
   "imports": {
     "deps": "./deps.ts",
     "plugins/": "./src/plugins/",
-    "internals": "./src/internals/internals.ts",
-    "utils": "./src/internals/utils/utils.ts",
-    "structures": "./src/internals/structures/structures.ts",
-    "database": "./src/internals/database/database.ts",
-    "i18n": "./src/internals/i18n/i18n.ts"
+    "internals": "./src/internals/internals_mod.ts",
+    "utils": "./src/internals/utils/utils_mod.ts",
+    "structures": "./src/internals/structures/structures_mod.ts",
+    "database": "./src/internals/database/database_mod.ts",
+    "i18n": "./src/internals/i18n/i18n_mod.ts"
   }
 }
