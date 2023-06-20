@@ -7,13 +7,8 @@ import {
   enablePermissionsPlugin,
   enableValidationsPlugin,
 } from "deps";
-import {
-  botConfig,
-  CustomBot,
-  DatabaseWrapper,
-  I18nHandler,
-  logger,
-} from "internals";
+import { botConfig } from "config";
+import { CustomBot, DatabaseWrapper, I18nHandler, logger } from "internals";
 const { discordToken, intents } = botConfig;
 
 const baseBot = createBot({ token: discordToken, intents });

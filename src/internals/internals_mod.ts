@@ -1,3 +1,4 @@
+export * from "./config.ts";
 export * from "./database/database_mod.ts";
 export * from "./i18n/i18n_mod.ts";
 export * from "./loaders/loaders_mod.ts";
@@ -5,6 +6,5 @@ export * from "./structures/structures_mod.ts";
 export * from "./utils/utils_mod.ts";
 export * from "./cli.ts";
 export * from "./client.ts";
-export * from "./config.ts";
 export * from "./CustomBot.ts";
 export * from "./logger.ts";

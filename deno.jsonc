@@ -4,6 +4,7 @@
   },
   "imports": {
     "deps": "./deps.ts",
+    "config": "./src/internals/config.ts",
     "plugins/": "./src/plugins/",
     "internals": "./src/internals/internals_mod.ts",
     "utils": "./src/internals/utils/utils_mod.ts",
