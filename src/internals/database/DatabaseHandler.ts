@@ -1,4 +1,4 @@
-import { Database, MongoClient } from "deps";
+import { MongoClient } from "deps";
 import { CustomBot } from "internals";
 import { ConfigDb } from "./databases/databases_mod.ts";
 // import type { CustomBot } from "internals";
