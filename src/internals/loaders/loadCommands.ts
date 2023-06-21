@@ -64,7 +64,7 @@ async function importCategories(bot: CustomBot) {
         `${pathToCategory}/mod.ts`
       );
 
-      const category: CommandCategory = new category_(bot);
+      const category: CommandCategory = category_(bot);
 
       bot.cmdCategories.set(category.name, category);
     }

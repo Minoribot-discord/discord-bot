@@ -9,7 +9,7 @@ class CommandCategory {
   description = "";
   commands: Command[] = [];
 
-  constructor(public bot: CustomBot, params: CommandCategoryParams) {
+  constructor(params: CommandCategoryParams) {
     this.name = params.name;
 
     if (params.description) this.description = params.description;
