@@ -28,11 +28,13 @@ async function importModules(bot: CustomBot) {
   for await (const entry of Deno.readDir(`./src/${pathToModuleDirectory}/`)) {
     if (entry.isFile) {
       try {
-        const { default: module_ } = await import(
+        const { default: module } = await import(
           `${pathToModuleDirectory}/${entry.name}`
         );
-
-        const module: Module = module_;
+        if (
+          !module || typeof module !== "object" ||
+          !(module instanceof Module)
+        ) continue;
 
         bot.modules.set(module.name, module);
       } catch (error) {

@@ -64,7 +64,7 @@ async function importCategories(bot: CustomBot) {
         `${pathToCategory}/mod.ts`
       );
 
-      const category: CommandCategory = category_(bot);
+      const category: CommandCategory = category_;
 
       bot.cmdCategories.set(category.name, category);
     }
@@ -78,11 +78,14 @@ async function importCommands(
 ) {
   for await (const entry of Deno.readDir(`./src/${pathToCategory}`)) {
     if (entry.isFile && (entry.name !== "mod.ts")) {
-      const { default: command_ } = await import(
+      const { default: command } = await import(
         `${pathToCategory}/${entry.name}`
       );
+      if (
+        !command || typeof command !== "object" ||
+        !(command instanceof Command)
+      ) continue;
 
-      const command: Command = new command_(bot);
       command.filePath = `${
         pathToCategory.replace(`${pathToCommandDirectory}/`, "")
       }/${entry.name}`;
@@ -92,7 +95,7 @@ async function importCommands(
 
       if (bot.commands.has(command.name)) {
         throw new Error(
-          `two commands with the same name (${command.name}),` +
+          `two commands with the same name (${command.name}): ` +
             `${command.filePath} | ${bot
               .commands.get(command.name)?.filePath}`,
         );

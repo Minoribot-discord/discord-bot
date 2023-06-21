@@ -1,22 +1,23 @@
 import { CustomBot, defaultLocaleCode } from "internals";
 import { Locale } from "structures";
 import { fs } from "deps";
-const pathToLocalDirectory = "plugins/locales";
+const pathToLocaleDirectory = "plugins/locales";
 
 async function loadLocales(bot: CustomBot) {
   bot.logger.info("Started loading locales");
 
   bot.locales.clear();
 
-  for await (const walkEntry of fs.walk(`./src/${pathToLocalDirectory}`)) {
+  for await (const walkEntry of fs.walk(`./src/${pathToLocaleDirectory}`)) {
     if (walkEntry.isFile) {
-      const { default: local_ } = await import(
+      const { default: locale_ } = await import(
         `../../../${walkEntry.path}`
       );
+      if (!locale_ || typeof locale_ != "object") continue;
 
-      const local: Locale = local_;
+      const locale: Locale = locale_;
 
-      bot.locales.set(local.code, local);
+      bot.locales.set(locale.code, locale);
     }
   }
 

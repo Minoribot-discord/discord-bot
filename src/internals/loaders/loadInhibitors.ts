@@ -10,11 +10,13 @@ async function loadInhibitors(bot: CustomBot) {
 
   for await (const walkEntry of fs.walk(`./src/${pathToInhibitorDirectory}`)) {
     if (walkEntry.isFile) {
-      const { default: inhibitor_ } = await import(
+      const { default: inhibitor } = await import(
         `${pathToInhibitorDirectory}/${walkEntry.path}`
       );
-
-      const inhibitor: Inhibitor = inhibitor_;
+      if (
+        !inhibitor || typeof inhibitor !== "object" ||
+        !(inhibitor instanceof Inhibitor)
+      ) continue;
 
       bot.inhibitors.set(inhibitor.name, inhibitor);
     }
