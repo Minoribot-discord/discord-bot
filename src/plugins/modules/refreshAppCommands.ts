@@ -16,7 +16,7 @@ export default new Module({
       if (bot.config.refreshCommands && !refreshedAlready) {
         await bot.utils.delay(3000);
 
-        await purgeAllApplicationCommands(bot);
+        await removeNonExistentApplicationCommands(bot);
         await handleSupportGuildScopedCommands(bot);
         await handleGuildScopedCommands(bot);
         await handleGlobalScopedCommands(bot);
@@ -28,23 +28,31 @@ export default new Module({
   },
 });
 
-async function purgeAllApplicationCommands(bot: CustomBot) {
-  bot.logger.info("Purging guild application commands from the API");
+async function removeNonExistentApplicationCommands(bot: CustomBot) {
+  bot.logger.info(
+    "Filter non-existent application commands from the API",
+  );
   for (const guildId of bot.guilds.keys()) {
     const guildApplicationCommands = await bot.helpers
       .getGuildApplicationCommands(guildId);
 
-    for (const commandId of guildApplicationCommands.keys()) {
-      await bot.helpers.deleteGuildApplicationCommand(commandId, guildId);
+    for (const command of guildApplicationCommands.values()) {
+      if (!bot.commands.has(command.name)) {
+        await bot.helpers.deleteGuildApplicationCommand(command.id, guildId);
+      }
     }
   }
 
-  bot.logger.info("Purging global application commands from the API");
+  bot.logger.info(
+    "Filter non-existent global application commands from the API",
+  );
   const globalApplicationCommands = await bot.helpers
     .getGlobalApplicationCommands();
 
-  for (const commandId of globalApplicationCommands.keys()) {
-    await bot.helpers.deleteGlobalApplicationCommand(commandId);
+  for (const command of globalApplicationCommands.values()) {
+    if (!bot.commands.has(command.name)) {
+      await bot.helpers.deleteGlobalApplicationCommand(command.id);
+    }
   }
 }
 
