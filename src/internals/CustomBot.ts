@@ -14,7 +14,7 @@ import { BotConfig, DatabaseHandler, I18nHandler, logger } from "internals";
 type CustomBot = BotWithHelpersPlugin<BotWithCache> & {
   config: BotConfig;
   logger: typeof logger;
-  database: DatabaseHandler;
+  db: DatabaseHandler;
   i18n: I18nHandler;
   modules: Collection<string, Module>;
   commands: Collection<string, Command>;

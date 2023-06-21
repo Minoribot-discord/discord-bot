@@ -12,9 +12,7 @@ class DatabaseHandler {
   });
 
   mongo!: MongoClient;
-  databases!: {
-    config: ConfigDb;
-  };
+  configDb!: ConfigDb;
 
   constructor(public bot: CustomBot) {}
 
@@ -29,8 +27,7 @@ class DatabaseHandler {
         apiKey: appKey,
       },
     });
-
-    this.databases = { config: new ConfigDb(this) };
+    this.configDb = new ConfigDb(this);
 
     this.bot.logger.info("Database initialized");
     this.resolveReady();

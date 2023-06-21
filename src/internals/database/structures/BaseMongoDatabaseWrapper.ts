@@ -2,24 +2,22 @@ import { Database, MongoClient } from "deps";
 import {
   BaseDatabaseWrapper,
   BaseDatabaseWrapperParams,
-  MongoCollectionWrapper,
+  BaseMongoCollectionWrapper,
 } from "db_structures";
 
 // deno-lint-ignore no-empty-interface
-interface MongoDatabaseWrapperParams extends BaseDatabaseWrapperParams {}
-class MongoDatabaseWrapper extends BaseDatabaseWrapper {
+interface BaseMongoDatabaseWrapperParams extends BaseDatabaseWrapperParams {}
+class BaseMongoDatabaseWrapper extends BaseDatabaseWrapper {
   mongo: MongoClient;
   database: Database;
-  colls: Record<string, MongoCollectionWrapper> = {};
+  colls: Record<string, BaseMongoCollectionWrapper> = {};
 
-  constructor(params: MongoDatabaseWrapperParams) {
+  constructor(params: BaseMongoDatabaseWrapperParams) {
     super(params);
     this.mongo = this.dbHandler.mongo;
-
-    console.log(this.name);
 
     this.database = this.mongo.database(this.name);
   }
 }
 
-export { MongoDatabaseWrapper };
+export { BaseMongoDatabaseWrapper };

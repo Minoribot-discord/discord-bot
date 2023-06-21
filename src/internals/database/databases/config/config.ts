@@ -1,20 +1,21 @@
-import { MongoDatabaseWrapper } from "db_structures";
+import { BaseMongoDatabaseWrapper } from "db_structures";
 import { DatabaseHandler } from "database";
-import { GuildConfigColl } from "./guildConfig/guildConfig.ts";
+import { GuildConfigColl, UserConfigColl } from "./collections.ts";
 
-class ConfigDb extends MongoDatabaseWrapper {
-  colls: {
-    guildConfig: GuildConfigColl;
-  };
+class ConfigDb extends BaseMongoDatabaseWrapper {
+  guildConfig: GuildConfigColl;
+  userConfig: UserConfigColl;
+
   constructor(dbHandler: DatabaseHandler) {
     super({ dbHandler, name: "config" });
 
-    this.colls = {
-      guildConfig: new GuildConfigColl({
-        bot: this.bot,
-        database: this.database,
-      }),
+    const collParams = {
+      bot: this.bot,
+      database: this.database,
     };
+
+    this.guildConfig = new GuildConfigColl(collParams);
+    this.userConfig = new UserConfigColl(collParams);
   }
 }
 

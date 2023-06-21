@@ -1,29 +1,27 @@
-import { BaseSchema, MongoCollectionWrapper } from "db_structures";
-import { BigString, Database } from "deps";
-import { CustomBot } from "internals";
+import {
+  BaseMongoCollectionWrapper,
+  BaseSchema,
+  MongoCollectionWrapperParams,
+} from "db_structures";
+import { BigString } from "deps";
 
 interface GuildConfigSchema extends BaseSchema {
   guildId: string;
   locale?: string;
 }
 
-interface GuildConfigCollParams {
-  bot: CustomBot;
-  database: Database;
-}
-
-class GuildConfigColl extends MongoCollectionWrapper<GuildConfigSchema> {
-  constructor(params: GuildConfigCollParams) {
+class GuildConfigColl extends BaseMongoCollectionWrapper<GuildConfigSchema> {
+  constructor(params: MongoCollectionWrapperParams) {
     const { bot, database } = params;
-    super({ bot, database, name: "guildConfig" });
+    super({ bot, database, name: "guild_config" });
   }
 
-  getGuildConfig(guildId_: BigString): Promise<GuildConfigSchema> {
+  get(guildId_: BigString): Promise<GuildConfigSchema | undefined> {
     const guildId = this.bot.transformers.reverse.snowflake(guildId_);
     return this.collection.findOne({ guildId });
   }
 
-  setGuildConfig(guildId_: BigString, update: Partial<GuildConfigSchema>) {
+  set(guildId_: BigString, update: Partial<GuildConfigSchema>) {
     const guildId = this.bot.transformers.reverse.snowflake(guildId_);
 
     return this.collection.updateOne({ guildId }, { guildId, ...update }, {

@@ -5,15 +5,20 @@ import { CustomBot } from "internals";
 interface MongoCollectionWrapperParams {
   bot: CustomBot;
   database: Database;
+}
+
+interface BaseMongoCollectionWrapperParams {
+  bot: CustomBot;
+  database: Database;
   name: string;
 }
-class MongoCollectionWrapper<T extends BaseSchema = BaseSchema> {
+class BaseMongoCollectionWrapper<T extends BaseSchema = BaseSchema> {
   bot: CustomBot;
   database: Database;
   collection: MongoCollection<T>;
   name: string;
 
-  constructor(params: MongoCollectionWrapperParams) {
+  constructor(params: BaseMongoCollectionWrapperParams) {
     const { bot, database, name } = params;
 
     this.bot = bot;
@@ -23,5 +28,5 @@ class MongoCollectionWrapper<T extends BaseSchema = BaseSchema> {
   }
 }
 
-export { MongoCollectionWrapper };
-export type { MongoCollectionWrapperParams };
+export { BaseMongoCollectionWrapper };
+export type { BaseMongoCollectionWrapperParams, MongoCollectionWrapperParams };
