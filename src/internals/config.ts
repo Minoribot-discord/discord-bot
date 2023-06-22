@@ -10,9 +10,7 @@ interface BotConfig {
 }
 
 interface MongoConfig {
-  appId: string;
-  clusterName: string;
-  appKey: string;
+  url: string;
 }
 
 // @ts-ignore:
@@ -40,9 +38,7 @@ function convertEnvVarToBoolean(envVarName: string): boolean {
 }
 
 const mongoConfig: MongoConfig = {
-  appId: env["MONGO_APP_ID"],
-  clusterName: env["MONGO_CLUSTER_NAME"],
-  appKey: env["MONGO_APP_KEY"],
+  url: env["MONGO_URL"],
 };
 
 const botConfig: BotConfig = {

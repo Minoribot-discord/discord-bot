@@ -1,14 +1,9 @@
 import {
   BaseMongoCollectionWrapper,
-  BaseSchema,
   MongoCollectionWrapperParams,
+  UserConfigSchema,
 } from "db_structures";
 import { BigString } from "deps";
-
-interface UserConfigSchema extends BaseSchema {
-  userId: string;
-  locale?: string;
-}
 
 class UserConfigColl extends BaseMongoCollectionWrapper<UserConfigSchema> {
   constructor(params: MongoCollectionWrapperParams) {
@@ -24,7 +19,9 @@ class UserConfigColl extends BaseMongoCollectionWrapper<UserConfigSchema> {
   set(userId_: BigString, update: Partial<UserConfigSchema>) {
     const userId = this.bot.transformers.reverse.snowflake(userId_);
 
-    return this.collection.updateOne({ userId }, { userId, ...update }, {
+    return this.collection.updateOne({ userId }, {
+      $set: { userId, ...update },
+    }, {
       upsert: true,
     });
   }

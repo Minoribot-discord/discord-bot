@@ -1,14 +1,9 @@
 import {
   BaseMongoCollectionWrapper,
-  BaseSchema,
+  GuildConfigSchema,
   MongoCollectionWrapperParams,
 } from "db_structures";
 import { BigString } from "deps";
-
-interface GuildConfigSchema extends BaseSchema {
-  guildId: string;
-  locale?: string;
-}
 
 class GuildConfigColl extends BaseMongoCollectionWrapper<GuildConfigSchema> {
   constructor(params: MongoCollectionWrapperParams) {
@@ -24,7 +19,9 @@ class GuildConfigColl extends BaseMongoCollectionWrapper<GuildConfigSchema> {
   set(guildId_: BigString, update: Partial<GuildConfigSchema>) {
     const guildId = this.bot.transformers.reverse.snowflake(guildId_);
 
-    return this.collection.updateOne({ guildId }, { guildId, ...update }, {
+    return this.collection.updateOne({ guildId }, {
+      $set: { guildId, ...update },
+    }, {
       upsert: true,
     });
   }
