@@ -5,7 +5,13 @@ import {
   InteractionResponseTypes,
   Message,
 } from "deps";
-import { CustomBot, getArgsLocaleKey, Locale, LocaleKeys } from "internals";
+import {
+  CustomBot,
+  DatabaseHandler,
+  getArgsLocaleKey,
+  Locale,
+  LocaleKeys,
+} from "internals";
 import { getOrFetchGuild, getOrFetchMember, getOrFetchUser } from "utils";
 
 interface ContextParams {
@@ -15,6 +21,7 @@ interface ContextParams {
 class Context {
   bot: CustomBot;
   interaction: Interaction;
+  db: DatabaseHandler;
 
   i18n: I18nContextHandler;
 
@@ -29,6 +36,7 @@ class Context {
 
     this.bot = bot;
     this.interaction = interaction;
+    this.db = bot.db;
 
     this.authorId = interaction.user.id;
     this.guildId = interaction.guildId;
