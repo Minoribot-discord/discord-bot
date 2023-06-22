@@ -25,8 +25,8 @@ class BaseCommand {
   name: string;
   description: string;
   options: ApplicationCommandOption[] = [];
-  inhibitorStrings: string[] = [];
-  inhibitors: Inhibitor[] = [];
+  inhibitors: string[] = [];
+  _inhibitors: Inhibitor[] = [];
 
   execute: CommandExecuteFunc;
 
@@ -42,7 +42,7 @@ class BaseCommand {
     this.name = name;
     this.description = description;
     if (options) this.options = options;
-    if (inhibitorStrings) this.inhibitorStrings = inhibitorStrings;
+    if (inhibitorStrings) this.inhibitors = inhibitorStrings;
     this.execute = execute?.bind(this) || ((_context: Context) => {
       throw new Error("Function not implemented.");
     });
