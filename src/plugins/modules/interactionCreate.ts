@@ -70,7 +70,7 @@ async function handleApplicationCommand(
   }
 
   for (const command of commandsToExecute) {
-    await command.execute(context);
+    await command.execute?.(context);
   }
 }
 

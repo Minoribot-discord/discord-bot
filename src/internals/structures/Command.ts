@@ -28,7 +28,7 @@ class BaseCommand {
   _inhibitors: string[] = [];
   inhibitors: Inhibitor[] = [];
 
-  execute: CommandExecuteFunc;
+  execute?: CommandExecuteFunc;
 
   constructor(params: BaseCommandParams) {
     const {
@@ -43,9 +43,7 @@ class BaseCommand {
     this.description = description;
     if (options) this.options = options;
     if (inhibitors) this._inhibitors = inhibitors;
-    this.execute = execute?.bind(this) || ((_context: Context) => {
-      throw new Error("Function not implemented.");
-    });
+    this.execute = execute?.bind(this);
   }
 }
 
