@@ -146,15 +146,15 @@ function checkNonExistentInhibitors(
   const nonExistentInhibitors = new Collection<string, string[]>();
 
   for (const [commandName, command] of baseCommands.entries()) {
-    if (command.inhibitors.length === 0) continue;
+    if (command._inhibitors.length === 0) continue;
 
     const commandNonExistentInhibitors: string[] = [];
 
-    for (const inhibitorName of command.inhibitors) {
+    for (const inhibitorName of command._inhibitors) {
       if (!bot.inhibitors.has(inhibitorName)) {
         commandNonExistentInhibitors.push(inhibitorName);
       } else {
-        command._inhibitors.push(bot.inhibitors.get(inhibitorName)!);
+        command.inhibitors.push(bot.inhibitors.get(inhibitorName)!);
       }
     }
 

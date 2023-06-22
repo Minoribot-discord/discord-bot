@@ -112,7 +112,7 @@ async function checkInhibitors(
   const invalidInhibitors: Inhibitor[] = [];
 
   for (const command of commandsToExecute) {
-    for (const inhibitor of command._inhibitors) {
+    for (const inhibitor of command.inhibitors) {
       if (!(await inhibitor.execute(context))) {
         invalidInhibitors.push(inhibitor);
       }

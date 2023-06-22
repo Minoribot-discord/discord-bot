@@ -18,15 +18,15 @@ interface BaseCommandParams {
   name: string;
   description: string;
   options?: ApplicationCommandOption[];
-  inhibitorStrings?: string[];
+  inhibitors?: string[];
   execute?: CommandExecuteFunc;
 }
 class BaseCommand {
   name: string;
   description: string;
   options: ApplicationCommandOption[] = [];
-  inhibitors: string[] = [];
-  _inhibitors: Inhibitor[] = [];
+  _inhibitors: string[] = [];
+  inhibitors: Inhibitor[] = [];
 
   execute: CommandExecuteFunc;
 
@@ -35,14 +35,14 @@ class BaseCommand {
       name,
       description,
       options,
-      inhibitorStrings,
+      inhibitors,
       execute,
     } = params;
 
     this.name = name;
     this.description = description;
     if (options) this.options = options;
-    if (inhibitorStrings) this.inhibitors = inhibitorStrings;
+    if (inhibitors) this._inhibitors = inhibitors;
     this.execute = execute?.bind(this) || ((_context: Context) => {
       throw new Error("Function not implemented.");
     });
