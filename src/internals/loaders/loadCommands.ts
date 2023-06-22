@@ -131,7 +131,7 @@ async function recursiveLoadSubCommands(
         key =
           `${subCommand.parent.parent.name}/${subCommand.parent.name}/${subCommand.name}`;
       } else {
-        key = `${subCommand.parent.name}/${subCommand.parent}`;
+        key = `${subCommand.parent.name}/${subCommand.name}`;
       }
 
       bot.subCommands.set(key, subCommand);
