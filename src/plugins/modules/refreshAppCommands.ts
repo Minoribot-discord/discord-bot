@@ -105,9 +105,25 @@ async function handleGlobalScopedCommands(bot: CustomBot) {
     command.scope === CommandScope.GLOBAL
   );
 
-  await bot.helpers.upsertGlobalApplicationCommands(
-    globalScopedCommands.map((command) => command.discordApplicationCommand),
+  const discordAppCommands = globalScopedCommands.map((command) =>
+    command.discordApplicationCommand
   );
+
+  if (bot.config.devMode) {
+    bot.logger.warning(
+      "Dev mode detected, global commands will be loaded for each guild instead of globally",
+    );
+    for (const guildId of bot.guilds.keys()) {
+      await bot.helpers.upsertGuildApplicationCommands(
+        guildId,
+        discordAppCommands,
+      );
+    }
+  } else {
+    await bot.helpers.upsertGlobalApplicationCommands(
+      discordAppCommands,
+    );
+  }
 
   bot.logger.info("Successfully upserted global scoped commands to the API");
 }
