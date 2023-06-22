@@ -10,7 +10,6 @@ import { Context, Inhibitor } from "internals";
 enum CommandScope {
   GLOBAL,
   GUILD,
-  SUPPORT,
 }
 
 type CommandExecuteFunc = (ctx: Context) => void | Promise<void>;
@@ -63,7 +62,7 @@ class Command extends BaseCommand {
   filePath = "";
   category = "";
   type: ApplicationCommandTypes = ApplicationCommandTypes.ChatInput;
-  scope: CommandScope = CommandScope.SUPPORT;
+  scope: CommandScope;
   subCommands: (SubCommand | SubCommandGroup)[] = [];
   dmPermission = false;
   defaultMemberPermissions: PermissionStrings[] | undefined;

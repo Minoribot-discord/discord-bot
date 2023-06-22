@@ -11,7 +11,7 @@ const execute: CommandExecuteFunc = async (context) => {
 export default new Command({
   name: "info",
   description: "Show some info about the bot",
-  scope: CommandScope.SUPPORT,
+  scope: CommandScope.GLOBAL,
   defaultMemberPermissions: ["ADMINISTRATOR"],
   dmPermission: true,
   execute,

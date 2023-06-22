@@ -14,10 +14,9 @@ export default new Module({
       await ready(_bot, payload, rawPayload);
 
       if (bot.config.refreshCommands && !refreshedAlready) {
-        await bot.utils.delay(3000);
+        await bot.utils.delay(2000);
 
         await removeNonExistentApplicationCommands(bot);
-        await handleSupportGuildScopedCommands(bot);
         await handleGuildScopedCommands(bot);
         await handleGlobalScopedCommands(bot);
         refreshedAlready = true;
@@ -30,7 +29,7 @@ export default new Module({
 
 async function removeNonExistentApplicationCommands(bot: CustomBot) {
   bot.logger.info(
-    "Filter non-existent application commands from the API",
+    "Remove non-existent application commands from the API",
   );
   for (const guildId of bot.guilds.keys()) {
     const guildApplicationCommands = await bot.helpers
@@ -44,7 +43,7 @@ async function removeNonExistentApplicationCommands(bot: CustomBot) {
   }
 
   bot.logger.info(
-    "Filter non-existent global application commands from the API",
+    "Remove non-existent global application commands from the API",
   );
   const globalApplicationCommands = await bot.helpers
     .getGlobalApplicationCommands();
@@ -83,28 +82,10 @@ async function handleGuildScopedCommands(bot: CustomBot) {
   bot.logger.info("Successfully upserted guild scoped commands to the API");
 }
 
-async function handleSupportGuildScopedCommands(bot: CustomBot) {
-  const supportGuildScopedCommands = bot.commands.filter((command) =>
-    command.scope === CommandScope.SUPPORT
-  );
-
-  await bot.helpers.upsertGuildApplicationCommands(
-    bot.config.supportGuildId,
-    supportGuildScopedCommands.map((command) =>
-      command.discordApplicationCommand
-    ),
-  );
-
-  bot.logger.info(
-    "Successfully upserted support guild scoped commands to the API",
-  );
-}
-
 async function handleGlobalScopedCommands(bot: CustomBot) {
   const globalScopedCommands = bot.commands.filter((command) =>
     command.scope === CommandScope.GLOBAL
   );
-
   const discordAppCommands = globalScopedCommands.map((command) =>
     command.discordApplicationCommand
   );
