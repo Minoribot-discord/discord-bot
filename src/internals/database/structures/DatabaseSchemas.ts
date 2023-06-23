@@ -1,17 +1,17 @@
 import { ObjectId } from "deps";
 
-interface BaseSchema {
+interface BaseDocument {
   _id?: ObjectId;
 }
 
-interface GuildConfigSchema extends BaseSchema {
+interface GuildConfigSchema extends BaseDocument {
   guildId: string;
   locale?: string;
 }
 
-interface UserConfigSchema extends BaseSchema {
+interface UserConfigSchema extends BaseDocument {
   userId: string;
   locale?: string;
 }
 
-export type { BaseSchema, GuildConfigSchema, UserConfigSchema };
+export type { BaseDocument, GuildConfigSchema, UserConfigSchema };

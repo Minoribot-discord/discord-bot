@@ -8,14 +8,6 @@ import {
 } from "internals";
 
 async function start() {
-  if (customBot.config.devMode) {
-    customBot.logger.warning(
-      "Dev mode enabled! Procede with caution, and except some changes in behaviour.",
-    );
-  }
-
-  await customBot.db.init();
-
   // load all the inhibitors
   // they're basically filters/conditions for commands
   await loadInhibitors(customBot);

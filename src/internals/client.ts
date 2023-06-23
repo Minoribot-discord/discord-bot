@@ -8,7 +8,7 @@ import {
   enableValidationsPlugin,
 } from "deps";
 import { botConfig } from "config";
-import { CustomBot, dbHandler, i18nHandler, logger } from "internals";
+import { CustomBot, i18nHandler, logger } from "internals";
 const { discordToken, intents } = botConfig;
 
 const baseBot = createBot({ token: discordToken, intents });
@@ -24,7 +24,6 @@ const botWithValidationsPlugin = enableValidationsPlugin(
 const customBot = botWithValidationsPlugin as CustomBot;
 customBot.config = botConfig;
 customBot.logger = logger;
-customBot.db = dbHandler;
 customBot.i18n = i18nHandler;
 customBot.modules = new Collection();
 customBot.commands = new Collection();

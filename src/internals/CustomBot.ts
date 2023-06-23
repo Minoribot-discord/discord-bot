@@ -8,13 +8,12 @@ import {
   SubCommand,
   SubCommandGroup,
 } from "structures";
-import { BotConfig, DatabaseHandler, I18nHandler, logger } from "internals";
+import { BotConfig, I18nHandler, logger } from "internals";
 
 // custom type for the bot so we can add custom properties
 type CustomBot = BotWithHelpersPlugin<BotWithCache> & {
   config: BotConfig;
   logger: typeof logger;
-  db: DatabaseHandler;
   i18n: I18nHandler;
   modules: Collection<string, Module>;
   commands: Collection<string, Command>;
