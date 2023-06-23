@@ -1,6 +1,8 @@
 import { Context } from "internals";
 
-type InhibitorExecuteFunc = (context: Context) => boolean | Promise<boolean>;
+type InhibitorExecuteFunc = (
+  context: Context,
+) => boolean | Promise<boolean>;
 
 interface InhibitorParams {
   name: string;
@@ -17,9 +19,10 @@ class Inhibitor {
     const { name, execute } = params;
 
     this.name = name;
-    this.execute = execute.bind(this) || ((_context: Context) => {
-      return false;
-    });
+    this.execute = execute.bind(this) ||
+      ((_context: Context) => {
+        return false;
+      });
   }
 
   errorMessage() {

@@ -1,5 +1,5 @@
 import { MongoClient } from "deps";
-import { CustomBot } from "internals";
+import { customBot } from "internals";
 import { ConfigDb } from "./databases/databases_mod.ts";
 // import type { CustomBot } from "internals";
 
@@ -14,11 +14,11 @@ class DatabaseHandler {
   mongo = new MongoClient();
   configDb!: ConfigDb;
 
-  constructor(public bot: CustomBot) {}
+  constructor() {}
 
   async init() {
-    this.bot.logger.info("Initializing database");
-    const { mongo: { url } } = this.bot.config;
+    customBot.logger.info("Initializing database");
+    const { mongo: { url } } = customBot.config;
 
     // this.mongo = new MongoClient({
     //   endpoint: `https://data.mongodb-api.com/app/${appId}/endpoint/data/v1`,
@@ -31,9 +31,10 @@ class DatabaseHandler {
 
     this.configDb = new ConfigDb(this);
 
-    this.bot.logger.info("Database initialized");
+    customBot.logger.info("Database initialized");
     this.resolveReady();
   }
 }
+export const databaseHandler = new DatabaseHandler();
 
 export { DatabaseHandler, devModePrefix };

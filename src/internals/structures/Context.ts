@@ -3,10 +3,12 @@ import {
   InteractionCallbackData,
   InteractionResponse,
   InteractionResponseTypes,
+  InteractionTypes,
   Message,
 } from "deps";
 import {
   CustomBot,
+  customBot,
   DatabaseHandler,
   getArgsLocaleKey,
   Locale,
@@ -14,10 +16,6 @@ import {
 } from "internals";
 import { getOrFetchGuild, getOrFetchMember, getOrFetchUser } from "utils";
 
-interface ContextParams {
-  bot: CustomBot;
-  interaction: Interaction;
-}
 class Context {
   bot: CustomBot;
   interaction: Interaction;
@@ -31,12 +29,10 @@ class Context {
   deferred = false;
   replied = false;
 
-  constructor(params: ContextParams) {
-    const { bot, interaction } = params;
-
-    this.bot = bot;
+  constructor(interaction: Interaction) {
+    this.bot = customBot;
     this.interaction = interaction;
-    this.db = bot.db;
+    this.db = customBot.db;
 
     this.authorId = interaction.user.id;
     this.guildId = interaction.guildId;
@@ -104,18 +100,22 @@ class Context {
   }
 
   async #replyOriginal(data: InteractionCallbackData) {
+    let message: Message | undefined;
+
     if (!this.deferred) {
       await this.sendInteractionResponse(
         { type: InteractionResponseTypes.ChannelMessageWithSource, data },
       );
     } else {
-      return await this.bot.helpers.editOriginalInteractionResponse(
+      message = await this.bot.helpers.editOriginalInteractionResponse(
         this.interaction.token,
         data,
       );
     }
 
     this.replied = true;
+
+    return message;
   }
 
   #replyFollowup(data: InteractionCallbackData) {

@@ -1,4 +1,4 @@
-import { CustomBot, DatabaseHandler, devModePrefix } from "internals";
+import { customBot, DatabaseHandler, devModePrefix } from "internals";
 
 interface BaseDatabaseWrapperParams {
   dbHandler: DatabaseHandler;
@@ -7,15 +7,12 @@ interface BaseDatabaseWrapperParams {
 class BaseDatabaseWrapper {
   dbHandler: DatabaseHandler;
   name: string;
-  bot: CustomBot;
 
   constructor(params: BaseDatabaseWrapperParams) {
     const { dbHandler, name } = params;
-    const bot = dbHandler.bot;
 
     this.dbHandler = dbHandler;
-    this.name = bot.config.devMode ? `${devModePrefix}${name}` : name;
-    this.bot = bot;
+    this.name = customBot.config.devMode ? `${devModePrefix}${name}` : name;
   }
 }
 

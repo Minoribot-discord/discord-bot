@@ -51,7 +51,7 @@ async function handleApplicationCommand(
     );
   }
 
-  const context = new Context({ bot, interaction });
+  const context = new Context(interaction);
 
   const invalidInhibitors = await checkInhibitors(
     commandsToExecute,

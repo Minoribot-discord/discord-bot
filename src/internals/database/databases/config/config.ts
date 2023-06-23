@@ -10,7 +10,6 @@ class ConfigDb extends BaseMongoDatabaseWrapper {
     super({ dbHandler, name: "config" });
 
     const collParams = {
-      bot: this.bot,
       database: this.database,
     };
 

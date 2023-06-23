@@ -12,7 +12,9 @@ enum CommandScope {
   GUILD,
 }
 
-type CommandExecuteFunc = (ctx: Context) => void | Promise<void>;
+type CommandExecuteFunc = (
+  ctx: Context,
+) => void | Promise<void>;
 
 interface BaseCommandParams {
   name: string;
