@@ -7,14 +7,14 @@
     "plugins/": "./src/plugins/",
     "config": "./src/internals/config.ts",
     "bot": "./src/internals/client.ts",
-    "internals": "./src/internals/internals_mod.ts",
+    "internals": "./src/internals/mod.ts",
     "internals/": "./src/internals/",
-    "utils": "./src/internals/utils/utils_mod.ts",
-    "structures": "./src/internals/structures/structures_mod.ts",
-    "db_structures": "./src/internals/database/structures/db_structures_mod.ts",
-    "db_schemas": "./src/internals/database/structures/DatabaseSchemas.ts",
-    "database": "./src/internals/database/database_mod.ts",
+    "utils": "./src/internals/utils/mod.ts",
+    "structures": "./src/internals/structures/mod.ts",
+    "db_structures": "./src/internals/database/structures/mod.ts",
+    "db_schemas": "./src/internals/database/structures/databaseSchemas.ts",
+    "database": "./src/internals/database/mod.ts",
     "database/": "./src/internals/database/",
-    "i18n": "./src/internals/i18n/i18n_mod.ts"
+    "i18n": "./src/internals/i18n/mod.ts"
   }
 }
