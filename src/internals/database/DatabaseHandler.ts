@@ -35,6 +35,6 @@ class DatabaseHandler {
     this.resolveReady();
   }
 }
-export const databaseHandler = new DatabaseHandler();
+export const dbHandler = new DatabaseHandler();
 
 export { DatabaseHandler, devModePrefix };

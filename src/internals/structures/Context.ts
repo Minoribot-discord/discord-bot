@@ -17,9 +17,7 @@ import {
 import { getOrFetchGuild, getOrFetchMember, getOrFetchUser } from "utils";
 
 class Context {
-  bot: CustomBot;
   interaction: Interaction;
-  db: DatabaseHandler;
 
   i18n: I18nContextHandler;
 
@@ -30,9 +28,7 @@ class Context {
   replied = false;
 
   constructor(interaction: Interaction) {
-    this.bot = customBot;
     this.interaction = interaction;
-    this.db = customBot.db;
 
     this.authorId = interaction.user.id;
     this.guildId = interaction.guildId;
@@ -41,7 +37,7 @@ class Context {
   }
 
   sendInteractionResponse(options: InteractionResponse) {
-    return this.bot.helpers.sendInteractionResponse(
+    return customBot.helpers.sendInteractionResponse(
       this.interaction.id,
       this.interaction.token,
       options,
@@ -67,9 +63,10 @@ class Context {
     } else {
       responseMessage = await this.#replyOriginal(data);
       if (wait) {
-        responseMessage = await this.bot.helpers.getOriginalInteractionResponse(
-          this.interaction.token,
-        );
+        responseMessage = await customBot.helpers
+          .getOriginalInteractionResponse(
+            this.interaction.token,
+          );
       }
     }
 
@@ -77,7 +74,7 @@ class Context {
   }
 
   get author() {
-    return getOrFetchUser(this.bot, this.interaction.user.id);
+    return getOrFetchUser(customBot, this.interaction.user.id);
   }
 
   get authorMember() {
@@ -86,7 +83,7 @@ class Context {
         "Cannot get the author of the interaction as a member, no guild id was found.",
       );
     }
-    return getOrFetchMember(this.bot, this.guildId, this.authorId);
+    return getOrFetchMember(customBot, this.guildId, this.authorId);
   }
 
   get guild() {
@@ -96,7 +93,7 @@ class Context {
       );
     }
 
-    return getOrFetchGuild(this.bot, this.guildId);
+    return getOrFetchGuild(customBot, this.guildId);
   }
 
   async #replyOriginal(data: InteractionCallbackData) {
@@ -107,7 +104,7 @@ class Context {
         { type: InteractionResponseTypes.ChannelMessageWithSource, data },
       );
     } else {
-      message = await this.bot.helpers.editOriginalInteractionResponse(
+      message = await customBot.helpers.editOriginalInteractionResponse(
         this.interaction.token,
         data,
       );
@@ -119,7 +116,7 @@ class Context {
   }
 
   #replyFollowup(data: InteractionCallbackData) {
-    return this.bot.helpers.sendFollowupMessage(
+    return customBot.helpers.sendFollowupMessage(
       this.interaction.token,
       // @ts-ignore: "type" property not needed
       {
@@ -133,16 +130,14 @@ interface I18nContextHandlerParams {
   parent: Context;
 }
 class I18nContextHandler {
-  bot: CustomBot;
   parent: Context;
   locale: Locale;
 
   constructor(params: I18nContextHandlerParams) {
     const { parent } = params;
 
-    this.bot = parent.bot;
     this.parent = parent;
-    this.locale = parent.bot.locales.get("cat-central") || (() => {
+    this.locale = customBot.locales.get("cat-central") || (() => {
       throw new Error("Cannot find locale cat-central");
     })();
   }
@@ -151,7 +146,7 @@ class I18nContextHandler {
     key: K,
     params?: getArgsLocaleKey<K>,
   ) {
-    return this.bot.i18n.translate<K>(this.locale, key, params);
+    return customBot.i18n.translate<K>(this.locale, key, params);
   }
 }
 
