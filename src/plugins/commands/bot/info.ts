@@ -1,9 +1,12 @@
 import { Command, CommandExecuteFunc, CommandScope } from "structures";
 import { Embed } from "deps";
 
-const execute: CommandExecuteFunc = async (context) => {
+const execute: CommandExecuteFunc = async (
+  context,
+  i18n,
+) => {
   const infoEmbed: Embed = {
-    title: context.i18n.translate("COMMAND.APP.INFO.INFOEMBED.TITLE"),
+    title: i18n.translate("COMMAND.APP.INFO.INFOEMBED.TITLE"),
   };
   await context.reply({ embeds: [infoEmbed] });
 };

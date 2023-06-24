@@ -12,6 +12,5 @@ if (customBot.config.devMode) {
   );
 }
 
-// i really want this import to be executed AFTER the previous stuff
-const str = "start";
-await (await import(`./${str}.ts`)).start();
+// i really want this to be imported AFTER the previous lines
+await (await import(`./start.ts`)).start();
