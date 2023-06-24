@@ -8,6 +8,8 @@ async function loadInhibitors(bot: CustomBot) {
 
   bot.inhibitors.clear();
 
+  await fs.ensureDir(`./src/${pathToInhibitorDirectory}`);
+
   for await (const walkEntry of fs.walk(`./src/${pathToInhibitorDirectory}`)) {
     if (walkEntry.isFile) {
       const { default: inhibitor } = await import(
