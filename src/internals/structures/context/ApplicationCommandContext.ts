@@ -13,7 +13,7 @@ import {
   getOrFetchUser,
 } from "internals";
 
-class ApplicationCommandContext implements Context {
+class ApplicationCommandContext {
   interaction: Interaction;
 
   authorId: bigint;

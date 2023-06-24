@@ -1,8 +1,5 @@
-import { Message } from "deps";
+import { ApplicationCommandContext } from "./ApplicationCommandContext.ts";
 
-interface Context {
-  // deno-lint-ignore no-explicit-any
-  reply: (...args: any[]) => Promise<Message | undefined>;
-}
+type Context = ApplicationCommandContext;
 
 export type { Context };
