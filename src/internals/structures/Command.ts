@@ -5,15 +5,16 @@ import {
   CreateApplicationCommand,
   PermissionStrings,
 } from "deps";
-import { Context, Inhibitor } from "internals";
+import { Context, I18nContext, Inhibitor } from "structures";
 
 enum CommandScope {
   GLOBAL,
   GUILD,
 }
 
-type CommandExecuteFunc = (
-  ctx: Context,
+type CommandExecuteFunc = <T extends Context = Context>(
+  ctx: T,
+  i18n: I18nContext,
 ) => void | Promise<void>;
 
 interface BaseCommandParams {

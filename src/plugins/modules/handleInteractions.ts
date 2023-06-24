@@ -1,4 +1,11 @@
-import { BaseCommand, Context, Inhibitor, Module } from "structures";
+import {
+  ApplicationCommandContext,
+  BaseCommand,
+  Context,
+  I18nContext,
+  Inhibitor,
+  Module,
+} from "structures";
 import {
   ApplicationCommandOptionTypes,
   Interaction,
@@ -51,7 +58,8 @@ async function handleApplicationCommand(
     );
   }
 
-  const context = new Context(interaction);
+  const context = new ApplicationCommandContext(interaction);
+  const i18nContext = new I18nContext(interaction);
 
   const invalidInhibitors = await checkInhibitors(
     commandsToExecute,
@@ -70,7 +78,7 @@ async function handleApplicationCommand(
   }
 
   for (const command of commandsToExecute) {
-    await command.execute?.(context);
+    await command.execute<ApplicationCommandContext>?.(context, i18nContext);
   }
 }
 

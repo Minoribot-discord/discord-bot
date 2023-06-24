@@ -3,23 +3,18 @@ import {
   InteractionCallbackData,
   InteractionResponse,
   InteractionResponseTypes,
-  InteractionTypes,
   Message,
 } from "deps";
 import {
-  CustomBot,
+  Context,
   customBot,
-  DatabaseHandler,
-  getArgsLocaleKey,
-  Locale,
-  LocaleKeys,
+  getOrFetchGuild,
+  getOrFetchMember,
+  getOrFetchUser,
 } from "internals";
-import { getOrFetchGuild, getOrFetchMember, getOrFetchUser } from "utils";
 
-class Context {
+class ApplicationCommandContext implements Context {
   interaction: Interaction;
-
-  i18n: I18nContextHandler;
 
   authorId: bigint;
   guildId: bigint | undefined;
@@ -32,8 +27,6 @@ class Context {
 
     this.authorId = interaction.user.id;
     this.guildId = interaction.guildId;
-
-    this.i18n = new I18nContextHandler({ parent: this });
   }
 
   sendInteractionResponse(options: InteractionResponse) {
@@ -126,28 +119,4 @@ class Context {
   }
 }
 
-interface I18nContextHandlerParams {
-  parent: Context;
-}
-class I18nContextHandler {
-  parent: Context;
-  locale: Locale;
-
-  constructor(params: I18nContextHandlerParams) {
-    const { parent } = params;
-
-    this.parent = parent;
-    this.locale = customBot.locales.get("cat-central") || (() => {
-      throw new Error("Cannot find locale cat-central");
-    })();
-  }
-
-  translate<K extends LocaleKeys>(
-    key: K,
-    params?: getArgsLocaleKey<K>,
-  ) {
-    return customBot.i18n.translate<K>(this.locale, key, params);
-  }
-}
-
-export { Context, I18nContextHandler };
+export { ApplicationCommandContext };
