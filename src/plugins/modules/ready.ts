@@ -1,6 +1,6 @@
-import { Module } from "structures";
+import { createModule } from "internals/loadStuff.ts";
 
-export default new Module({
+createModule({
   name: "ready",
   priority: 999,
   init: (bot) => {

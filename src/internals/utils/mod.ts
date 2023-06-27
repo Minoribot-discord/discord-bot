@@ -1,5 +1,3 @@
-export * from "./fetch.ts";
-
 const devModePrefix = "DEV_";
 
 const databaseAddDevModePrefix = (devMode: boolean, name: string) => {
@@ -30,3 +28,4 @@ const formatDatePart = (date: Date): string => {
 };
 
 export { databaseAddDevModePrefix, formatDatePart, formatTime, formatTimePart };
+export * from "./fetch.ts";

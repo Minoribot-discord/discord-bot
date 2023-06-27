@@ -50,7 +50,13 @@ class BaseCommand {
   }
 }
 
+const defaultCategoryName = "misc";
+
 interface CommandParams extends BaseCommandParams {
+  /**
+   * By default the category is "misc"
+   */
+  category?: string;
   scope: CommandScope;
   type?: ApplicationCommandTypes;
   guildIds?: bigint[];
@@ -60,8 +66,10 @@ interface CommandParams extends BaseCommandParams {
 }
 
 class Command extends BaseCommand {
-  filePath = "";
-  category = "";
+  /**
+   * By default the category is "misc"
+   */
+  category = defaultCategoryName;
   type: ApplicationCommandTypes = ApplicationCommandTypes.ChatInput;
   scope: CommandScope;
   subCommands: (SubCommand | SubCommandGroup)[] = [];
@@ -76,6 +84,7 @@ class Command extends BaseCommand {
     const {
       scope,
       type,
+      category,
       guildIds,
       subCommands,
       dmPermission,
@@ -83,14 +92,13 @@ class Command extends BaseCommand {
     } = params;
     this.scope = scope;
     if (type) this.type = type;
+    if (category) this.category = category;
     if (guildIds) this.guildIds = guildIds;
     if (subCommands) this.subCommands = subCommands;
     if (dmPermission) this.dmPermission = dmPermission;
     if (defaultMemberPermissions) {
       this.defaultMemberPermissions = defaultMemberPermissions;
     }
-
-    convertSubCommandsIntoOptions(this, this.subCommands);
   }
 
   get discordApplicationCommand(): CreateApplicationCommand {
@@ -103,20 +111,6 @@ class Command extends BaseCommand {
       defaultMemberPermissions: this.defaultMemberPermissions,
     };
   }
-}
-
-function convertSubCommandsIntoOptions(
-  parent: Command | SubCommandGroup,
-  subCommands: (SubCommand | SubCommandGroup)[],
-) {
-  parent.options = [
-    ...parent.options,
-    ...subCommands.map((subCommand) => {
-      subCommand.parent = parent;
-
-      return subCommand.discordOption;
-    }),
-  ];
 }
 
 // deno-lint-ignore no-empty-interface
@@ -151,10 +145,13 @@ class SubCommandGroup extends SubCommand {
     super(params);
 
     this.subCommands = params.subCommands;
-
-    convertSubCommandsIntoOptions(this, this.subCommands);
   }
 }
 
 export { BaseCommand, Command, CommandScope, SubCommand, SubCommandGroup };
-export type { CommandExecuteFunc };
+export type {
+  CommandExecuteFunc,
+  CommandParams,
+  SubCommandGroupParams,
+  SubCommandParams,
+};

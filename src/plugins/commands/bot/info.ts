@@ -1,5 +1,6 @@
-import { Command, CommandExecuteFunc, CommandScope } from "structures";
+import { CommandExecuteFunc, CommandScope } from "structures";
 import { Embed } from "deps";
+import { createCommand } from "internals/loadStuff.ts";
 
 const execute: CommandExecuteFunc = async (
   context,
@@ -11,8 +12,9 @@ const execute: CommandExecuteFunc = async (
   await context.reply({ embeds: [infoEmbed] });
 };
 
-export default new Command({
+createCommand({
   name: "info",
+  category: "bot",
   description: "Show some info about the bot",
   scope: CommandScope.GLOBAL,
   defaultMemberPermissions: ["ADMINISTRATOR"],

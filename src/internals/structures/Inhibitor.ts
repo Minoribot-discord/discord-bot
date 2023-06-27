@@ -31,3 +31,4 @@ class Inhibitor {
 }
 
 export { Inhibitor };
+export type { InhibitorParams };

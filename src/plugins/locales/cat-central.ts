@@ -1,3 +1,5 @@
+import { loadLocale } from "internals/loadStuff.ts";
+
 const cat_central = {
   code: "cat-central",
   name: "Català central estàndard",
@@ -6,5 +8,7 @@ const cat_central = {
       "Vet aquí informacions sobre el bot Discord:",
   },
 };
+
+loadLocale(cat_central);
 
 export default cat_central;

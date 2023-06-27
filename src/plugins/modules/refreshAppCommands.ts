@@ -1,10 +1,11 @@
 import { Collection } from "deps";
-import { Command, CommandScope, Module } from "structures";
-import { CustomBot } from "internals";
+import { Command, CommandScope } from "structures";
+import { createModule } from "internals/loadStuff.ts";
+import { CustomBot } from "internals/CustomBot.ts";
 
 let refreshedAlready = false;
 
-export default new Module({
+createModule({
   name: "refreshApplicationCommands",
   priority: 0,
   init: (bot: CustomBot) => {

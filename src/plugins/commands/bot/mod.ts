@@ -1,3 +1,3 @@
-import { CommandCategory } from "structures";
+import { createCommandCategory } from "internals/loadStuff.ts";
 
-export default new CommandCategory({ name: "bot" });
+createCommandCategory({ name: "bot" });

@@ -4,7 +4,6 @@ import {
   Context,
   I18nContext,
   Inhibitor,
-  Module,
 } from "structures";
 import {
   ApplicationCommandOptionTypes,
@@ -12,9 +11,10 @@ import {
   InteractionDataOption,
   InteractionTypes,
 } from "deps";
-import { CustomBot } from "internals";
+import { createModule } from "internals/loadStuff.ts";
+import { CustomBot } from "internals/CustomBot.ts";
 
-export default new Module({
+createModule({
   name: "handleInteractions",
 
   init: (bot) => {

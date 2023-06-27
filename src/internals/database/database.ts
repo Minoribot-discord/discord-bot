@@ -1,14 +1,9 @@
 import { MongoClient } from "deps";
-import { customBot } from "bot";
-
-const logger = customBot.logger;
-const config = customBot.config;
-
-logger.info("Initializing database");
+import { logger } from "internals/logger.ts";
+import { botConfig } from "config";
 const mongoClient = new MongoClient();
 
-await mongoClient.connect(config.mongo.url);
-
-logger.info("Database initialized");
+await mongoClient.connect(botConfig.mongo.url);
+logger.info("Mongo client connected");
 
 export { mongoClient };

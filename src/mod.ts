@@ -1,13 +1,12 @@
 import { botConfig } from "config";
+import { logger } from "internals/logger.ts";
 import { readStartupCommandLineArgs } from "internals/cli.ts";
-import { customBot } from "bot";
-botConfig;
-customBot;
+
 // read the args passed to the script at startup and handle them
 readStartupCommandLineArgs();
 
-if (customBot.config.devMode) {
-  customBot.logger.warning(
+if (botConfig.devMode) {
+  logger.warning(
     "Dev mode enabled! Procede with caution, and except some changes in behaviour.",
   );
 }

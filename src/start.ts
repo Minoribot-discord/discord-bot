@@ -1,27 +1,23 @@
 import { startBot } from "deps";
-import {
-  customBot,
-  loadCommands,
-  loadInhibitors,
-  loadLocales,
-  loadModules,
-} from "internals";
+import { customBot } from "bot";
+import { initializeModules, loadFolders } from "internals/loadStuff.ts";
+import { mongoClient } from "database";
 
 async function start() {
-  // load all the inhibitors
-  // they're basically filters/conditions for commands
-  await loadInhibitors(customBot);
+  // forces the database to load and initialize
+  mongoClient;
 
-  // load all the locales, basically the languages
-  await loadLocales(customBot);
-
-  customBot.i18n.init();
-
-  // load all the commands
-  await loadCommands(customBot);
-
-  // load all the events etc...
-  await loadModules(customBot);
+  await loadFolders(
+    [
+      { name: "inhibitors" },
+      {
+        name: "locales",
+        afterFunc: customBot.i18n.init,
+      },
+      { name: "commands" },
+      { name: "modules", afterFunc: initializeModules },
+    ],
+  );
 
   // start the bot
   customBot.logger.info("Starting connection to the Discord API & gateway");
