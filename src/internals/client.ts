@@ -1,5 +1,4 @@
 import {
-  Collection,
   createBot,
   enableCachePlugin,
   enableCacheSweepers,
@@ -9,6 +8,14 @@ import {
 } from "deps";
 import { botConfig } from "config";
 import { CustomBot, i18nHandler, logger } from "internals";
+import {
+  commandCategories,
+  commands,
+  inhibitors,
+  locales,
+  modules,
+  subCommands,
+} from "internals/loadStuff.ts";
 const { discordToken, intents } = botConfig;
 
 const baseBot = createBot({ token: discordToken, intents });
@@ -25,11 +32,11 @@ const customBot = botWithValidationsPlugin as CustomBot;
 customBot.config = botConfig;
 customBot.logger = logger;
 customBot.i18n = i18nHandler;
-customBot.modules = new Collection();
-customBot.commands = new Collection();
-customBot.subCommands = new Collection();
-customBot.cmdCategories = new Collection();
-customBot.locales = new Collection();
-customBot.inhibitors = new Collection();
+customBot.modules = modules;
+customBot.commands = commands;
+customBot.subCommands = subCommands;
+customBot.cmdCategories = commandCategories;
+customBot.locales = locales;
+customBot.inhibitors = inhibitors;
 
 export { customBot };

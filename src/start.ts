@@ -8,6 +8,7 @@ async function start() {
   mongoClient;
 
   await loadFolders(
+    customBot,
     [
       { name: "inhibitors" },
       {

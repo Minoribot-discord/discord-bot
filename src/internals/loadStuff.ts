@@ -1,6 +1,6 @@
-import { fs } from "deps";
-import { customBot } from "bot";
+import { Collection, fs } from "deps";
 import { CustomBot } from "internals/CustomBot.ts";
+import { logger } from "internals/logger.ts";
 import {
   BaseCommand,
   Command,
@@ -19,12 +19,12 @@ import {
   SubCommandParams,
 } from "structures";
 
-const inhibitors = customBot.inhibitors;
-const locales = customBot.locales;
-const modules = customBot.modules;
-const commandCategories = customBot.cmdCategories;
-const commands = customBot.commands;
-const subCommands = customBot.subCommands;
+const inhibitors = new Collection<string, Inhibitor>();
+const locales = new Collection<string, Locale>();
+const modules = new Collection<string, Module>();
+const commandCategories = new Collection<string, CommandCategory>();
+const commands = new Collection<string, Command>();
+const subCommands = new Collection<string, (SubCommandGroup | SubCommand)>();
 
 const pluginFolder = "plugins";
 
@@ -33,6 +33,7 @@ type AfterFunc =
   | ((bot: CustomBot) => void | Promise<void>);
 
 async function loadFolders(
+  bot: CustomBot,
   subFolders: Array<{ name: string; afterFunc?: AfterFunc }>,
 ) {
   for (const subFolder of subFolders) {
@@ -46,7 +47,7 @@ async function loadFolders(
       }
     }
 
-    await subFolder.afterFunc?.(customBot);
+    await subFolder.afterFunc?.(bot);
   }
 }
 
@@ -75,13 +76,13 @@ function createModule(params: ModuleParams): Module {
   return module;
 }
 
-async function initializeModules() {
+async function initializeModules(bot: CustomBot) {
   const modulesArray = Array.from(modules.values());
   const sortedModules = modulesArray.sort((a, b) => a.priority - b.priority);
 
   for (const module of sortedModules) {
-    await module.init(customBot);
-    customBot.logger.info(`Module ${module.name} initialized`);
+    await module.init(bot);
+    bot.logger.info(`Module ${module.name} initialized`);
   }
 }
 
@@ -119,7 +120,7 @@ function checkAndAddInhibitorsToCommand(baseCommand: BaseCommand) {
   if (nonExistentInhibitors.length > 0) {
     const errorString =
       `Cannot continue, incorrect or missing inhibitors detected for the command/subcommand/subcommand group ${baseCommand.name}`;
-    customBot.logger.error(
+    logger.error(
       `${errorString}:\n${nonExistentInhibitors.join(" - ")}`,
     );
     throw new Error(errorString);
@@ -224,13 +225,19 @@ function createSubCommand(
 }
 
 export {
+  commandCategories,
+  commands,
   createCommand,
   createCommandCategory,
   createInhibitor,
   createModule,
   createSubCommand,
   createSubCommandGroup,
+  inhibitors,
   initializeModules,
   loadFolders,
   loadLocale,
+  locales,
+  modules,
+  subCommands,
 };
