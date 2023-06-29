@@ -7,7 +7,7 @@ import {
   enableValidationsPlugin,
 } from "deps";
 import { botConfig } from "config";
-import { collectors, CustomBot, i18nHandler, logger } from "internals";
+import { collectors, CustomBot, I18nHandler, logger } from "internals";
 import {
   commandCategories,
   commands,
@@ -31,7 +31,7 @@ const botWithValidationsPlugin = enableValidationsPlugin(
 const customBot = botWithValidationsPlugin as CustomBot;
 customBot.config = botConfig;
 customBot.logger = logger;
-customBot.i18n = i18nHandler;
+customBot.i18n = new I18nHandler(customBot);
 customBot.collectors = collectors;
 customBot.modules = modules;
 customBot.commands = commands;
