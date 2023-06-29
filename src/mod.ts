@@ -1,6 +1,7 @@
 import { botConfig } from "config";
 import { logger } from "internals/logger.ts";
 import { readStartupCommandLineArgs } from "internals/cli.ts";
+import { start } from "./start.ts";
 
 // read the args passed to the script at startup and handle them
 readStartupCommandLineArgs();
@@ -11,5 +12,4 @@ if (botConfig.devMode) {
   );
 }
 
-// i really want this to be imported AFTER the previous lines
-await (await import(`./start.ts`)).start();
+await start();

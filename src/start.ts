@@ -12,7 +12,7 @@ async function start() {
       { name: "inhibitors" },
       {
         name: "locales",
-        afterFunc: customBot.i18n.init,
+        afterFunc: customBot.i18n.init.bind(customBot.i18n),
       },
       { name: "commands" },
       { name: "modules", afterFunc: initializeModules },
