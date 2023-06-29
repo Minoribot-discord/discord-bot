@@ -2,7 +2,6 @@
 
 import { Emoji, Interaction, Message } from "deps";
 import { CustomBot } from "internals/CustomBot.ts";
-import { LocaleKeys } from "structures";
 
 export interface AmethystReaction {
   /** The emoji name */
@@ -36,12 +35,28 @@ export interface CollectMessagesOptions extends BaseCollectorCreateOptions {
   channelId: bigint;
   /** Function that will filter messages to determine whether to collect this message */
   filter: (bot: CustomBot, message: Message) => boolean;
+  collect?: (
+    bot: CustomBot,
+    message: Message,
+  ) => void | Promise<void>;
+  filterReject?: (
+    bot: CustomBot,
+    message: Message,
+  ) => void | Promise<void>;
 }
 
 export interface CollectComponentsOptions
   extends Omit<BaseCollectorCreateOptions, "key"> {
   key: bigint;
   filter: (bot: CustomBot, data: Interaction) => boolean;
+  collect?: (
+    bot: CustomBot,
+    data: Interaction,
+  ) => void | Promise<void>;
+  filterReject?: (
+    bot: CustomBot,
+    data: Interaction,
+  ) => void | Promise<void>;
 }
 
 export interface CollectReactionsOptions
@@ -57,6 +72,14 @@ export interface CollectReactionsOptions
       emoji: Emoji;
     },
   ) => boolean;
+  collect?: (
+    bot: CustomBot,
+    reaction: AmethystReaction,
+  ) => void | Promise<void>;
+  filterReject?: (
+    bot: CustomBot,
+    reaction: AmethystReaction,
+  ) => void | Promise<void>;
 }
 // Collector Options
 
@@ -70,6 +93,14 @@ export interface BaseCollectorOptions {
 export interface MessageCollectorOptions extends BaseCollectorOptions {
   /** A function to filter the messages and determine whether to collect or not */
   filter?: (bot: CustomBot, message: Message) => boolean;
+  collect?: (
+    bot: CustomBot,
+    message: Message,
+  ) => void | Promise<void>;
+  filterReject?: (
+    bot: CustomBot,
+    message: Message,
+  ) => void | Promise<void>;
 }
 
 export interface ReactionCollectorOptions extends BaseCollectorOptions {
@@ -84,6 +115,14 @@ export interface ReactionCollectorOptions extends BaseCollectorOptions {
       emoji: Emoji;
     },
   ) => boolean;
+  collect?: (
+    bot: CustomBot,
+    reaction: AmethystReaction,
+  ) => void | Promise<void>;
+  filterReject?: (
+    bot: CustomBot,
+    reaction: AmethystReaction,
+  ) => void | Promise<void>;
 }
 
 export interface ComponentCollectorOptions extends BaseCollectorOptions {
@@ -91,31 +130,50 @@ export interface ComponentCollectorOptions extends BaseCollectorOptions {
   filter?: (bot: CustomBot, data: Interaction) => boolean;
   /** The type of the component to collect */
   type?: "Button" | "SelectMenu" | "TextInput";
+  collect?: (
+    bot: CustomBot,
+    data: Interaction,
+  ) => void | Promise<void>;
+  filterReject?: (
+    bot: CustomBot,
+    data: Interaction,
+  ) => void | Promise<void>;
 }
 
-// Todo: Replace "any" by a translation key, in "reject"
+export type ResolveFunc<R extends unknown> = (
+  value: CollectorResults<R>,
+) => void;
+// deno-lint-ignore no-explicit-any
+export type RejectFunc = (reason?: any) => void;
 
-type RejectFunc = (reason?: LocaleKeys) => void;
+export enum CollectorErrorCodes {
+  COLLECTOR_BEGAN_BEFORE_OLD_ONE,
+  TIMEOUT,
+}
+
+export type CollectorResults<R extends unknown> = {
+  results?: R[];
+  error?: CollectorErrorCodes;
+};
 
 // Collectors
+
 export interface ReactionCollector extends CollectReactionsOptions {
-  resolve: (
-    value: AmethystReaction[] | PromiseLike<AmethystReaction[]>,
-  ) => void;
+  resolve: ResolveFunc<AmethystReaction>;
   reject: RejectFunc;
   /** Where the reactions are stored if the amount to collect is more than 1. */
   reactions: AmethystReaction[];
 }
 
 export interface MessageCollector extends CollectMessagesOptions {
-  resolve: (value: Message[] | PromiseLike<Message[]>) => void;
+  resolve: ResolveFunc<Message>;
   reject: RejectFunc;
   /** Where the messages are stored if the amount to collect is more than 1. */
   messages: Message[];
 }
 
 export interface ComponentCollector extends CollectComponentsOptions {
-  resolve: (value: Interaction[] | PromiseLike<Interaction[]>) => void;
+  resolve: ResolveFunc<Interaction>;
   reject: RejectFunc;
   /** Where the interactions are stored if the amount to collect is more than 1. */
   components: Interaction[];

@@ -1,4 +1,5 @@
 import { Emoji, Interaction, InteractionTypes, Message } from "deps";
+import { AmethystReaction } from "structures";
 import { createModule } from "internals/loadStuff.ts";
 import { CustomBot } from "internals/CustomBot.ts";
 
@@ -84,7 +85,10 @@ function handleMessageCollector(
   // This user has no collectors pending or the message is in a different channel
   if (!collector || message.channelId !== collector.channelId) return;
   // This message is a response to a collector. Now running the filter function.
-  if (!collector.filter(bot, message)) return;
+  if (!collector.filter(bot, message)) {
+    return collector.filterReject?.(bot, message);
+  }
+  collector.collect?.(bot, message);
 
   // If the necessary amount has been collected
   if (
@@ -94,7 +98,7 @@ function handleMessageCollector(
     // Remove the collector
     bot.collectors.messages.delete(`${message.authorId}-${message.channelId}`);
     // Resolve the collector
-    return collector.resolve([...collector.messages, message]);
+    return collector.resolve({ results: [...collector.messages, message] });
   }
 
   // More messages still need to be collected
@@ -113,47 +117,47 @@ function handleReactionCollector(
 ) {
   const collector = bot.collectors.reactions.get(payload.messageId);
   if (!collector || !payload.emoji.name || !payload.emoji.id) return;
-  if (!collector.filter(bot, payload)) return;
-
-  if (
-    collector.maxUsage === 1 ||
-    collector.maxUsage === collector.reactions.length + 1
-  ) {
-    bot.collectors.reactions.delete(collector.key);
-    return collector.resolve([
-      ...collector.reactions,
-      {
-        name: payload.emoji.name,
-        id: payload.emoji.id,
-        userId: payload.userId,
-        channelId: payload.channelId,
-        messageId: payload.messageId,
-        guildId: payload.guildId,
-      },
-    ]);
-  }
-
-  collector.reactions.push({
+  const reaction: AmethystReaction = {
     userId: payload.userId,
     channelId: payload.channelId,
     messageId: payload.messageId,
     guildId: payload.guildId,
     name: payload.emoji.name,
     id: payload.emoji.id,
-  });
+  };
+  if (!collector.filter(bot, payload)) {
+    return collector.filterReject?.(bot, reaction);
+  }
+  collector.collect?.(bot, reaction);
+
+  if (
+    collector.maxUsage === 1 ||
+    collector.maxUsage === collector.reactions.length + 1
+  ) {
+    bot.collectors.reactions.delete(collector.key);
+    return collector.resolve({
+      results: [
+        ...collector.reactions,
+        reaction,
+      ],
+    });
+  }
+
+  collector.reactions.push(reaction);
 }
 
 function handleComponentCollector(bot: CustomBot, data: Interaction) {
   const collector = bot.collectors.components.get(data.message?.id || 0n);
   if (!collector) return;
-  if (!collector.filter(bot, data)) return;
+  if (!collector.filter(bot, data)) return collector.filterReject?.(bot, data);
+  collector.collect?.(bot, data);
 
   if (
     collector.maxUsage === 1 ||
     collector.maxUsage === collector.components.length + 1
   ) {
     bot.collectors.components.delete(collector.key);
-    return collector.resolve([...collector.components, data]);
+    return collector.resolve({ results: [...collector.components, data] });
   }
 
   collector.components.push(data);
