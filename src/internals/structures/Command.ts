@@ -60,7 +60,6 @@ interface CommandParams extends BaseCommandParams {
   scope: CommandScope;
   type?: ApplicationCommandTypes;
   guildIds?: bigint[];
-  subCommands?: (SubCommand | SubCommandGroup)[];
   dmPermission?: boolean;
   defaultMemberPermissions?: PermissionStrings[];
 }
@@ -86,7 +85,6 @@ class Command extends BaseCommand {
       type,
       category,
       guildIds,
-      subCommands,
       dmPermission,
       defaultMemberPermissions,
     } = params;
@@ -94,7 +92,6 @@ class Command extends BaseCommand {
     if (type) this.type = type;
     if (category) this.category = category;
     if (guildIds) this.guildIds = guildIds;
-    if (subCommands) this.subCommands = subCommands;
     if (dmPermission) this.dmPermission = dmPermission;
     if (defaultMemberPermissions) {
       this.defaultMemberPermissions = defaultMemberPermissions;
@@ -134,17 +131,14 @@ class SubCommand extends BaseCommand {
   }
 }
 
-interface SubCommandGroupParams extends SubCommandParams {
-  subCommands: SubCommand[];
-}
+// deno-lint-ignore no-empty-interface
+interface SubCommandGroupParams extends SubCommandParams {}
 class SubCommandGroup extends SubCommand {
   type = ApplicationCommandOptionTypes.SubCommandGroup;
   subCommands: SubCommand[] = [];
 
   constructor(params: SubCommandGroupParams) {
     super(params);
-
-    this.subCommands = params.subCommands;
   }
 }
 
