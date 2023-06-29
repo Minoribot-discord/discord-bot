@@ -1,11 +1,10 @@
 import { startBot } from "deps";
 import { customBot } from "bot";
 import { initializeModules, loadFolders } from "internals/loadStuff.ts";
-import { mongoClient } from "database";
+import { initDatabase } from "database";
 
 async function start() {
-  // forces the database to load and initialize
-  mongoClient;
+  customBot.db = await initDatabase(customBot);
 
   await loadFolders(
     customBot,

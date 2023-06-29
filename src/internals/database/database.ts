@@ -1,9 +1,24 @@
 import { MongoClient } from "deps";
-import { logger } from "internals/logger.ts";
-import { botConfig } from "config";
+import { CustomBot } from "internals/CustomBot.ts";
+import { configWrappers } from "database/databases/mod.ts";
+
 const mongoClient = new MongoClient();
 
-await mongoClient.connect(botConfig.mongo.url);
-logger.info("Mongo client connected");
+type DatabaseWrapper =
+  & { mongoClient: MongoClient }
+  & ReturnType<typeof configWrappers>;
 
-export { mongoClient };
+async function initDatabase(bot: CustomBot) {
+  await mongoClient.connect(bot.config.mongo.url);
+  bot.logger.info("Mongo client connected");
+
+  const databaseWrapper: DatabaseWrapper = {
+    mongoClient,
+    ...configWrappers(bot, mongoClient),
+  };
+
+  return databaseWrapper;
+}
+
+export { initDatabase, mongoClient };
+export type { DatabaseWrapper };

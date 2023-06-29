@@ -1,4 +1,4 @@
-import { Command, CustomBot } from "internals";
+import { Command } from "internals";
 
 interface CommandCategoryParams {
   name: string;
