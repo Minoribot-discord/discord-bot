@@ -9,6 +9,7 @@ import {
   SubCommandGroup,
 } from "structures";
 import { BotConfig, I18nHandler, logger } from "internals";
+import { collectors } from "utils";
 import { DatabaseWrapper } from "./database/database.ts";
 
 // custom type for the bot so we can add custom properties
@@ -17,6 +18,7 @@ type CustomBot = BotWithHelpersPlugin<BotWithCache> & {
   logger: typeof logger;
   db: DatabaseWrapper;
   i18n: I18nHandler;
+  collectors: typeof collectors;
   modules: Collection<string, Module>;
   commands: Collection<string, Command>;
   subCommands: Collection<string, (SubCommandGroup | SubCommand)>;
