@@ -1,5 +1,5 @@
 import { botConfig } from "config";
-import { logger } from "internals/logger.ts";
+import { customBot } from "bot";
 import { readStartupCommandLineArgs } from "internals/cli.ts";
 import { start } from "./start.ts";
 
@@ -7,7 +7,7 @@ import { start } from "./start.ts";
 readStartupCommandLineArgs();
 
 if (botConfig.devMode) {
-  logger.warning(
+  customBot.logger.warning(
     "Dev mode enabled! Procede with caution, and except some changes in behaviour.",
   );
 }
