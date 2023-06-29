@@ -8,6 +8,12 @@ const execute: CommandExecuteFunc = async (
 ) => {
   const infoEmbed: Embed = {
     title: i18n.translate("COMMAND.APP.INFO.EMBED.TITLE"),
+    fields: [{
+      name: "Caches",
+      value: `**Users:** ${ctx.bot.users.size}\n` +
+        `**Channels:** ${ctx.bot.channels.size}\n` +
+        `**Guilds:** ${ctx.bot.guilds.size}\n`,
+    }],
   };
   await ctx.reply({ embeds: [infoEmbed] });
 };
