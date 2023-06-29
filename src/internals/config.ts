@@ -20,6 +20,7 @@ let intents: BotConfig["intents"] = 0;
   "GuildMembers",
   "GuildPresences",
   "GuildMessages",
+  "DirectMessages",
   "MessageContent",
 ] as Array<keyof typeof GatewayIntents>) //
   .map((intent) => intents |= GatewayIntents[intent]);
