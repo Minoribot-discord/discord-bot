@@ -25,6 +25,8 @@ export function configWrappers(bot: CustomBot, mongoClient: MongoClient) {
       const guildId_ = reversedTransformers.snowflake(guildId);
       return guildConfigCollection.updateOne({ guildId: guildId_ }, {
         $set: { guildId: guildId_, ...data },
+      }, {
+        upsert: true,
       });
     },
   };
@@ -44,6 +46,8 @@ export function configWrappers(bot: CustomBot, mongoClient: MongoClient) {
       const userId_ = reversedTransformers.snowflake(userId);
       return userConfigCollection.updateOne({ userId: userId_ }, {
         $set: { userId: userId_, ...data },
+      }, {
+        upsert: true,
       });
     },
   };
