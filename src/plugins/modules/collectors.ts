@@ -1,5 +1,5 @@
 import { Emoji, Interaction, InteractionTypes, Message } from "deps";
-import { AmethystReaction } from "structures";
+import { AmethystReaction, CollectorErrorCodes } from "structures";
 import { createModule } from "internals/loadStuff.ts";
 import { CustomBot } from "internals/CustomBot.ts";
 
@@ -47,7 +47,7 @@ function cleanCollectorsTask(bot: CustomBot) {
 
         bot.collectors.components.delete(key);
 
-        collector.reject("COLLECTORS.COMPONENTS.REJECT.TIMEOUT");
+        collector.resolve({ error: CollectorErrorCodes.TIMEOUT });
       }
     })();
     // deno-lint-ignore require-await
@@ -57,7 +57,7 @@ function cleanCollectorsTask(bot: CustomBot) {
 
         bot.collectors.reactions.delete(key);
 
-        collector.reject("COLLECTORS.REACTIONS.REJECT.TIMEOUT");
+        collector.resolve({ error: CollectorErrorCodes.TIMEOUT });
       }
     })();
     // deno-lint-ignore require-await
@@ -67,7 +67,7 @@ function cleanCollectorsTask(bot: CustomBot) {
 
         bot.collectors.messages.delete(key);
 
-        collector.reject("COLLECTORS.MESSAGES.REJECT.TIMEOUT");
+        collector.resolve({ error: CollectorErrorCodes.TIMEOUT });
       }
     })();
   }, (10 * 60) * 1000);
