@@ -1,21 +1,42 @@
 import { Interaction } from "deps";
-import { customBot } from "bot";
 import { getArgsLocaleKey, Locale, LocaleKeys } from "structures";
+import { CustomBot } from "internals/CustomBot.ts";
 
 class I18nContext {
   locale: Locale;
 
-  constructor(public interaction: Interaction) {
-    this.locale = customBot.locales.get("cat-central") || (() => {
-      throw new Error("Cannot find locale cat-central");
-    })();
+  constructor(public bot: CustomBot, public interaction: Interaction) {
+    this.locale = this.bot.i18n.globalDefaultLocale;
+  }
+
+  async initLocale(): Promise<this> {
+    const guildId = this.interaction.guildId;
+    if (guildId) {
+      const guildLocaleCode = (await this.bot.db.guildConfig.getOne(guildId))
+        ?.locale;
+      if (guildLocaleCode) {
+        const guildLocale = this.bot.locales.get(guildLocaleCode);
+
+        if (!guildLocale) {
+          await this.bot.db.guildConfig.setOne(guildId, { locale: undefined });
+        } else {
+          this.locale = guildLocale;
+        }
+      }
+    }
+
+    if (!this.locale) {
+      this.locale = this.bot.i18n.globalDefaultLocale;
+    }
+
+    return this;
   }
 
   translate<K extends LocaleKeys>(
     key: K,
     params?: getArgsLocaleKey<K>,
   ) {
-    return customBot.i18n.translate<K>(this.locale, key, params);
+    return this.bot.i18n.translate<K>(this.locale, key, params);
   }
 }
 

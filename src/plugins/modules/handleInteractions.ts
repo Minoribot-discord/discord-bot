@@ -21,7 +21,7 @@ createModule({
     const { interactionCreate } = bot.events;
 
     bot.events.interactionCreate = async (_bot, interaction) => {
-      await interactionCreate(_bot, interaction);
+      interactionCreate(_bot, interaction);
 
       switch (interaction.type) {
         case InteractionTypes.ApplicationCommand:
@@ -58,8 +58,8 @@ async function handleApplicationCommand(
     );
   }
 
-  const context = new ApplicationCommandContext(interaction);
-  const i18nContext = new I18nContext(interaction);
+  const context = new ApplicationCommandContext(bot, interaction);
+  const i18nContext = await new I18nContext(bot, interaction).initLocale();
 
   const invalidInhibitors = await checkInhibitors(
     commandsToExecute,

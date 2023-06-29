@@ -1,6 +1,6 @@
 import { customBot, getArgsLocaleKey, Locale, LocaleKeys } from "internals";
 
-const defaultLocaleCode = "cat-central";
+const botDefaultLocale = "cat-central";
 
 class I18nHandler {
   globalDefaultLocale!: Locale;
@@ -10,9 +10,9 @@ class I18nHandler {
   init() {
     customBot.logger.info("Initializing i18n handler");
 
-    const globalDefaultLocale = customBot.locales.get(defaultLocaleCode);
+    const globalDefaultLocale = customBot.locales.get(botDefaultLocale);
     if (!globalDefaultLocale) {
-      throw new Error(`Couldn't find default locale: ${defaultLocaleCode}`);
+      throw new Error(`Couldn't find default locale: ${botDefaultLocale}`);
     }
     this.globalDefaultLocale = globalDefaultLocale;
   }
@@ -22,13 +22,13 @@ class I18nHandler {
     key: K,
     params?: getArgsLocaleKey<K>,
   ): string {
-    // deno-lint-ignore no-explicit-any
-    let value: string | ((...any: any[]) => string) | string[] =
-      locale.keys[key];
+    let value = locale
+      // deno-lint-ignore no-explicit-any
+      .keys[key] as string | ((...any: any[]) => string) | string[];
 
     if (!value) {
       // check if the key is available in the default locale
-      if (locale.code !== defaultLocaleCode) {
+      if (locale.code !== botDefaultLocale) {
         value = this.globalDefaultLocale.keys[key];
       }
 
@@ -45,4 +45,4 @@ class I18nHandler {
 }
 export const i18nHandler = new I18nHandler();
 
-export { defaultLocaleCode, I18nHandler };
+export { botDefaultLocale, I18nHandler };

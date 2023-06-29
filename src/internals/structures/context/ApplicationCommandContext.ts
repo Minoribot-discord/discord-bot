@@ -6,31 +6,26 @@ import {
   Message,
 } from "deps";
 import {
-  Context,
-  customBot,
+  CustomBot,
   getOrFetchGuild,
   getOrFetchMember,
   getOrFetchUser,
 } from "internals";
 
 class ApplicationCommandContext {
-  interaction: Interaction;
-
   authorId: bigint;
   guildId: bigint | undefined;
 
   deferred = false;
   replied = false;
 
-  constructor(interaction: Interaction) {
-    this.interaction = interaction;
-
+  constructor(public bot: CustomBot, public interaction: Interaction) {
     this.authorId = interaction.user.id;
     this.guildId = interaction.guildId;
   }
 
   sendInteractionResponse(options: InteractionResponse) {
-    return customBot.helpers.sendInteractionResponse(
+    return this.bot.helpers.sendInteractionResponse(
       this.interaction.id,
       this.interaction.token,
       options,
@@ -56,7 +51,7 @@ class ApplicationCommandContext {
     } else {
       responseMessage = await this.#replyOriginal(data);
       if (wait) {
-        responseMessage = await customBot.helpers
+        responseMessage = await this.bot.helpers
           .getOriginalInteractionResponse(
             this.interaction.token,
           );
@@ -67,7 +62,7 @@ class ApplicationCommandContext {
   }
 
   get author() {
-    return getOrFetchUser(customBot, this.interaction.user.id);
+    return getOrFetchUser(this.bot, this.interaction.user.id);
   }
 
   get authorMember() {
@@ -76,7 +71,7 @@ class ApplicationCommandContext {
         "Cannot get the author of the interaction as a member, no guild id was found.",
       );
     }
-    return getOrFetchMember(customBot, this.guildId, this.authorId);
+    return getOrFetchMember(this.bot, this.guildId, this.authorId);
   }
 
   get guild() {
@@ -86,7 +81,7 @@ class ApplicationCommandContext {
       );
     }
 
-    return getOrFetchGuild(customBot, this.guildId);
+    return getOrFetchGuild(this.bot, this.guildId);
   }
 
   async #replyOriginal(data: InteractionCallbackData) {
@@ -97,7 +92,7 @@ class ApplicationCommandContext {
         { type: InteractionResponseTypes.ChannelMessageWithSource, data },
       );
     } else {
-      message = await customBot.helpers.editOriginalInteractionResponse(
+      message = await this.bot.helpers.editOriginalInteractionResponse(
         this.interaction.token,
         data,
       );
@@ -109,7 +104,7 @@ class ApplicationCommandContext {
   }
 
   #replyFollowup(data: InteractionCallbackData) {
-    return customBot.helpers.sendFollowupMessage(
+    return this.bot.helpers.sendFollowupMessage(
       this.interaction.token,
       // @ts-ignore: "type" property not needed
       {
