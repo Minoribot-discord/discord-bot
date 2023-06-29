@@ -30,33 +30,27 @@ export interface BaseCollectorCreateOptions {
   timeout: number;
 }
 
+export type CollectFunc<T extends unknown> = (
+  bot: CustomBot,
+  collected: T,
+) => void | Promise<void>;
+export type FilterRejectFunc<T extends unknown> = CollectFunc<T>;
+
 export interface CollectMessagesOptions extends BaseCollectorCreateOptions {
   /** The channel Id where this is listening to */
   channelId: bigint;
   /** Function that will filter messages to determine whether to collect this message */
   filter: (bot: CustomBot, message: Message) => boolean;
-  collect?: (
-    bot: CustomBot,
-    message: Message,
-  ) => void | Promise<void>;
-  filterReject?: (
-    bot: CustomBot,
-    message: Message,
-  ) => void | Promise<void>;
+  collect?: CollectFunc<Message>;
+  filterReject?: FilterRejectFunc<Message>;
 }
 
 export interface CollectComponentsOptions
   extends Omit<BaseCollectorCreateOptions, "key"> {
   key: bigint;
   filter: (bot: CustomBot, data: Interaction) => boolean;
-  collect?: (
-    bot: CustomBot,
-    data: Interaction,
-  ) => void | Promise<void>;
-  filterReject?: (
-    bot: CustomBot,
-    data: Interaction,
-  ) => void | Promise<void>;
+  collect?: CollectFunc<Interaction>;
+  filterReject?: FilterRejectFunc<Interaction>;
 }
 
 export interface CollectReactionsOptions
@@ -72,14 +66,8 @@ export interface CollectReactionsOptions
       emoji: Emoji;
     },
   ) => boolean;
-  collect?: (
-    bot: CustomBot,
-    reaction: AmethystReaction,
-  ) => void | Promise<void>;
-  filterReject?: (
-    bot: CustomBot,
-    reaction: AmethystReaction,
-  ) => void | Promise<void>;
+  collect?: CollectFunc<AmethystReaction>;
+  filterReject?: FilterRejectFunc<AmethystReaction>;
 }
 // Collector Options
 
@@ -93,14 +81,8 @@ export interface BaseCollectorOptions {
 export interface MessageCollectorOptions extends BaseCollectorOptions {
   /** A function to filter the messages and determine whether to collect or not */
   filter?: (bot: CustomBot, message: Message) => boolean;
-  collect?: (
-    bot: CustomBot,
-    message: Message,
-  ) => void | Promise<void>;
-  filterReject?: (
-    bot: CustomBot,
-    message: Message,
-  ) => void | Promise<void>;
+  collect?: CollectFunc<Message>;
+  filterReject?: FilterRejectFunc<Message>;
 }
 
 export interface ReactionCollectorOptions extends BaseCollectorOptions {
@@ -115,14 +97,8 @@ export interface ReactionCollectorOptions extends BaseCollectorOptions {
       emoji: Emoji;
     },
   ) => boolean;
-  collect?: (
-    bot: CustomBot,
-    reaction: AmethystReaction,
-  ) => void | Promise<void>;
-  filterReject?: (
-    bot: CustomBot,
-    reaction: AmethystReaction,
-  ) => void | Promise<void>;
+  collect?: CollectFunc<AmethystReaction>;
+  filterReject?: FilterRejectFunc<AmethystReaction>;
 }
 
 export interface ComponentCollectorOptions extends BaseCollectorOptions {
@@ -130,14 +106,8 @@ export interface ComponentCollectorOptions extends BaseCollectorOptions {
   filter?: (bot: CustomBot, data: Interaction) => boolean;
   /** The type of the component to collect */
   type?: "Button" | "SelectMenu" | "TextInput";
-  collect?: (
-    bot: CustomBot,
-    data: Interaction,
-  ) => void | Promise<void>;
-  filterReject?: (
-    bot: CustomBot,
-    data: Interaction,
-  ) => void | Promise<void>;
+  collect?: CollectFunc<Interaction>;
+  filterReject?: FilterRejectFunc<Interaction>;
 }
 
 export type ResolveFunc<R extends unknown> = (
