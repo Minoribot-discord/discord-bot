@@ -3,13 +3,13 @@ import { Embed } from "deps";
 import { createCommand } from "internals/loadStuff.ts";
 
 const execute: CommandExecuteFunc = async (
-  context,
+  ctx,
   i18n,
 ) => {
   const infoEmbed: Embed = {
-    title: i18n.translate("COMMAND.APP.INFO.INFOEMBED.TITLE"),
+    title: i18n.translate("COMMAND.APP.INFO.EMBED.TITLE"),
   };
-  await context.reply({ embeds: [infoEmbed] });
+  await ctx.reply({ embeds: [infoEmbed] });
 };
 
 createCommand({
