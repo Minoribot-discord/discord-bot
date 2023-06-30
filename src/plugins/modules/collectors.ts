@@ -1,5 +1,5 @@
 import { Emoji, Interaction, InteractionTypes, Message } from "deps";
-import { AmethystReaction, CollectorErrorCodes } from "structures";
+import { AmethystReaction } from "structures";
 import { createModule } from "internals/loadStuff.ts";
 import { CustomBot } from "internals/CustomBot.ts";
 
@@ -9,7 +9,7 @@ createModule({
   init: (bot) => {
     const { messageCreate, reactionAdd, interactionCreate } = bot.events;
 
-    cleanCollectorsTask(bot);
+    // cleanCollectorsTask(bot);
 
     bot.events.messageCreate = (_bot, message) => {
       messageCreate(_bot, message);
@@ -35,43 +35,6 @@ createModule({
     return bot;
   },
 });
-
-function cleanCollectorsTask(bot: CustomBot) {
-  // To-do add tasks and turn this into a task
-  setInterval(() => {
-    const now = Date.now();
-    // deno-lint-ignore require-await
-    (async () => {
-      for (const [key, collector] of bot.collectors.components) {
-        if (collector.createdAt + collector.timeout > now) continue;
-
-        bot.collectors.components.delete(key);
-
-        collector.resolve({ error: CollectorErrorCodes.TIMEOUT });
-      }
-    })();
-    // deno-lint-ignore require-await
-    (async () => {
-      for (const [key, collector] of bot.collectors.reactions) {
-        if (collector.createdAt + collector.timeout > now) continue;
-
-        bot.collectors.reactions.delete(key);
-
-        collector.resolve({ error: CollectorErrorCodes.TIMEOUT });
-      }
-    })();
-    // deno-lint-ignore require-await
-    (async () => {
-      for (const [key, collector] of bot.collectors.messages) {
-        if (collector.createdAt + collector.timeout > now) continue;
-
-        bot.collectors.messages.delete(key);
-
-        collector.resolve({ error: CollectorErrorCodes.TIMEOUT });
-      }
-    })();
-  }, (10 * 60) * 1000);
-}
 
 // Functions ripped of from "https://github.com/AmethystFramework/framework/blob/4bd01b466d4e3435adf26c57d887a7c7416f3e42/src/utils/extra.ts"
 

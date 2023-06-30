@@ -14,7 +14,6 @@ import {
 import {
   createCommand,
   createSubCommand,
-  createSubCommandGroup,
   locales,
 } from "internals/loadStuff.ts";
 import { awaitComponent } from "utils";
