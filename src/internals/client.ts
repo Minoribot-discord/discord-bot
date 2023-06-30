@@ -29,6 +29,7 @@ const botWithValidationsPlugin = enableValidationsPlugin(
 
 // implement the custom properties to the bot object
 const customBot = botWithValidationsPlugin as CustomBot;
+customBot.ready = false;
 customBot.config = botConfig;
 customBot.logger = logger;
 customBot.i18n = new I18nHandler(customBot);

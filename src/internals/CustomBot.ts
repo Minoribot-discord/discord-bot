@@ -14,6 +14,7 @@ import { DatabaseWrapper } from "./database/database.ts";
 
 // custom type for the bot so we can add custom properties
 type CustomBot = BotWithHelpersPlugin<BotWithCache> & {
+  ready: boolean;
   config: BotConfig;
   logger: typeof logger;
   db: DatabaseWrapper;
