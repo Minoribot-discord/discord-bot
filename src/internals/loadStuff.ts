@@ -13,12 +13,16 @@ import {
   Locale,
   Module,
   ModuleParams,
+  RunningTasks,
   SubCommand,
   SubCommandGroup,
   SubCommandGroupParams,
   SubCommandParams,
+  Task,
 } from "structures";
 
+const tasks = new Collection<string, Task>();
+const runningTasks: RunningTasks = { initialTimeouts: [], intervals: [] };
 const inhibitors = new Collection<string, Inhibitor>();
 const locales = new Collection<string, Locale>();
 const modules = new Collection<string, Module>();
@@ -37,6 +41,7 @@ async function loadFolders(
   subFolders: Array<{ name: string; afterFunc?: AfterFunc }>,
 ) {
   for (const subFolder of subFolders) {
+    bot.logger.info(`Loading folder ${pluginFolder}/${subFolder.name}`);
     fs.ensureDirSync(`./src/${pluginFolder}/${subFolder.name}`);
 
     for await (
@@ -48,6 +53,33 @@ async function loadFolders(
     }
 
     await subFolder.afterFunc?.(bot);
+  }
+}
+
+function loadTask(task: Task): Task {
+  tasks.set(task.name, task);
+
+  return task;
+}
+
+// Code ripped of from "https://github.com/AmethystFramework/framework/blob/4bd01b466d4e3435adf26c57d887a7c7416f3e42/src/utils/extra.ts"
+function initializeTasks(bot: CustomBot) {
+  for (const task of tasks.values()) {
+    runningTasks.initialTimeouts.push(
+      setTimeout(async () => {
+        await task.execute(bot);
+        runningTasks.intervals.push(
+          setInterval(async () => {
+            if (!bot.ready) return;
+            try {
+              await task.execute(bot);
+            } catch (error) {
+              throw error;
+            }
+          }, task.interval),
+        );
+      }, task.interval - (Date.now() % task.interval)),
+    );
   }
 }
 
@@ -235,9 +267,13 @@ export {
   createSubCommandGroup,
   inhibitors,
   initializeModules,
+  initializeTasks,
   loadFolders,
   loadLocale,
+  loadTask,
   locales,
   modules,
+  runningTasks,
   subCommands,
+  tasks,
 };

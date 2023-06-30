@@ -1,6 +1,10 @@
 import { startBot } from "deps";
 import { customBot } from "bot";
-import { initializeModules, loadFolders } from "internals/loadStuff.ts";
+import {
+  initializeModules,
+  initializeTasks,
+  loadFolders,
+} from "internals/loadStuff.ts";
 import { initDatabase } from "database";
 
 async function start() {
@@ -15,6 +19,7 @@ async function start() {
         afterFunc: customBot.i18n.init.bind(customBot.i18n),
       },
       { name: "commands" },
+      { name: "tasks", afterFunc: initializeTasks },
       { name: "modules", afterFunc: initializeModules },
     ],
   );

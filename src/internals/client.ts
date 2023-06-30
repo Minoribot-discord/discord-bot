@@ -7,13 +7,14 @@ import {
   enableValidationsPlugin,
 } from "deps";
 import { botConfig } from "config";
-import { collectors, CustomBot, I18nHandler, logger } from "internals";
+import { collectors, CustomBot, I18nHandler, logger, tasks } from "internals";
 import {
   commandCategories,
   commands,
   inhibitors,
   locales,
   modules,
+  runningTasks,
   subCommands,
 } from "internals/loadStuff.ts";
 const { discordToken, intents } = botConfig;
@@ -40,5 +41,7 @@ customBot.subCommands = subCommands;
 customBot.cmdCategories = commandCategories;
 customBot.locales = locales;
 customBot.inhibitors = inhibitors;
+customBot.tasks = tasks;
+customBot.runningTasks = runningTasks;
 
 export { customBot };

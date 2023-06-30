@@ -3,8 +3,6 @@ import { Command, CommandScope } from "structures";
 import { createModule } from "internals/loadStuff.ts";
 import { CustomBot } from "internals/CustomBot.ts";
 
-let refreshedAlready = false;
-
 createModule({
   name: "refreshApplicationCommands",
   priority: 0,
@@ -14,13 +12,12 @@ createModule({
     bot.events.ready = async (_bot, payload, rawPayload) => {
       await ready(_bot, payload, rawPayload);
 
-      if (bot.config.refreshCommands && !refreshedAlready) {
+      if (bot.config.refreshCommands && !bot.ready) {
         await bot.utils.delay(2000);
 
         await removeNonExistentApplicationCommands(bot);
         await handleGuildScopedCommands(bot);
         await handleGlobalScopedCommands(bot);
-        refreshedAlready = true;
       }
     };
 

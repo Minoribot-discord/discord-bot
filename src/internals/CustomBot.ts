@@ -5,8 +5,10 @@ import {
   Inhibitor,
   Locale,
   Module,
+  RunningTasks,
   SubCommand,
   SubCommandGroup,
+  Task,
 } from "structures";
 import { BotConfig, I18nHandler, logger } from "internals";
 import { collectors } from "utils";
@@ -26,6 +28,8 @@ type CustomBot = BotWithHelpersPlugin<BotWithCache> & {
   cmdCategories: Collection<string, CommandCategory>;
   locales: Collection<string, Locale>;
   inhibitors: Collection<string, Inhibitor>;
+  tasks: Collection<string, Task>;
+  runningTasks: RunningTasks;
 };
 
 export type { CustomBot };

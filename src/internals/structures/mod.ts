@@ -5,3 +5,4 @@ export * from "./CommandCategory.ts";
 export * from "./Inhibitor.ts";
 export * from "./Locale.ts";
 export * from "./Module.ts";
+export * from "./Task.ts";
