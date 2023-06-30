@@ -1,4 +1,5 @@
 import { createModule } from "internals/loadStuff.ts";
+import { ActivityTypes } from "../../../deps.ts";
 
 createModule({
   name: "ready",
@@ -8,6 +9,16 @@ createModule({
 
     bot.events.ready = async (_bot, payload, rawPayload) => {
       await ready(_bot, payload, rawPayload);
+      bot.ready = true;
+
+      await bot.helpers.editBotStatus({
+        activities: [{
+          name: "Visca les llengues minoritzades",
+          createdAt: Date.now(),
+          type: ActivityTypes.Game,
+        }],
+        status: "online",
+      });
 
       bot.logger.info("Bot is ready");
 
