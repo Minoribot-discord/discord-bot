@@ -80,6 +80,7 @@ function initializeTasks(bot: CustomBot) {
         );
       }, task.interval - (Date.now() % task.interval)),
     );
+    bot.logger.info(`Task ${task.name} initialized`);
   }
 }
 

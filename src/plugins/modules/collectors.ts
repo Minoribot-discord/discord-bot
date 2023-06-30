@@ -9,8 +9,6 @@ createModule({
   init: (bot) => {
     const { messageCreate, reactionAdd, interactionCreate } = bot.events;
 
-    // cleanCollectorsTask(bot);
-
     bot.events.messageCreate = (_bot, message) => {
       messageCreate(_bot, message);
 
