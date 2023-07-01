@@ -12,7 +12,7 @@ import {
 } from "structures";
 import { BotConfig, I18nHandler, logger } from "internals";
 import { collectors } from "utils";
-import { DatabaseWrapper } from "./database/database.ts";
+import { DatabaseWrapper } from "database/database.ts";
 
 // custom type for the bot so we can add custom properties
 type CustomBot = BotWithHelpersPlugin<BotWithCache> & {
