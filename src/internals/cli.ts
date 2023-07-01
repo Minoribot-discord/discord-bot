@@ -2,17 +2,22 @@ import { flags } from "deps";
 import { botConfig } from "internals/config.ts";
 import { CustomBot } from "internals/CustomBot.ts";
 type args = flags.Args & {
-  refreshcommands?: string;
-  r?: string;
-  dev?: string;
-  d?: string;
+  refreshcommands?: string | boolean;
+  r?: string | boolean;
+  dev?: string | boolean;
+  d?: string | boolean;
 };
 
-function convertCommandLineArgumentToBoolean(cliArg: string): boolean | never {
+function convertCommandLineArgumentToBoolean(
+  cliArg: string | boolean,
+): boolean | null {
   if (cliArg === "false") return false;
   else if (cliArg === "true") return true;
 
-  throw new Error(`The argument ${cliArg} needs to be a boolean`);
+  if (typeof cliArg === "string") {
+    return null;
+  }
+  return cliArg;
 }
 const convStr = convertCommandLineArgumentToBoolean;
 
@@ -20,14 +25,16 @@ function readStartupCommandLineArgs() {
   const parsedArgs = flags.parse<args>(Deno.args);
 
   if ("refreshcommands" in parsedArgs || "r" in parsedArgs) {
-    botConfig.refreshCommands = convStr(parsedArgs.refreshcommands!) ??
-      convStr(parsedArgs.r!) ??
-      false;
+    botConfig.refreshCommands = convStr(
+      parsedArgs.refreshcommands ?? parsedArgs.r ?? false,
+    ) ?? false;
   }
   if ("dev" in parsedArgs || "d" in parsedArgs) {
-    botConfig.devMode = convStr(parsedArgs.dev!) ??
-      convStr(parsedArgs.d!) ??
-      false;
+    botConfig.devMode = convStr(
+      parsedArgs.dev ??
+        parsedArgs.d ??
+        false,
+    ) ?? false;
   }
 }
 
