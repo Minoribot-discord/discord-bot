@@ -12,4 +12,4 @@ if (botConfig.devMode) {
   );
 }
 
-await start();
+await start(customBot);

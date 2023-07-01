@@ -1,5 +1,5 @@
 import { startBot } from "deps";
-import { customBot } from "bot";
+import { CustomBot } from "internals/CustomBot.ts";
 import {
   initializeModules,
   initializeTasks,
@@ -7,16 +7,16 @@ import {
 } from "internals/loadStuff.ts";
 import { initDatabase } from "database";
 
-async function start() {
-  customBot.db = await initDatabase(customBot);
+async function start(bot: CustomBot) {
+  bot.db = await initDatabase(bot);
 
   await loadFolders(
-    customBot,
+    bot,
     [
       { name: "inhibitors" },
       {
         name: "locales",
-        afterFunc: customBot.i18n.init.bind(customBot.i18n),
+        afterFunc: bot.i18n.init.bind(bot.i18n),
       },
       { name: "commands" },
       { name: "tasks", afterFunc: initializeTasks },
@@ -25,8 +25,8 @@ async function start() {
   );
 
   // start the bot
-  customBot.logger.info("Starting connection to the Discord API & gateway");
-  return startBot(customBot);
+  bot.logger.info("Starting connection to the Discord API & gateway");
+  await startBot(bot);
 }
 
 export { start };
