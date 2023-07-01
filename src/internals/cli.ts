@@ -1,5 +1,6 @@
 import { flags } from "deps";
 import { botConfig } from "internals/config.ts";
+import { CustomBot } from "internals/CustomBot.ts";
 type args = flags.Args & {
   refreshcommands?: string;
   r?: string;
@@ -28,10 +29,14 @@ function readStartupCommandLineArgs() {
       convStr(parsedArgs.d!) ??
       false;
   }
-
-  // I wanna take input from the terminal, kind of like a console, with commands
-
-  // How can I request input from the console in Deno?
 }
 
-export { readStartupCommandLineArgs };
+async function handleConsoleInput(_bot: CustomBot) {
+  const decoder = new TextDecoder();
+  for await (const chunk of Deno.stdin.readable) {
+    const text = decoder.decode(chunk);
+    console.log(text);
+  }
+}
+
+export { handleConsoleInput, readStartupCommandLineArgs };
