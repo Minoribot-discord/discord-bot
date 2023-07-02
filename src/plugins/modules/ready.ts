@@ -1,5 +1,6 @@
+import { ActivityTypes } from "deps";
 import { createModule } from "internals/loadStuff.ts";
-import { ActivityTypes } from "../../../deps.ts";
+import { CustomBot } from "internals/CustomBot.ts";
 
 createModule({
   name: "ready",
@@ -21,6 +22,11 @@ createModule({
       });
 
       bot.logger.info("Bot is ready");
+
+      /*
+        the commented code below is some old code that i conserve for some reason
+        might delete it in the future tho
+      */
 
       // show a list of loaded commands, modules and inhibitors
 
@@ -64,8 +70,20 @@ createModule({
         `${bot.locales.size} locals`;
 
       bot.logger.info(string_);
+
+      checkIfCommandsHaveExecuteFunction(bot);
     };
 
     return bot;
   },
 });
+
+function checkIfCommandsHaveExecuteFunction(bot: CustomBot) {
+  for (const command of bot.commands.values()) {
+    if (!command.execute && command.subCommands.length === 0) {
+      bot.logger.warning(
+        `Command ${command.name} has no execute function and no subcommands.`,
+      );
+    }
+  }
+}
