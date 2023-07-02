@@ -9,7 +9,7 @@
     "bot": "./src/internals/client.ts",
     "internals": "./src/internals/mod.ts",
     "internals/": "./src/internals/",
-    "utils": "./src/internals/utils/mod.ts",
+    "utils": "./src/utils/mod.ts",
     "structures": "./src/internals/structures/mod.ts",
     "db_structures": "./src/database/structures/mod.ts",
     "db_schemas": "./src/database/structures/databaseSchemas.ts",

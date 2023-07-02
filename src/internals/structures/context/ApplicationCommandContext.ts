@@ -5,12 +5,8 @@ import {
   InteractionResponseTypes,
   Message,
 } from "deps";
-import {
-  CustomBot,
-  getOrFetchGuild,
-  getOrFetchMember,
-  getOrFetchUser,
-} from "internals";
+import { CustomBot } from "internals";
+import { getOrFetchGuild, getOrFetchMember, getOrFetchUser } from "utils";
 
 class ApplicationCommandContext {
   authorId: bigint;

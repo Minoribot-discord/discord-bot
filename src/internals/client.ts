@@ -7,7 +7,8 @@ import {
   enableValidationsPlugin,
 } from "deps";
 import { botConfig } from "config";
-import { collectors, CustomBot, I18nHandler, logger, tasks } from "internals";
+import { CustomBot, I18nHandler, logger, tasks } from "internals";
+import { collectors } from "utils";
 import {
   commandCategories,
   commands,
