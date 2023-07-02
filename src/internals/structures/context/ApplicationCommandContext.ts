@@ -7,10 +7,13 @@ import {
 } from "deps";
 import { CustomBot } from "internals";
 import { getOrFetchGuild, getOrFetchMember, getOrFetchUser } from "utils";
+import { ArgumentParser } from "structures";
 
 class ApplicationCommandContext {
   authorId: bigint;
   guildId: bigint | undefined;
+
+  args: ArgumentParser;
 
   deferred = false;
   replied = false;
@@ -18,6 +21,8 @@ class ApplicationCommandContext {
   constructor(public bot: CustomBot, public interaction: Interaction) {
     this.authorId = interaction.user.id;
     this.guildId = interaction.guildId;
+
+    this.args = new ArgumentParser(interaction.data?.options);
   }
 
   sendInteractionResponse(options: InteractionResponse) {
