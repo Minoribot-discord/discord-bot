@@ -42,16 +42,17 @@ class ApplicationCommandContext {
 
   async reply(
     data: string | InteractionCallbackData,
-    wait = false,
+    replyOptions?: { wait?: boolean; private?: boolean },
   ): Promise<Message | undefined> {
     if (typeof data === "string") data = { content: data };
+    if (replyOptions?.private && !data.flags) data.flags = 64; // private: true
 
     let responseMessage: Message | undefined;
     if (this.replied) {
       responseMessage = await this.#replyFollowup(data);
     } else {
       responseMessage = await this.#replyOriginal(data);
-      if (wait) {
+      if (replyOptions?.wait) {
         responseMessage = await this.bot.helpers
           .getOriginalInteractionResponse(
             this.interaction.token,

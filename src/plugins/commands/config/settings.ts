@@ -78,7 +78,7 @@ createSubCommand("settings", {
         components: [selectMenuLanguages],
         type: MessageComponentTypes.ActionRow,
       }],
-    }, true);
+    }, { wait: true });
 
     const filter: ComponentCollectorOptions["filter"] = (_bot, data) => {
       if (data.data?.customId) {
