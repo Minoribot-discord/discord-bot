@@ -32,6 +32,8 @@ const cat_central = {
     "COMMAND.APP.BAN.BANEMBED.FIELDS.USER": "Usuari",
     "COMMAND.APP.BAN.BANEMBED.FIELDS.REASON": "Motiu",
     "COMMAND.APP.BAN.BANEMBED.FIELDS.REASON.NO_REASON": "Cap",
+    // Kick command
+    "COMMAND.APP.KICK.KICKEMBED.TITLE": "Usuari expulsat",
   },
 };
 

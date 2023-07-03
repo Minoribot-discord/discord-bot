@@ -2,7 +2,6 @@ import {
   ApplicationCommandOption,
   ApplicationCommandOptionTypes,
   Embed,
-  User,
 } from "deps";
 import { createCommand } from "internals/loadStuff.ts";
 import { CommandError, CommandScope } from "structures";
@@ -94,6 +93,8 @@ createCommand({
         },
       ],
     };
-    await ctx.reply({ embeds: [banEmbed] }, { private: !isBanMessageVisible });
+    await ctx.reply({ embeds: [banEmbed] }, {
+      private: !isBanMessageVisible,
+    });
   },
 });
