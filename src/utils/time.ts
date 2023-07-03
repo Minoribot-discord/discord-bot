@@ -33,7 +33,6 @@ export function parseTime(timeString: string): number | null {
 
   let match;
   while ((match = timeRegex.exec(timeString)) !== null) {
-    console.log(match);
     const [_, amount, unit] = match;
     if (!(unit in timeUnits)) {
       return null;
