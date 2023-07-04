@@ -1,19 +1,19 @@
 import { fs, log } from "deps";
-import { formatTime } from "utils";
+import { formatDate } from "utils";
 
 const logDirectory = "logs";
 
 await fs.ensureDir(`./${logDirectory}`);
 
 const generateFileName = () => {
-  return `./${logDirectory}/log_${formatTime(new Date())}.txt`;
+  return `./${logDirectory}/log_${formatDate(new Date())}.txt`;
 };
 
 const fileHandler = new log.handlers.FileHandler("DEBUG", {
   filename: generateFileName(),
 
   formatter: ({ levelName, msg, datetime }) =>
-    `[${formatTime(datetime, " | ")}] - ${levelName} ${msg}`,
+    `[${formatDate(datetime, " | ")}] - ${levelName} ${msg}`,
 });
 
 log.setup({
