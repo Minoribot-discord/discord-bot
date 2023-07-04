@@ -1,11 +1,11 @@
-export function formatTime(date: Date, separator = "_"): string {
-  const timePart = formatTimePart(date);
-  const datePart = formatDatePart(date);
+export function formatDate(date: Date, separator = "_"): string {
+  const timePart = formatDateIntoHourMinuteSecond(date);
+  const datePart = formatDateIntoDayMonthYear(date);
 
   return `${timePart}${separator}${datePart}`;
 }
 
-export function formatTimePart(date: Date): string {
+export function formatDateIntoHourMinuteSecond(date: Date): string {
   const hour = date.getHours().toString().padStart(2, "0");
   const minute = date.getMinutes().toString().padStart(2, "0");
   const second = date.getSeconds().toString().padStart(2, "0");
@@ -13,7 +13,7 @@ export function formatTimePart(date: Date): string {
   return `${hour}-${minute}-${second}`;
 }
 
-export function formatDatePart(date: Date): string {
+export function formatDateIntoDayMonthYear(date: Date): string {
   const day = date.getDate().toString().padStart(2, "0");
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const year = date.getFullYear().toString();
