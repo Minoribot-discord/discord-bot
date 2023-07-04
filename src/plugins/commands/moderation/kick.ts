@@ -24,7 +24,7 @@ const options: ApplicationCommandOption[] = [
   },
   {
     name: "visible",
-    description: "Show the ban message or not",
+    description: "Whether the kick message should be visible to everyone",
     type: ApplicationCommandOptionTypes.Boolean,
     required: false,
   },
@@ -38,10 +38,7 @@ createCommand({
   dmPermission: false,
   options,
   execute: async (ctx, i18n) => {
-    const _userIdToKick = ctx.args.getString("user");
-    if (!_userIdToKick) {
-      throw new CommandError("No 'user' was provided??");
-    }
+    const _userIdToKick = ctx.args.getString("user")!;
     const userIdToKick: bigint = ctx.bot.transformers.snowflake(_userIdToKick);
 
     const reason = ctx.args.getString("reason");

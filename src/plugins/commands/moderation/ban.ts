@@ -30,7 +30,7 @@ const options: ApplicationCommandOption[] = [
   },
   {
     name: "visible",
-    description: "Show the ban message or not",
+    description: "Whether the ban message should be visible to everyone",
     type: ApplicationCommandOptionTypes.Boolean,
     required: false,
   },
@@ -44,10 +44,7 @@ createCommand({
   dmPermission: false,
   options,
   execute: async (ctx, i18n) => {
-    const _userIdToBan = ctx.args.getString("user");
-    if (!_userIdToBan) {
-      throw new CommandError("No 'user' was provided??");
-    }
+    const _userIdToBan = ctx.args.getString("user")!;
     const userIdToBan: bigint = ctx.bot.transformers.snowflake(_userIdToBan);
 
     const reason = ctx.args.getString("reason");
