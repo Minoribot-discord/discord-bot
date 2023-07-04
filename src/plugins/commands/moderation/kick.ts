@@ -4,7 +4,7 @@ import {
   Embed,
 } from "deps";
 import { createCommand } from "internals/loadStuff.ts";
-import { CommandError, CommandScope } from "structures";
+import { CommandScope } from "structures";
 import { getOrFetchUser, userUsernameAndDiscriminator } from "utils";
 
 const options: ApplicationCommandOption[] = [
