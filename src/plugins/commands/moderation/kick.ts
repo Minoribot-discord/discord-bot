@@ -32,6 +32,7 @@ createCommand({
   description: "Kick a user from the server",
   scope: CommandScope.GLOBAL,
   dmPermission: false,
+  defaultMemberPermissions: ["KICK_MEMBERS"],
   options,
   execute: async (ctx, i18n) => {
     const _userIdToKick = ctx.args.getString("user")!;

@@ -48,6 +48,7 @@ createCommand({
   description: "Ban a user from the server",
   scope: CommandScope.GLOBAL,
   dmPermission: false,
+  defaultMemberPermissions: ["BAN_MEMBERS"],
   options,
   execute: async (ctx, i18n) => {
     const _userIdToBan = ctx.args.getString("user")!;

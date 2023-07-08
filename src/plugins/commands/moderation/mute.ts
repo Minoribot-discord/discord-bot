@@ -49,6 +49,7 @@ createCommand({
   description: "Mute a member (using the built-in Discord feature)",
   scope: CommandScope.GLOBAL,
   dmPermission: false,
+  defaultMemberPermissions: ["MUTE_MEMBERS"],
   options,
   execute: async (ctx, i18n) => {
     const _userIdToMute = ctx.args.getString("member")!;
