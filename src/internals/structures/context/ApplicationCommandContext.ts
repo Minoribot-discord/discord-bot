@@ -1,11 +1,12 @@
 import {
+  Embed,
   Interaction,
   InteractionCallbackData,
   InteractionResponse,
   InteractionResponseTypes,
   Message,
 } from "deps";
-import { CustomBot } from "internals";
+import { CustomBot, EmbedBuilder } from "internals";
 import { getOrFetchGuild, getOrFetchMember, getOrFetchUser } from "utils";
 import { ArgumentParser } from "structures";
 
@@ -41,17 +42,36 @@ class ApplicationCommandContext {
   }
 
   async reply(
-    data: string | InteractionCallbackData,
+    data:
+      | string
+      | (Omit<InteractionCallbackData, "embeds">) & {
+        embeds?: (Embed | EmbedBuilder)[];
+      }
+      | EmbedBuilder
+      | EmbedBuilder[],
     replyOptions?: { wait?: boolean; private?: boolean },
   ): Promise<Message | undefined> {
     if (typeof data === "string") data = { content: data };
+    else if (data instanceof EmbedBuilder) data = { embeds: [data.toJSON()] };
+    else if (Array.isArray(data)) {
+      data = { embeds: data.map((e) => e.toJSON()) };
+    } else {
+      data.embeds = data.embeds?.map((e) =>
+        e instanceof EmbedBuilder ? e.toJSON() : e
+      );
+    }
+
     if (replyOptions?.private && !data.flags) data.flags = 64; // private: true
 
     let responseMessage: Message | undefined;
     if (this.replied) {
-      responseMessage = await this.#replyFollowup(data);
+      responseMessage = await this.#replyFollowup(
+        data as InteractionCallbackData,
+      );
     } else {
-      responseMessage = await this.#replyOriginal(data);
+      responseMessage = await this.#replyOriginal(
+        data as InteractionCallbackData,
+      );
       if (replyOptions?.wait) {
         responseMessage = await this.bot.helpers
           .getOriginalInteractionResponse(
