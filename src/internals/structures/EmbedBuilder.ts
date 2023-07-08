@@ -1,4 +1,4 @@
-import { Embed } from "deps";
+import { Embed, lodash } from "deps";
 
 export class EmbedBuilder {
   embed: Embed = {};
@@ -109,6 +109,6 @@ export class EmbedBuilder {
   }
 
   toJSON(): Embed {
-    return { ...this.embed };
+    return lodash.cloneDeep(this.embed);
   }
 }

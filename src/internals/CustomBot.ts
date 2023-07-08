@@ -18,6 +18,7 @@ import { DatabaseWrapper } from "database/database.ts";
 type CustomBot = BotWithHelpersPlugin<BotWithCache> & {
   ready: boolean;
   config: BotConfig;
+  ownerId: bigint;
   logger: typeof logger;
   db: DatabaseWrapper;
   i18n: I18nHandler;

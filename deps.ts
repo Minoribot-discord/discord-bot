@@ -19,4 +19,6 @@ export {
 } from "https://deno.land/x/mongo@v0.31.2/mod.ts";
 
 // @deno-types="npm:@types/lodash@^4"
-import _ from "npm:lodash@^4";
+import lodash from "npm:lodash@^4";
+
+export { lodash };

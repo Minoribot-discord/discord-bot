@@ -1,4 +1,5 @@
-import { Context } from "internals";
+import { Context, I18nContext, LocaleKeys } from "internals";
+import { camelCaseToScreamingSnakeCase } from "utils";
 
 type InhibitorExecuteFunc = (
   context: Context,
@@ -7,26 +8,32 @@ type InhibitorExecuteFunc = (
 interface InhibitorParams {
   name: string;
   execute: InhibitorExecuteFunc;
-  // errorMessageKey: string;
+  rejectMessageKey?: LocaleKeys;
 }
+
 class Inhibitor {
   name: string;
-  errorMessageKey = "";
+  rejectMessageKey: LocaleKeys | string;
 
   execute: InhibitorExecuteFunc;
 
   constructor(params: InhibitorParams) {
-    const { name, execute } = params;
+    const { name, execute, rejectMessageKey } = params;
 
     this.name = name;
     this.execute = execute.bind(this) ||
       ((_context: Context) => {
         return false;
       });
+
+    this.rejectMessageKey = rejectMessageKey ??
+      camelCaseToScreamingSnakeCase(this.name);
   }
 
-  errorMessage() {
-    return this.name;
+  rejectMessage(i18n: I18nContext): string {
+    // Even if the key is actually the inhibitor's name, it won't throw an error
+    // It'll just return the key instead
+    return i18n.translate(this.rejectMessageKey as LocaleKeys);
   }
 }
 
