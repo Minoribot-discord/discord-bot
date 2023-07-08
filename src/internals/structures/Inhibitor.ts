@@ -7,8 +7,8 @@ type InhibitorExecuteFunc = (
 
 interface InhibitorParams {
   name: string;
-  execute: InhibitorExecuteFunc;
   rejectMessageKey?: LocaleKeys;
+  execute: InhibitorExecuteFunc;
 }
 
 class Inhibitor {
@@ -18,7 +18,7 @@ class Inhibitor {
   execute: InhibitorExecuteFunc;
 
   constructor(params: InhibitorParams) {
-    const { name, execute, rejectMessageKey } = params;
+    const { name, rejectMessageKey, execute } = params;
 
     this.name = name;
     this.execute = execute.bind(this) ||
