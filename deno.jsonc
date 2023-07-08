@@ -11,6 +11,7 @@
     "internals/": "./src/internals/",
     "utils": "./src/utils/mod.ts",
     "structures": "./src/internals/structures/mod.ts",
+    "structures/": "./src/internals/structures/",
     "db_structures": "./src/database/structures/mod.ts",
     "db_schemas": "./src/database/structures/databaseSchemas.ts",
     "database": "./src/database/mod.ts",

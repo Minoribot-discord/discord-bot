@@ -20,12 +20,12 @@ createModule({
   init: (bot) => {
     const { interactionCreate } = bot.events;
 
-    bot.events.interactionCreate = async (_bot, interaction) => {
+    bot.events.interactionCreate = (_bot, interaction) => {
       interactionCreate(_bot, interaction);
 
       switch (interaction.type) {
         case InteractionTypes.ApplicationCommand:
-          await handleApplicationCommand(bot, interaction);
+          handleApplicationCommand(bot, interaction);
       }
     };
 
@@ -59,7 +59,7 @@ async function handleApplicationCommand(
   }
 
   const context = new ApplicationCommandContext(bot, interaction);
-  const i18nContext = await new I18nContext(bot, interaction).initLocale();
+  const i18nContext = await (new I18nContext(bot, interaction)).initLocale();
 
   const invalidInhibitors = await checkInhibitors(
     commandsToExecute,
@@ -77,8 +77,12 @@ async function handleApplicationCommand(
     return;
   }
 
-  for (const command of commandsToExecute) {
-    await command.execute<ApplicationCommandContext>?.(context, i18nContext);
+  try {
+    for (const command of commandsToExecute) {
+      await command.execute<ApplicationCommandContext>?.(context, i18nContext);
+    }
+  } catch (e) {
+    bot.logger.error(e);
   }
 }
 

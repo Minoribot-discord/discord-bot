@@ -9,6 +9,7 @@ type DatabaseWrapper =
   & ReturnType<typeof configWrappers>;
 
 async function initDatabase(bot: CustomBot) {
+  bot.logger.info("Connecting to the Mongo client");
   await mongoClient.connect(bot.config.mongo.url);
   bot.logger.info("Mongo client connected");
 
