@@ -6,11 +6,20 @@ export const cat_central = {
   keys: {
     // Collectors
     "COLLECTORS.GLOBAL.REJECT.COLLECTOR_BEGAN_BEFORE":
-      "Un nou col·lector ha començat abans que l'usuari respongui a l'antic col·lector.",
+      "Un nou col·lector ha començat abans que un usuari respongui a l'antic col·lector.",
     "COLLECTORS.COMPONENTS.REJECT.TIMEOUT":
       "No has utilitzat el component a temps.",
     "COLLECTORS.REACTIONS.REJECT.TIMEOUT": "No has reaccionat a temps.",
     "COLLECTORS.MESSAGES.REJECT.TIMEOUT": "No has enviat un missatge a temps.",
+    // Global namespace for embeds
+    "EMBED.PUNISHMENT.FIELDS.USER.NAME": "Usuari",
+    "EMBED.PUNISHMENT.FIELDS.REASON.NAME": "Motiu",
+    "EMBED.PUNISHMENT.FIELDS.REASON.VALUE.NO_REASON": "Cap",
+    // Global namespace for commands
+    "COMMAND.GLOBAL.PROVIDE_CORRECT_TIME":
+      "Has de fornir un temps/una duració correcte. (per exemple: 1d, 10m, 4h)",
+    "COMMAND.GLOBAL.PROVIDE_CORRECT_TIME_RANGE": (min: string, max: string) =>
+      `El temps/la duració ha de ser entre **${min}** i **${max}**`,
     // Application commands
     // Info command
     "COMMAND.APP.INFO.EMBED.TITLE":
@@ -20,20 +29,18 @@ export const cat_central = {
     // Settings command
     "COMMAND.APP.SETTINGS.SERVER.CONFIGEMBED.FIELDS.LANGUAGE.NAME": "Llengua",
     "COMMAND.APP.SETTINGS.SERVER.CONFIGEMBED.FIELDS.LANGUAGE.VALUE.DEFAULT_LANG":
-      (
-        langName: string,
-      ) => `La llenga per defecte (${langName})`,
+      (langName: string) => `La llenga per defecte (${langName})`,
     "COMMAND.APP.SETTINGS.SERVER.NEWLANGUAGE": (formattedLangName: string) =>
       `Llengua configurada amb èxit - ${formattedLangName}`,
     // Ban command
-    "COMMAND.APP.BAN.PROVIDE_CORRECT_DELETE_MSG_HISTORY": (examples: string) =>
-      `Necessiteu fornir un temps correcte. ${examples}`,
     "COMMAND.APP.BAN.BANEMBED.TITLE": "Usuari bandejat",
-    "COMMAND.APP.BAN.BANEMBED.FIELDS.USER": "Usuari",
-    "COMMAND.APP.BAN.BANEMBED.FIELDS.REASON": "Motiu",
-    "COMMAND.APP.BAN.BANEMBED.FIELDS.REASON.NO_REASON": "Cap",
     // Kick command
     "COMMAND.APP.KICK.KICKEMBED.TITLE": "Usuari expulsat",
+    // Mute command
+    "COMMAND.APP.MUTE.MUTEEMBED.TITLE": "Usuari silenciat",
+    "COMMAND.APP.MUTE.MUTEEMBED.FIELDS.DURATION.NAME": "Duració",
+    // Unmute command
+    "COMMAND.APP.UNMUTE.UNMUTEEMBED.TITLE": "L'usuari ja no és silenciat",
   },
 };
 
