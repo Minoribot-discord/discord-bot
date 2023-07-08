@@ -11,7 +11,7 @@ export function configWrappers(bot: CustomBot, mongoClient: MongoClient) {
   );
 
   const guildConfigCollection = configDb.collection<GuildConfigSchema>(
-    "guildConfig",
+    "guild_config",
   );
 
   const guildConfig = {
@@ -32,7 +32,7 @@ export function configWrappers(bot: CustomBot, mongoClient: MongoClient) {
   };
 
   const userConfigCollection = configDb.collection<UserConfigSchema>(
-    "userConfig",
+    "user_config",
   );
 
   const userConfig = {
