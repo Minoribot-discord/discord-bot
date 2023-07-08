@@ -14,6 +14,14 @@ export function userUsernameAndDiscriminator(user: User) {
   }
 }
 
+export function camelCaseToSnakeCase(str: string) {
+  return str.replace(/([A-Z])/g, "_$1");
+}
+
+export function camelCaseToScreamingSnakeCase(str: string) {
+  return camelCaseToSnakeCase(str).toUpperCase();
+}
+
 export * from "./collectors.ts";
 export * from "./fetch.ts";
 export * from "./time.ts";
