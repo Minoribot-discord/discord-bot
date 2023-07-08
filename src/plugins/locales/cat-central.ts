@@ -1,6 +1,6 @@
 import { loadLocale } from "internals/loadStuff.ts";
 
-const cat_central = {
+export const cat_central = {
   code: "cat-central",
   name: "Català central estàndard",
   keys: {
@@ -38,5 +38,3 @@ const cat_central = {
 };
 
 loadLocale(cat_central);
-
-export default cat_central;
