@@ -11,11 +11,11 @@ export const cat_central = {
       "No has utilitzat el component a temps.",
     "COLLECTORS.REACTIONS.REJECT.TIMEOUT": "No has reaccionat a temps.",
     "COLLECTORS.MESSAGES.REJECT.TIMEOUT": "No has enviat un missatge a temps.",
-    // Global namespace for embeds
+    // Global embed namespace
     "EMBED.PUNISHMENT.FIELDS.USER.NAME": "Usuari",
     "EMBED.PUNISHMENT.FIELDS.REASON.NAME": "Motiu",
     "EMBED.PUNISHMENT.FIELDS.REASON.VALUE.NO_REASON": "Cap",
-    // Global namespace for commands
+    // Global command namespace
     "COMMAND.GLOBAL.PROVIDE_CORRECT_TIME":
       "Has de fornir un temps/una duració correcte. (per exemple: 1d, 10m, 4h)",
     "COMMAND.GLOBAL.PROVIDE_CORRECT_TIME_RANGE": (min: string, max: string) =>
