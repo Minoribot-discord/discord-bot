@@ -2,6 +2,7 @@ import { dotenv, GatewayIntents } from "deps";
 
 interface BotConfig {
   discordToken: string;
+  ownerId: bigint;
   supportGuildId: bigint;
   intents: GatewayIntents;
   refreshCommands: boolean;
@@ -44,6 +45,7 @@ const mongoConfig: MongoConfig = {
 
 const botConfig: BotConfig = {
   discordToken: env["DISCORD_TOKEN"],
+  ownerId: BigInt(env["BOT_OWNER_ID"]),
   supportGuildId: BigInt(env["SUPPORT_GUILD_ID"]),
   intents,
   refreshCommands: convertEnvVarToBoolean("REFRESH_COMMANDS"),
