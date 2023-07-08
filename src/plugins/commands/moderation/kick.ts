@@ -1,11 +1,7 @@
-import {
-  ApplicationCommandOption,
-  ApplicationCommandOptionTypes,
-  Embed,
-} from "deps";
+import { ApplicationCommandOption, ApplicationCommandOptionTypes } from "deps";
 import { createCommand } from "internals/loadStuff.ts";
 import { CommandScope } from "structures";
-import { getOrFetchUser, userUsernameAndDiscriminator } from "utils";
+import { getOrFetchUser, makeBasePunishmentEmbed } from "utils";
 
 const options: ApplicationCommandOption[] = [
   {
@@ -52,23 +48,15 @@ createCommand({
     );
 
     const isKickMessageVisible = ctx.args.getBoolean("visible");
-    const kickEmbed: Embed = {
-      title: i18n.translate("COMMAND.APP.KICK.KICKEMBED.TITLE"),
-      fields: [
-        {
-          name: i18n.translate("COMMAND.APP.BAN.BANEMBED.FIELDS.USER"),
-          value: `\`${userUsernameAndDiscriminator(user)}\`` +
-            `\n<@${user.id}>\n\`${user.id}\``,
-        },
-        {
-          name: i18n.translate("COMMAND.APP.BAN.BANEMBED.FIELDS.REASON"),
-          value: `\`${reason}\`` ??
-            i18n.translate("COMMAND.APP.BAN.BANEMBED.FIELDS.REASON.NO_REASON"),
-        },
-      ],
-    };
-    await ctx.reply({ embeds: [kickEmbed] }, {
-      private: !isKickMessageVisible,
-    });
+
+    await ctx.reply(
+      makeBasePunishmentEmbed(i18n, user, reason)
+        .setTitle(
+          i18n.translate("COMMAND.APP.KICK.KICKEMBED.TITLE"),
+        ),
+      {
+        private: !isKickMessageVisible,
+      },
+    );
   },
 });

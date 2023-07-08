@@ -1,11 +1,12 @@
-import {
-  ApplicationCommandOption,
-  ApplicationCommandOptionTypes,
-  Embed,
-} from "deps";
+import { ApplicationCommandOption, ApplicationCommandOptionTypes } from "deps";
 import { createCommand } from "internals/loadStuff.ts";
 import { CommandScope } from "structures";
-import { getOrFetchUser, parseTime, userUsernameAndDiscriminator } from "utils";
+import {
+  getOrFetchUser,
+  makeBasePunishmentEmbed,
+  parseTime,
+  parseTimeAndCheckIfCorrect,
+} from "utils";
 
 const options: ApplicationCommandOption[] = [
   {
@@ -23,7 +24,7 @@ const options: ApplicationCommandOption[] = [
   },
   {
     name: "delete-message-history",
-    description: "Delete message history of the user (Example: 2d, 10h5m)",
+    description: "Delete message history of the user (e.g.: 10h30m, 7d)",
     type: ApplicationCommandOptionTypes.String,
     minLength: 2,
     required: false,
@@ -35,6 +36,11 @@ const options: ApplicationCommandOption[] = [
     required: false,
   },
 ];
+
+const banMaxTimeRange = parseTime("7d");
+if (!banMaxTimeRange) {
+  throw new Error("banMaxTimeRange is null");
+}
 
 createCommand({
   name: "ban",
@@ -52,15 +58,13 @@ createCommand({
     const deleteMessageHistory = ctx.args.getString("delete-message-history");
     let parsedDeleteMessageHistoryTime: number | null | undefined = undefined;
     if (deleteMessageHistory) {
-      parsedDeleteMessageHistoryTime = parseTime(deleteMessageHistory);
-      if (parsedDeleteMessageHistoryTime === null) {
-        return void await ctx.reply(
-          i18n.translate("COMMAND.APP.BAN.PROVIDE_CORRECT_DELETE_MSG_HISTORY", [
-            "(e.g.: 1d, 10m, 4h)",
-          ]),
-          { private: true },
-        );
-      }
+      parsedDeleteMessageHistoryTime = await parseTimeAndCheckIfCorrect(
+        ctx,
+        i18n,
+        deleteMessageHistory,
+        { max: banMaxTimeRange },
+      );
+      if (parsedDeleteMessageHistoryTime === null) return;
     }
 
     const user = await getOrFetchUser(ctx.bot, userIdToBan);
@@ -75,23 +79,15 @@ createCommand({
     );
 
     const isBanMessageVisible = ctx.args.getBoolean("visible") ?? false;
-    const banEmbed: Embed = {
-      title: i18n.translate("COMMAND.APP.BAN.BANEMBED.TITLE"),
-      fields: [
-        {
-          name: i18n.translate("COMMAND.APP.BAN.BANEMBED.FIELDS.USER"),
-          value: `\`${userUsernameAndDiscriminator(user)}\`` +
-            `\n<@${user.id}>\n\`${user.id}\``,
-        },
-        {
-          name: i18n.translate("COMMAND.APP.BAN.BANEMBED.FIELDS.REASON"),
-          value: `\`${reason}\`` ??
-            i18n.translate("COMMAND.APP.BAN.BANEMBED.FIELDS.REASON.NO_REASON"),
-        },
-      ],
-    };
-    await ctx.reply({ embeds: [banEmbed] }, {
-      private: !isBanMessageVisible,
-    });
+
+    await ctx.reply(
+      makeBasePunishmentEmbed(i18n, user, reason)
+        .setTitle(
+          i18n.translate("COMMAND.APP.BAN.BANEMBED.TITLE"),
+        ),
+      {
+        private: !isBanMessageVisible,
+      },
+    );
   },
 });
