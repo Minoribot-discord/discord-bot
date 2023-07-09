@@ -15,10 +15,7 @@ async function start(bot: CustomBot) {
     bot,
     [
       { name: "inhibitors" },
-      {
-        name: "locales",
-        afterFunc: bot.i18n.init.bind(bot.i18n),
-      },
+      { name: "locales" },
       { name: "commands" },
       { name: "tasks", afterFunc: initializeTasks },
       { name: "modules", afterFunc: initializeModules },

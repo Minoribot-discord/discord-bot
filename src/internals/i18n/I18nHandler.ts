@@ -1,19 +1,15 @@
-import { CustomBot, getArgsLocaleKey, Locale, LocaleKeys } from "internals";
-
-const botDefaultLocale = "cat-central";
+import {
+  CustomBot,
+  defaultLocale,
+  getArgsLocaleKey,
+  Locale,
+  LocaleKeys,
+} from "internals";
 
 class I18nHandler {
-  globalDefaultLocale!: Locale;
+  globalDefaultLocale = defaultLocale;
 
   constructor(public bot: CustomBot) {}
-
-  init() {
-    this.bot.logger.info("Initializing i18n handler");
-    this.globalDefaultLocale = this.bot.locales.get(botDefaultLocale)!;
-    if (!this.globalDefaultLocale) {
-      throw new Error(`Couldn't find default locale: ${botDefaultLocale}`);
-    }
-  }
 
   translate<K extends LocaleKeys>(
     locale: Locale,
@@ -26,7 +22,7 @@ class I18nHandler {
 
     if (!value) {
       // check if the key is available in the default locale
-      if (locale.code !== botDefaultLocale) {
+      if (locale.code !== this.globalDefaultLocale.code) {
         value = this.globalDefaultLocale.keys[key];
       }
 
@@ -42,4 +38,4 @@ class I18nHandler {
   }
 }
 
-export { botDefaultLocale, I18nHandler };
+export { I18nHandler };
