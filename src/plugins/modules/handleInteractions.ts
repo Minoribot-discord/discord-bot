@@ -25,7 +25,10 @@ createModule({
 
       switch (interaction.type) {
         case InteractionTypes.ApplicationCommand:
-          handleApplicationCommand(bot, interaction);
+          handleApplicationCommand(bot, interaction)
+            .catch((error) =>
+              handleApplicationCommandError(bot, interaction, error)
+            );
       }
     };
 
@@ -65,7 +68,6 @@ async function handleApplicationCommand(
     commandsToExecute,
     context,
   );
-
   if (invalidInhibitors.length > 0) {
     context.reply(
       `**${i18nContext.translate("INHIBITOR.MISSING_CONDITIONS")}**\n\`${
@@ -80,12 +82,8 @@ async function handleApplicationCommand(
     return;
   }
 
-  try {
-    for (const command of commandsToExecute) {
-      await command.execute<ApplicationCommandContext>?.(context, i18nContext);
-    }
-  } catch (e) {
-    bot.logger.error(e);
+  for (const command of commandsToExecute) {
+    await command.execute<ApplicationCommandContext>?.(context, i18nContext);
   }
 }
 
@@ -135,4 +133,16 @@ async function checkInhibitors(
   }
 
   return invalidInhibitors;
+}
+
+// deno-lint-ignore require-await
+async function handleApplicationCommandError(
+  bot: CustomBot,
+  _interaction: Interaction,
+  error: unknown,
+) {
+  // const context = new ApplicationCommandContext(bot, interaction);
+  // const i18nContext = await (new I18nContext(bot, interaction)).initLocale();
+
+  bot.logger.error(error);
 }
