@@ -23,10 +23,12 @@ loadLocale({
     "EMBED.PUNISHMENT.FIELDS.REASON.NAME": "Reason",
     "EMBED.PUNISHMENT.FIELDS.REASON.VALUE.NO_REASON": "None",
     // Global command namespace
-    "COMMAND.GLOBAL.PROVIDE_CORRECT_TIME":
+    "COMMAND.GLOBAL.ERRORS.PROVIDE_CORRECT_TIME":
       "You need to provide a correct time/duration. (e.g.: 1d, 10m, 4h)",
-    "COMMAND.GLOBAL.PROVIDE_CORRECT_TIME_RANGE": (min: string, max: string) =>
-      `The time/duration needs to be between **${min}** and **${max}**`,
+    "COMMAND.GLOBAL.ERRORS.PROVIDE_CORRECT_TIME_RANGE": (
+      min: string,
+      max: string,
+    ) => `The time/duration needs to be between **${min}** and **${max}**`,
     // Application commands
     // Info command
     "COMMAND.APP.INFO.EMBED.TITLE": "Here are some information about the bot:",
@@ -47,5 +49,7 @@ loadLocale({
     "COMMAND.APP.MUTE.MUTEEMBED.FIELDS.DURATION.NAME": "Duration",
     // Unmute command
     "COMMAND.APP.UNMUTE.UNMUTEEMBED.TITLE": "User unmuted",
+    // Unban command
+    "COMMAND.APP.UNBAN.UNBANEMBED.TITLE": "User unbanned",
   },
 });

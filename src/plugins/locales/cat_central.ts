@@ -23,10 +23,12 @@ export const cat_central = {
     "EMBED.PUNISHMENT.FIELDS.REASON.NAME": "Motiu",
     "EMBED.PUNISHMENT.FIELDS.REASON.VALUE.NO_REASON": "Cap",
     // Global command namespace
-    "COMMAND.GLOBAL.PROVIDE_CORRECT_TIME":
+    "COMMAND.GLOBAL.ERRORS.PROVIDE_CORRECT_TIME":
       "Has de fornir un temps/una duració correcte. (per exemple: 1d, 10m, 4h)",
-    "COMMAND.GLOBAL.PROVIDE_CORRECT_TIME_RANGE": (min: string, max: string) =>
-      `El temps/la duració ha de ser entre **${min}** i **${max}**`,
+    "COMMAND.GLOBAL.ERRORS.PROVIDE_CORRECT_TIME_RANGE": (
+      min: string,
+      max: string,
+    ) => `El temps/la duració ha de ser entre **${min}** i **${max}**`,
     // Application commands
     // Info command
     "COMMAND.APP.INFO.EMBED.TITLE":
@@ -48,6 +50,8 @@ export const cat_central = {
     "COMMAND.APP.MUTE.MUTEEMBED.FIELDS.DURATION.NAME": "Duració",
     // Unmute command
     "COMMAND.APP.UNMUTE.UNMUTEEMBED.TITLE": "L'usuari ja no és silenciat",
+    // Unban command
+    "COMMAND.APP.UNBAN.UNBANEMBED.TITLE": "L'usuari ja no és bandejat",
   },
 };
 

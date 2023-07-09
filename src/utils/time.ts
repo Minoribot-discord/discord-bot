@@ -105,7 +105,7 @@ export async function parseTimeAndCheckIfCorrect(
   const parsedTime = parseTime(timeString);
   if (parsedTime === null) {
     await ctx.reply(
-      i18n.translate("COMMAND.GLOBAL.PROVIDE_CORRECT_TIME"),
+      i18n.translate("COMMAND.GLOBAL.ERRORS.PROVIDE_CORRECT_TIME"),
       { private: true },
     );
     return null;
@@ -113,7 +113,7 @@ export async function parseTimeAndCheckIfCorrect(
 
   if (parsedTime < range?.min || parsedTime > range?.max) {
     await ctx.reply(
-      i18n.translate("COMMAND.GLOBAL.PROVIDE_CORRECT_TIME_RANGE", [
+      i18n.translate("COMMAND.GLOBAL.ERRORS.PROVIDE_CORRECT_TIME_RANGE", [
         formatTime(range.min),
         formatTime(range.max),
       ]),
