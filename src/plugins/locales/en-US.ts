@@ -4,6 +4,13 @@ loadLocale({
   code: "en-US",
   name: "American English",
   keys: {
+    // Inhibitors
+    "INHIBITOR.MISSING_CONDITIONS":
+      "You cannot execute this command, missing conditions:",
+    "INHIBITOR.IS_BOT_OWNER.REJECT":
+      "This command is reserved for the bot owner",
+    "INHIBITOR.IS_TARGET_MEMBER_EDITABLE.REJECT":
+      "You cannot edit this user: They are admin, or server owner, or they're above you in the member's list",
     // Collectors
     "COLLECTORS.GLOBAL.REJECT.COLLECTOR_BEGAN_BEFORE":
       "A new collector began before the user responded to the previous one.",

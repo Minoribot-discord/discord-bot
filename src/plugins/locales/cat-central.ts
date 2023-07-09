@@ -9,6 +9,8 @@ export const cat_central = {
       "No pots executar aquesta ordre, falten condicions:",
     "INHIBITOR.IS_BOT_OWNER.REJECT":
       "Aquesta ordre està reservada al propietari/a la propietària del bot",
+    "INHIBITOR.IS_TARGET_MEMBER_EDITABLE.REJECT":
+      "No pots editar aquest usuari: És admin, o és propietari del servidor, o és damunt teu dins de la llista dels membres",
     // Collectors
     "COLLECTORS.GLOBAL.REJECT.COLLECTOR_BEGAN_BEFORE":
       "Un nou col·lector ha començat abans que un usuari respongui a l'antic col·lector.",
