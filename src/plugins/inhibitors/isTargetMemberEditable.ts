@@ -1,4 +1,4 @@
-import { hasGuildPermissions, highestRole } from "deps";
+import { hasGuildPermissions, highestRole, JsonErrorCodes, Member } from "deps";
 import { createInhibitor } from "internals/loadStuff.ts";
 import { getOrFetchMember } from "utils";
 
@@ -15,11 +15,38 @@ createInhibitor({
     );
 
     const guild = await ctx.guild;
-    const targetMember = await getOrFetchMember(
-      ctx.bot,
-      ctx.guildId!,
-      targetMemberId,
-    );
+
+    /*
+      Will try to get the member from the cache, or fetch it from Discord.
+      If it throws an error because the resource doesn't exist,
+      (aka the member is probably not on the server)
+      it will just return true and validate the inhibitor
+      Maybe we'll change this behaviour in the future
+    */
+    let targetMember: Member | undefined;
+    try {
+      targetMember = await getOrFetchMember(
+        ctx.bot,
+        ctx.guildId!,
+        targetMemberId,
+      );
+    } catch (e_) {
+      const error = e_ as unknown;
+
+      if (
+        error && (error instanceof Error) && ("message" in error) &&
+        (typeof error.message === "string") &&
+        (error.message.includes(
+          String(JsonErrorCodes.UnknownMember),
+        ))
+      ) {
+        ctx.bot.logger.error(error);
+        return true;
+      } else {
+        throw error;
+      }
+    }
+
     const authorMember = await ctx.authorMember;
 
     if (hasGuildPermissions(ctx.bot, guild, targetMember, ["ADMINISTRATOR"])) {
