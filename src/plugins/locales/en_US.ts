@@ -1,7 +1,7 @@
 import { loadLocale } from "internals/loadStuff.ts";
 
 loadLocale({
-  code: "en-US",
+  code: "en_US",
   name: "American English",
   keys: {
     // Inhibitors

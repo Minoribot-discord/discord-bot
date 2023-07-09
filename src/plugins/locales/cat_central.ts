@@ -1,7 +1,7 @@
 import { loadLocale } from "internals/loadStuff.ts";
 
 export const cat_central = {
-  code: "cat-central",
+  code: "cat_central",
   name: "Català central estàndard",
   keys: {
     // Inhibitors
