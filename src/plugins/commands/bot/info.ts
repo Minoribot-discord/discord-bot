@@ -31,7 +31,6 @@ createCommand({
   category: "bot",
   description: "Show some info about the bot",
   scope: CommandScope.GLOBAL,
-  defaultMemberPermissions: ["ADMINISTRATOR"],
   dmPermission: true,
   execute,
 });
