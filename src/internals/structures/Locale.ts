@@ -1,4 +1,4 @@
-import { cat_central } from "plugins/locales/cat-central.ts";
+import { cat_central } from "plugins/locales/cat_central.ts";
 
 type LocaleKeys = keyof typeof cat_central.keys;
 
