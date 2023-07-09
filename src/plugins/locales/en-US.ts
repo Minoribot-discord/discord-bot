@@ -4,6 +4,11 @@ loadLocale({
   code: "en-US",
   name: "American English",
   keys: {
+    // Inhibitors
+    "INHIBITOR.MISSING_CONDITIONS":
+      "You cannot execute this command, missing conditions:",
+    "INHIBITOR.IS_BOT_OWNER.REJECT":
+      "This command is reserved for the bot owner",
     "COLLECTORS.GLOBAL.REJECT.COLLECTOR_BEGAN_BEFORE":
       "A new collector began before the user responded to the previous one.",
     "COLLECTORS.COMPONENTS.REJECT.TIMEOUT":
