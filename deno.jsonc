@@ -17,5 +17,8 @@
     "database": "./src/database/mod.ts",
     "database/": "./src/database/",
     "i18n": "./src/internals/i18n/mod.ts"
+  },
+  "compilerOptions": {
+    "noUncheckedIndexedAccess": true
   }
 }

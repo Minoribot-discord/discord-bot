@@ -20,7 +20,9 @@ import {
 } from "internals/loadStuff.ts";
 const { discordToken, intents } = botConfig;
 
-const baseBot = createBot({ token: discordToken, intents });
+const botId = BigInt(atob(discordToken.split(".")[0]));
+
+const baseBot = createBot({ token: discordToken, intents, botId });
 const botWithCache = enableCachePlugin(baseBot);
 enableCacheSweepers(botWithCache);
 const botWithHelpersPlugin = enableHelpersPlugin(botWithCache);
