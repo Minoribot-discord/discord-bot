@@ -9,7 +9,7 @@ import { handleConsoleInput } from "internals/cli.ts";
 import { initDatabase } from "database";
 
 async function start(bot: CustomBot) {
-  bot.db = await initDatabase(bot);
+  const databaseWrapper = initDatabase(bot);
 
   await loadFolders(
     bot,
@@ -22,6 +22,7 @@ async function start(bot: CustomBot) {
     ],
   );
 
+  bot.db = await databaseWrapper;
   // start the bot
   bot.logger.info("Starting connection to the Discord API & gateway");
   await startBot(bot);
