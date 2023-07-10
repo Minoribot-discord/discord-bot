@@ -5,8 +5,8 @@ loadLocale({
   name: "American English",
   keys: {
     // Inhibitors
-    "INHIBITOR.MISSING_CONDITIONS":
-      "You cannot execute this command, missing conditions:",
+    "INHIBITOR.MISSING_CONDITIONS": (formattedMissingConditions: string) =>
+      `**You cannot execute this command, missing conditions:**${formattedMissingConditions}`,
     "INHIBITOR.IS_BOT_OWNER.REJECT":
       "This command is reserved for the bot owner",
     "COLLECTORS.GLOBAL.REJECT.COLLECTOR_BEGAN_BEFORE":

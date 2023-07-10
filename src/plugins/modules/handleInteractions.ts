@@ -70,13 +70,18 @@ async function handleApplicationCommand(
   );
   if (invalidInhibitors.length > 0) {
     context.reply(
-      `**${i18nContext.translate("INHIBITOR.MISSING_CONDITIONS")}**\n\`${
-        invalidInhibitors.map((inhibitor) =>
-          inhibitor.rejectMessage(i18nContext)
-        ).join(
-          "\`, \`",
-        )
-      }\``,
+      i18nContext.translate(
+        "INHIBITOR.MISSING_CONDITIONS",
+        [
+          `\n\`${
+            invalidInhibitors.map((inhibitor) =>
+              inhibitor.rejectMessage(i18nContext)
+            ).join(
+              "\`, \`",
+            )
+          }\``,
+        ],
+      ),
       { private: true },
     );
     return;

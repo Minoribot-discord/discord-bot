@@ -5,8 +5,8 @@ export const cat_central = {
   name: "Català central estàndard",
   keys: {
     // Inhibitors
-    "INHIBITOR.MISSING_CONDITIONS":
-      "No pots executar aquesta ordre, falten condicions:",
+    "INHIBITOR.MISSING_CONDITIONS": (formattedMissingConditions: string) =>
+      `**No pots executar aquesta ordre, falten condicions:**${formattedMissingConditions}`,
     "INHIBITOR.IS_BOT_OWNER.REJECT":
       "Aquesta ordre està reservada al propietari/a la propietària del bot",
     "COLLECTORS.GLOBAL.REJECT.COLLECTOR_BEGAN_BEFORE":
