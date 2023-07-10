@@ -23,7 +23,7 @@ export function formatDateIntoDayMonthYear(date: Date): string {
 
 export function parseTime(timeString: string): number | null {
   const timeRegex = /(\d+)(\D+)/g;
-  const timeUnits: { [key: string]: number } = {
+  const timeUnits = {
     d: 24 * 60 * 60,
     h: 60 * 60,
     m: 60,
@@ -34,10 +34,11 @@ export function parseTime(timeString: string): number | null {
   let match;
   while ((match = timeRegex.exec(timeString)) !== null) {
     const [_, amount, unit] = match;
-    if (!(unit in timeUnits)) {
+    if (!amount || !unit || !(unit in timeUnits)) {
       return null;
     }
-    totalSeconds += parseInt(amount) * timeUnits[unit];
+    totalSeconds += parseInt(amount) *
+      timeUnits[unit as keyof typeof timeUnits];
   }
 
   return totalSeconds;
