@@ -23,5 +23,6 @@ export function camelCaseToScreamingSnakeCase(str: string) {
 }
 
 export * from "./collectors.ts";
+export * from "./embed.ts";
 export * from "./fetch.ts";
 export * from "./time.ts";
