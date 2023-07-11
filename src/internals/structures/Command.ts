@@ -22,14 +22,21 @@ interface BaseCommandParams {
   description: string;
   options?: ApplicationCommandOption[];
   inhibitors?: string[];
+  requiredBotPermissions?: PermissionStrings[];
   execute?: CommandExecuteFunc;
 }
+
+const globalRequiredBotPermissions: PermissionStrings[] = [
+  "EMBED_LINKS",
+];
+
 class BaseCommand {
   name: string;
   description: string;
   options: ApplicationCommandOption[] = [];
   _inhibitors: string[] = [];
   inhibitors: Inhibitor[] = [];
+  requiredBotPermissions: PermissionStrings[] = [];
 
   execute?: CommandExecuteFunc;
 
@@ -39,6 +46,7 @@ class BaseCommand {
       description,
       options,
       inhibitors,
+      requiredBotPermissions,
       execute,
     } = params;
 
@@ -46,6 +54,22 @@ class BaseCommand {
     this.description = description;
     if (options) this.options = options;
     if (inhibitors) this._inhibitors = inhibitors;
+    if (requiredBotPermissions) {
+      this.requiredBotPermissions = requiredBotPermissions;
+
+      if (requiredBotPermissions.length > 0) {
+        for (
+          const globalRequiredBotPermission of globalRequiredBotPermissions
+        ) {
+          if (
+            !this.requiredBotPermissions.includes(globalRequiredBotPermission)
+          ) {
+            this.requiredBotPermissions.push(globalRequiredBotPermission);
+          }
+        }
+      }
+    }
+
     this.execute = execute?.bind(this);
   }
 }
@@ -142,7 +166,14 @@ class SubCommandGroup extends SubCommand {
   }
 }
 
-export { BaseCommand, Command, CommandScope, SubCommand, SubCommandGroup };
+export {
+  BaseCommand,
+  Command,
+  CommandScope,
+  globalRequiredBotPermissions,
+  SubCommand,
+  SubCommandGroup,
+};
 export type {
   CommandExecuteFunc,
   CommandParams,
