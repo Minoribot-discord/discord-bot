@@ -40,13 +40,13 @@ function convertEnvVarToBoolean(envVarName: string): boolean {
 }
 
 const mongoConfig: MongoConfig = {
-  url: env["MONGO_URL"],
+  url: env["MONGO_URL"]!,
 };
 
 const botConfig: BotConfig = {
-  discordToken: env["DISCORD_TOKEN"],
-  ownerId: BigInt(env["BOT_OWNER_ID"]),
-  supportGuildId: BigInt(env["SUPPORT_GUILD_ID"]),
+  discordToken: env["DISCORD_TOKEN"]!,
+  ownerId: BigInt(env["BOT_OWNER_ID"]!),
+  supportGuildId: BigInt(env["SUPPORT_GUILD_ID"]!),
   intents,
   refreshCommands: convertEnvVarToBoolean("REFRESH_COMMANDS"),
   devMode: convertEnvVarToBoolean("DEV_MODE"),

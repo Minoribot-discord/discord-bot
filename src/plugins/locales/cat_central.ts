@@ -5,8 +5,8 @@ export const cat_central = {
   name: "Català central estàndard",
   keys: {
     // Inhibitors
-    "INHIBITOR.MISSING_CONDITIONS":
-      "No pots executar aquesta ordre, falten condicions:",
+    "INHIBITOR.MISSING_CONDITIONS": (formattedMissingConditions: string) =>
+      `**No pots executar aquesta ordre, falten condicions:**${formattedMissingConditions}`,
     "INHIBITOR.IS_BOT_OWNER.REJECT":
       "Aquesta ordre està reservada al propietari/a la propietària del bot",
     "INHIBITOR.IS_TARGET_MEMBER_EDITABLE.REJECT":
@@ -29,6 +29,10 @@ export const cat_central = {
       min: string,
       max: string,
     ) => `El temps/la duració ha de ser entre **${min}** i **${max}**`,
+    "COMMAND.GLOBAL.MISSING_PERMISSIONS": (
+      formattedMissingPermissions: string,
+    ) =>
+      `**Em falta un o més dels permisos següents, en aquest canal o en aquest servidor:**${formattedMissingPermissions}`,
     // Application commands
     // Info command
     "COMMAND.APP.INFO.EMBED.TITLE":

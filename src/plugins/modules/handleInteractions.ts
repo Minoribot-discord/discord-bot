@@ -7,9 +7,11 @@ import {
 } from "structures";
 import {
   ApplicationCommandOptionTypes,
+  hasChannelPermissions,
   Interaction,
   InteractionDataOption,
   InteractionTypes,
+  PermissionStrings,
 } from "deps";
 import { createModule } from "internals/loadStuff.ts";
 import { CustomBot } from "internals/CustomBot.ts";
@@ -28,7 +30,7 @@ createModule({
           handleApplicationCommand(bot, interaction)
             .catch((error) =>
               handleApplicationCommandError(bot, interaction, error)
-            );
+            ).catch(bot.logger.error);
       }
     };
 
@@ -70,13 +72,38 @@ async function handleApplicationCommand(
   );
   if (invalidInhibitors.length > 0) {
     context.reply(
-      `**${i18nContext.translate("INHIBITOR.MISSING_CONDITIONS")}**\n\`${
-        invalidInhibitors.map((inhibitor) =>
-          inhibitor.rejectMessage(i18nContext)
-        ).join(
-          "\`, \`",
-        )
-      }\``,
+      i18nContext.translate(
+        "INHIBITOR.MISSING_CONDITIONS",
+        [
+          `\n\`${
+            invalidInhibitors.map((inhibitor) =>
+              inhibitor.rejectMessage(i18nContext)
+            ).join(
+              "\`, \`",
+            )
+          }\``,
+        ],
+      ),
+      { private: true },
+    );
+    return;
+  }
+
+  const allRequiredBotPermissions = calculateAllRequiredBotPermissions(
+    commandsToExecute,
+  );
+  const botHasRequiredPermissions = await checkRequiredBotPermissions(
+    allRequiredBotPermissions,
+    context,
+  );
+  if (!botHasRequiredPermissions) {
+    context.reply(
+      i18nContext.translate(
+        "COMMAND.GLOBAL.MISSING_PERMISSIONS",
+        [
+          `\n\`${allRequiredBotPermissions.join("\`, \`")}\``,
+        ],
+      ),
       { private: true },
     );
     return;
@@ -120,19 +147,54 @@ function checkForSubCommands(
 
 async function checkInhibitors(
   commandsToExecute: BaseCommand[],
-  context: Context,
+  ctx: Context,
 ): Promise<Inhibitor[]> {
   const invalidInhibitors: Inhibitor[] = [];
 
   for (const command of commandsToExecute) {
     for (const inhibitor of command.inhibitors) {
-      if (!(await inhibitor.execute(context))) {
+      if (!(await inhibitor.execute(ctx))) {
         invalidInhibitors.push(inhibitor);
       }
     }
   }
 
   return invalidInhibitors;
+}
+
+function calculateAllRequiredBotPermissions(
+  commandsToExecute: BaseCommand[],
+): PermissionStrings[] {
+  const allRequiredBotPermissions: PermissionStrings[] = [];
+  for (const command of commandsToExecute) {
+    for (const permission of command.requiredBotPermissions) {
+      if (!allRequiredBotPermissions.includes(permission)) {
+        allRequiredBotPermissions.push(permission);
+      }
+    }
+  }
+
+  return allRequiredBotPermissions;
+}
+
+async function checkRequiredBotPermissions(
+  allRequiredBotPermissions: PermissionStrings[],
+  ctx: Context,
+): Promise<boolean> {
+  const botMember = await ctx.botMember;
+
+  if (
+    hasChannelPermissions(
+      ctx.bot,
+      await ctx.channel,
+      botMember,
+      allRequiredBotPermissions,
+    )
+  ) {
+    return true;
+  }
+
+  return false;
 }
 
 // deno-lint-ignore require-await

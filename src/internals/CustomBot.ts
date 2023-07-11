@@ -1,4 +1,4 @@
-import { BotWithCache, BotWithHelpersPlugin, Collection } from "deps";
+import { BotWithCache, BotWithHelpersPlugin, Collection, User } from "deps";
 import {
   Command,
   CommandCategory,
@@ -19,6 +19,7 @@ type CustomBot = BotWithHelpersPlugin<BotWithCache> & {
   ready: boolean;
   config: BotConfig;
   ownerId: bigint;
+  getBotUser: () => Promise<User>;
   logger: typeof logger;
   db: DatabaseWrapper;
   i18n: I18nHandler;

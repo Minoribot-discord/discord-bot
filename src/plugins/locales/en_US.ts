@@ -5,8 +5,8 @@ loadLocale({
   name: "American English",
   keys: {
     // Inhibitors
-    "INHIBITOR.MISSING_CONDITIONS":
-      "You cannot execute this command, missing conditions:",
+    "INHIBITOR.MISSING_CONDITIONS": (formattedMissingConditions: string) =>
+      `**You cannot execute this command, missing conditions:**${formattedMissingConditions}`,
     "INHIBITOR.IS_BOT_OWNER.REJECT":
       "This command is reserved for the bot owner",
     "INHIBITOR.IS_TARGET_MEMBER_EDITABLE.REJECT":
@@ -29,6 +29,10 @@ loadLocale({
       min: string,
       max: string,
     ) => `The time/duration needs to be between **${min}** and **${max}**`,
+    "COMMAND.GLOBAL.MISSING_PERMISSIONS": (
+      formattedMissingPermissions: string,
+    ) =>
+      `**I am missing one or more of the following permissions, in this channel or in this server:**${formattedMissingPermissions}`,
     // Application commands
     // Info command
     "COMMAND.APP.INFO.EMBED.TITLE": "Here are some information about the bot:",

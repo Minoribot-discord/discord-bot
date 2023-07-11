@@ -24,7 +24,7 @@ export function formatDateIntoDayMonthYear(date: Date): string {
   return `${day}-${month}-${year}`;
 }
 
-export const timeUnitsParseTime: { [key: string]: number } = {
+export const timeUnitsParseTime = {
   y: 365 * 24 * 60 * 60,
   d: 24 * 60 * 60,
   h: 60 * 60,
@@ -45,22 +45,24 @@ export function parseTime(timeString: string): number | null {
   let matched = false;
   while ((match = timeRegex.exec(timeString)) !== null) {
     const [_, amount, unit] = match;
-    if (!(unit in timeUnitsParseTime)) {
+    if (!amount || !unit || !(unit in timeUnitsParseTime)) {
       return null;
     }
     matched = true;
-    totalSeconds += parseInt(amount) * timeUnitsParseTime[unit];
+    totalSeconds += parseInt(amount) *
+      timeUnitsParseTime[unit as keyof typeof timeUnitsParseTime];
   }
 
   if (!matched) return null;
   return reversed ? -totalSeconds : totalSeconds;
 }
 
-const timeUnitsFormatTime: { [key: string]: number } = {
-  "day(s)": 24 * 60 * 60,
-  "hour(s)": 60 * 60,
-  "month(s)": 60,
-  "second(s)": 1,
+const timeUnitsFormatTime = {
+  " year(s)": 365 * 24 * 60 * 60,
+  " day(s)": 24 * 60 * 60,
+  " hour(s)": 60 * 60,
+  " month(s)": 60,
+  " second(s)": 1,
 };
 export function formatTime(seconds: number): string {
   let reversed = false;
@@ -69,10 +71,11 @@ export function formatTime(seconds: number): string {
     seconds = -seconds;
   }
 
-  const units = Object.keys(timeUnitsFormatTime); // Reverse the order of units
+  const units = Object.keys(timeUnitsFormatTime);
 
   for (const unit of units) {
-    const unitValue = timeUnitsFormatTime[unit];
+    const unitValue =
+      timeUnitsFormatTime[unit as keyof typeof timeUnitsFormatTime];
     if (seconds >= unitValue) {
       const amount = (seconds / unitValue).toFixed(2);
       return `${reversed ? "-" : ""}${amount}${unit}`;
