@@ -22,6 +22,17 @@ async function getOrFetchGuild(bot: CustomBot, guildId: bigint) {
   return guild;
 }
 
+async function getOrFetchChannel(bot: CustomBot, channelId: bigint) {
+  let channel = bot.channels.get(channelId);
+
+  if (!channel) {
+    channel = await bot.helpers.getChannel(channelId);
+    bot.channels.set(channelId, channel);
+  }
+
+  return channel;
+}
+
 async function getOrFetchMember(
   bot: CustomBot,
   guildId: bigint,
@@ -45,4 +56,4 @@ async function getOrFetchMember(
   return member;
 }
 
-export { getOrFetchGuild, getOrFetchMember, getOrFetchUser };
+export { getOrFetchChannel, getOrFetchGuild, getOrFetchMember, getOrFetchUser };

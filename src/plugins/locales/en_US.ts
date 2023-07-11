@@ -15,6 +15,10 @@ loadLocale({
       "You didn't use the component in time.",
     "COLLECTORS.REACTIONS.REJECT.TIMEOUT": "You didn't react in time.",
     "COLLECTORS.MESSAGES.REJECT.TIMEOUT": "You didn't send a message in time.",
+    "COMMAND.GLOBAL.MISSING_PERMISSIONS": (
+      formattedMissingPermissions: string,
+    ) =>
+      `**I am missing one or more of the following permissions, in this channel or in this server:**${formattedMissingPermissions}`,
     "COMMAND.APP.INFO.EMBED.TITLE": "Here are some information about the bot:",
     "COMMAND.APP.SETTINGS.SERVER.CONFIGEMBED.TITLE": "Server configuration",
     "COMMAND.APP.SETTINGS.SERVER.CONFIGEMBED.FIELDS.LANGUAGE.NAME": "Language",

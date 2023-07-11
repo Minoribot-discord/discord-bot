@@ -8,7 +8,7 @@ import {
 } from "deps";
 import { botConfig } from "config";
 import { CustomBot, I18nHandler, logger, tasks } from "internals";
-import { collectors } from "utils";
+import { collectors, getOrFetchUser } from "utils";
 import {
   commandCategories,
   commands,
@@ -40,6 +40,7 @@ const customBot = botWithValidationsPlugin as CustomBot;
 customBot.ready = false;
 customBot.config = botConfig;
 customBot.ownerId = botConfig.ownerId;
+customBot.getBotUser = () => getOrFetchUser(customBot, customBot.id);
 customBot.logger = logger;
 customBot.i18n = new I18nHandler(customBot);
 customBot.collectors = collectors;

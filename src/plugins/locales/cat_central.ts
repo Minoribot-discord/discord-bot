@@ -15,6 +15,10 @@ export const cat_central = {
       "No has utilitzat el component a temps.",
     "COLLECTORS.REACTIONS.REJECT.TIMEOUT": "No has reaccionat a temps.",
     "COLLECTORS.MESSAGES.REJECT.TIMEOUT": "No has enviat un missatge a temps.",
+    "COMMAND.GLOBAL.MISSING_PERMISSIONS": (
+      formattedMissingPermissions: string,
+    ) =>
+      `**Em falta un o més dels permisos següents, en aquest canal o en aquest servidor:**${formattedMissingPermissions}`,
     "COMMAND.APP.INFO.EMBED.TITLE":
       "Vet aquí informacions sobre el bot de Discord:",
     "COMMAND.APP.SETTINGS.SERVER.CONFIGEMBED.TITLE":
