@@ -49,6 +49,7 @@ createCommand({
   scope: CommandScope.GLOBAL,
   dmPermission: false,
   defaultMemberPermissions: ["BAN_MEMBERS"],
+  requiredBotPermissions: ["BAN_MEMBERS"],
   inhibitors: ["isTargetMemberEditable"],
   options,
   execute: async (ctx, i18n) => {

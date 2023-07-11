@@ -32,6 +32,7 @@ createCommand({
   scope: CommandScope.GLOBAL,
   dmPermission: false,
   defaultMemberPermissions: ["BAN_MEMBERS"],
+  requiredBotPermissions: ["BAN_MEMBERS"],
   options,
   execute: async (ctx, i18n) => {
     const _userIdToUnban = ctx.args.getString("user")!;

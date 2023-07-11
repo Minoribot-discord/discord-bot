@@ -25,6 +25,7 @@ createCommand({
   scope: CommandScope.GLOBAL,
   dmPermission: false,
   defaultMemberPermissions: ["MUTE_MEMBERS"],
+  requiredBotPermissions: ["MUTE_MEMBERS"],
   inhibitors: ["isTargetMemberEditable"],
   options,
   execute: async (ctx, i18n) => {
