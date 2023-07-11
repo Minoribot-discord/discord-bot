@@ -12,4 +12,15 @@ if (botConfig.devMode) {
   );
 }
 
+// Little script to convert the enum BitwisePermissionFlags to a object, filtering any non-string key
+
+// let object: any = {};
+
+// console.log(
+//   Object.keys(BitwisePermissionFlags).filter((key) => isNaN(parseInt(key))).map(
+//     (key) => object[`PERMISSION.${key}`] = undefined,
+//   ),
+// );
+// console.log(object);
+
 await start(customBot);
