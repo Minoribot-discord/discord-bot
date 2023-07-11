@@ -7,12 +7,18 @@ import {
   Message,
 } from "deps";
 import { CustomBot, EmbedBuilder } from "internals";
-import { getOrFetchGuild, getOrFetchMember, getOrFetchUser } from "utils";
+import {
+  getOrFetchChannel,
+  getOrFetchGuild,
+  getOrFetchMember,
+  getOrFetchUser,
+} from "utils";
 import { ArgumentParser } from "structures";
 
 class ApplicationCommandContext {
   authorId: bigint;
   guildId: bigint | undefined;
+  channelId: bigint | undefined;
 
   args: ArgumentParser;
 
@@ -22,6 +28,7 @@ class ApplicationCommandContext {
   constructor(public bot: CustomBot, public interaction: Interaction) {
     this.authorId = interaction.user.id;
     this.guildId = interaction.guildId;
+    this.channelId = interaction.channelId;
 
     this.args = new ArgumentParser(interaction.data?.options);
   }
@@ -87,6 +94,16 @@ class ApplicationCommandContext {
     return getOrFetchUser(this.bot, this.interaction.user.id);
   }
 
+  get botMember() {
+    if (!this.guildId) {
+      throw new Error(
+        "Cannot get the author of the interaction as a member, no guild id was found.",
+      );
+    }
+
+    return getOrFetchMember(this.bot, this.guildId, this.bot.id);
+  }
+
   get authorMember() {
     if (!this.guildId) {
       throw new Error(
@@ -104,6 +121,16 @@ class ApplicationCommandContext {
     }
 
     return getOrFetchGuild(this.bot, this.guildId);
+  }
+
+  get channel() {
+    if (!this.channelId) {
+      throw new Error(
+        "Cannot get the channel of the interaction, no channel id was found.",
+      );
+    }
+
+    return getOrFetchChannel(this.bot, this.channelId);
   }
 
   async #replyOriginal(data: InteractionCallbackData) {
