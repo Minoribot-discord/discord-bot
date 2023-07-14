@@ -1,4 +1,3 @@
-import { startBot } from "deps";
 import { CustomBot } from "internals/CustomBot.ts";
 import {
   initializeModules,
@@ -23,9 +22,10 @@ async function start(bot: CustomBot) {
   );
 
   bot.db = await databaseWrapper;
+  
   // start the bot
   bot.logger.info("Starting connection to the Discord API & gateway");
-  await startBot(bot);
+  await bot.start();
 
   await handleConsoleInput(bot);
 }
