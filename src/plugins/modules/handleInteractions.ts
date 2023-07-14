@@ -22,8 +22,8 @@ createModule({
   init: (bot) => {
     const { interactionCreate } = bot.events;
 
-    bot.events.interactionCreate = (_bot, interaction) => {
-      interactionCreate(_bot, interaction);
+    bot.events.interactionCreate = (interaction) => {
+      interactionCreate?.(interaction);
 
       switch (interaction.type) {
         case InteractionTypes.ApplicationCommand:

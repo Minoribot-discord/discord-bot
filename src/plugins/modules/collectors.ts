@@ -9,20 +9,20 @@ createModule({
   init: (bot) => {
     const { messageCreate, reactionAdd, interactionCreate } = bot.events;
 
-    bot.events.messageCreate = (_bot, message) => {
-      messageCreate(_bot, message);
+    bot.events.messageCreate = (message) => {
+      messageCreate?.(message);
 
       handleMessageCollector(bot, message);
     };
 
-    bot.events.reactionAdd = (_bot, payload) => {
-      reactionAdd(_bot, payload);
+    bot.events.reactionAdd = (payload) => {
+      reactionAdd?.(payload);
 
       handleReactionCollector(bot, payload);
     };
 
-    bot.events.interactionCreate = (_bot, interaction) => {
-      interactionCreate(_bot, interaction);
+    bot.events.interactionCreate = (interaction) => {
+      interactionCreate?.(interaction);
 
       switch (interaction.type) {
         case InteractionTypes.MessageComponent:
@@ -41,7 +41,7 @@ function handleMessageCollector(
   message: Message,
 ) {
   const collector = bot.collectors.messages.get(
-    `${message.authorId}-${message.channelId}`,
+    `${message.author.id}-${message.channelId}`,
   );
   // This user has no collectors pending or the message is in a different channel
   if (!collector || message.channelId !== collector.channelId) return;
@@ -57,7 +57,7 @@ function handleMessageCollector(
     collector.maxUsage === collector.messages.length + 1
   ) {
     // Remove the collector
-    bot.collectors.messages.delete(`${message.authorId}-${message.channelId}`);
+    bot.collectors.messages.delete(`${message.author.id}-${message.channelId}`);
     // Resolve the collector
     return collector.resolve({ results: [...collector.messages, message] });
   }

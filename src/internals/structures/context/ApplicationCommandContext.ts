@@ -155,10 +155,7 @@ class ApplicationCommandContext {
   #replyFollowup(data: InteractionCallbackData) {
     return this.bot.helpers.sendFollowupMessage(
       this.interaction.token,
-      // @ts-ignore: "type" property not needed
-      {
-        data,
-      },
+      data,
     );
   }
 }
