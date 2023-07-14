@@ -1,4 +1,4 @@
-import { Collection } from "deps";
+import { Collection, delay } from "deps";
 import { Command, CommandScope } from "structures";
 import { createModule } from "internals/loadStuff.ts";
 import { CustomBot } from "internals/CustomBot.ts";
@@ -9,11 +9,11 @@ createModule({
   init: (bot: CustomBot) => {
     const { ready } = bot.events;
 
-    bot.events.ready = async (_bot, payload, rawPayload) => {
-      await ready(_bot, payload, rawPayload);
+    bot.events.ready = async (payload, rawPayload) => {
+      await ready?.(payload, rawPayload);
 
       if (bot.config.refreshCommands && !bot.ready) {
-        await bot.utils.delay(2000);
+        await delay(2000);
 
         await removeNonExistentApplicationCommands(bot);
         await handleGuildScopedCommands(bot);
@@ -89,7 +89,7 @@ async function handleGlobalScopedCommands(bot: CustomBot) {
   );
 
   if (bot.config.devMode) {
-    bot.logger.warning(
+    bot.logger.warn(
       "Dev mode detected, global commands will be loaded for each guild instead of globally",
     );
     for (const guildId of bot.guilds.keys()) {
