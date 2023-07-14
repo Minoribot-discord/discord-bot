@@ -1,4 +1,4 @@
-import { BotWithCache, BotWithHelpersPlugin, Collection, User } from "deps";
+import { Bot, Collection, User } from "deps";
 import {
   Command,
   CommandCategory,
@@ -10,17 +10,16 @@ import {
   SubCommandGroup,
   Task,
 } from "structures";
-import { BotConfig, I18nHandler, logger } from "internals";
+import { BotConfig, I18nHandler } from "internals";
 import { collectors } from "utils";
 import { DatabaseWrapper } from "database/database.ts";
 
 // custom type for the bot so we can add custom properties
-type CustomBot = BotWithHelpersPlugin<BotWithCache> & {
+type CustomBot = Bot & {
   ready: boolean;
   config: BotConfig;
   ownerId: bigint;
   getBotUser: () => Promise<User>;
-  logger: typeof logger;
   db: DatabaseWrapper;
   i18n: I18nHandler;
   collectors: typeof collectors;
