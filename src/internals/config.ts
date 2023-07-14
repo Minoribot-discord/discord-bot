@@ -8,10 +8,15 @@ interface BotConfig {
   refreshCommands: boolean;
   devMode: boolean;
   mongo: MongoConfig;
+  redis: RedisConfig;
 }
 
 interface MongoConfig {
   url: string;
+}
+
+interface RedisConfig {
+  cacheUrl: string;
 }
 
 // @ts-ignore:
@@ -26,9 +31,21 @@ let intents: BotConfig["intents"] = 0;
 ] as Array<keyof typeof GatewayIntents>) //
   .map((intent) => intents |= GatewayIntents[intent]);
 
-const env = await dotenv.load();
+type EnvKey =
+  | "DISCORD_TOKEN"
+  | "BOT_OWNER_ID"
+  | "SUPPORT_GUILD_ID"
+  | "REFRESH_COMMANDS"
+  | "DEV_MODE"
+  | "MONGO_URL"
+  | "REDIS_CACHE_URL";
 
-function convertEnvVarToBoolean(envVarName: string): boolean {
+type EnvKeys = {
+  [key in EnvKey]: string;
+};
+const env = await dotenv.load() as EnvKeys;
+
+function convertEnvVarToBoolean(envVarName: EnvKey): boolean {
   const envVar = env[envVarName];
   if (!envVar || envVar === "false") return false;
   else if (envVar === "true") return true;
@@ -43,6 +60,10 @@ const mongoConfig: MongoConfig = {
   url: env["MONGO_URL"]!,
 };
 
+const redisConfig: RedisConfig = {
+  cacheUrl: env["REDIS_CACHE_URL"]!,
+};
+
 const botConfig: BotConfig = {
   discordToken: env["DISCORD_TOKEN"]!,
   ownerId: BigInt(env["BOT_OWNER_ID"]!),
@@ -51,7 +72,8 @@ const botConfig: BotConfig = {
   refreshCommands: convertEnvVarToBoolean("REFRESH_COMMANDS"),
   devMode: convertEnvVarToBoolean("DEV_MODE"),
   mongo: mongoConfig,
+  redis: redisConfig,
 };
 
-export { botConfig };
-export type { BotConfig };
+export { botConfig, mongoConfig, redisConfig };
+export type { BotConfig, MongoConfig, RedisConfig };

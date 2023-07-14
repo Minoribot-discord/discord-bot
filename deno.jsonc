@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "start": "deno fmt && deno run --unstable --allow-sys --allow-net --allow-read='./' --allow-write='./' --allow-env ./mod.ts"
+    "start": "deno fmt && deno run --unstable --allow-sys --allow-net --allow-read --allow-write='./' --allow-env ./mod.ts"
   },
   "imports": {
     "deps": "./deps.ts",
@@ -12,6 +12,8 @@
     "utils": "./src/utils/mod.ts",
     "structures": "./src/internals/structures/mod.ts",
     "structures/": "./src/internals/structures/",
+    "zod_schemas": "./src/internals/zodSchemas/mod.ts",
+    "zod_schemas/": "./src/internals/zodSchemas/",
     "db_structures": "./src/database/structures/mod.ts",
     "db_schemas": "./src/database/structures/databaseSchemas.ts",
     "database": "./src/database/mod.ts",
