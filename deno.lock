@@ -665,26 +665,26 @@
     "https://deno.land/x/zod@v3.21.4/locales/en.ts": "a7a25cd23563ccb5e0eed214d9b31846305ddbcdb9c5c8f508b108943366ab4c",
     "https://deno.land/x/zod@v3.21.4/mod.ts": "64e55237cb4410e17d968cd08975566059f27638ebb0b86048031b987ba251c4",
     "https://deno.land/x/zod@v3.21.4/types.ts": "b5d061babea250de14fc63764df5b3afa24f2b088a1d797fc060ba49a0ddff28",
-    "https://esm.sh/redis@4.6.7": "f0e08204a7c975bbf49e21e49828e38894e76fdc19a1b1ef539ad6c72c1740d6",
-    "https://esm.sh/v127/@redis/bloom@1.2.0/denonext/bloom.mjs": "cf74ddad732f55f15a39a95a2c8e8108cbd8aeaab906d16ef4f1d9f621fa696d",
-    "https://esm.sh/v127/@redis/client@1.5.8/denonext/client.mjs": "e4dad012e9f9d42cc43f9d31170dc5b98c22b7d31cc0a15514f6ba273352388b",
-    "https://esm.sh/v127/@redis/client@1.5.8/denonext/dist/lib/commands/generic-transformers.js": "7ee6c46fcbd8b967b244bf1ad5d14293919acb113e2faf444e1d728aa103ef86",
-    "https://esm.sh/v127/@redis/graph@1.1.0/denonext/graph.mjs": "6079d34296b32846907c985f46c5d5af0a0a8327af5497655d1f1c206269826b",
-    "https://esm.sh/v127/@redis/json@1.0.4/denonext/json.mjs": "2e1bc77f559b22f7bec5b81739350bb4bebcbfb9794c17b5340bcc127a535585",
-    "https://esm.sh/v127/@redis/search@1.1.3/denonext/search.mjs": "4a1bd4c6fa041f5f7892ea9c131c4c9ab820f04fe366d7e61fd73030895cb01c",
-    "https://esm.sh/v127/@redis/time-series@1.0.4/denonext/time-series.mjs": "fc60bf3cfbdd0bf2c247ff6d73b3daea9a7a8534ed3bcef9ca3c2c5919db4e01",
-    "https://esm.sh/v127/cluster-key-slot@1.1.2/denonext/cluster-key-slot.mjs": "3d7c011bacf7e1536edcaba4f7ab5b3b819267db114738fe1535fff6988c5916",
-    "https://esm.sh/v127/generic-pool@3.9.0/denonext/generic-pool.mjs": "9c8d28bdc12aaa4a5968e5ebc16f8ce9924deaac7123f557e89091ef439486af",
-    "https://esm.sh/v127/redis@4.6.7/denonext/redis.mjs": "51be2630627524cac68e576cb137ee900105e798da4fbb00d7701246fe3fc89a",
-    "https://esm.sh/v127/yallist@4.0.0/denonext/yallist.mjs": "61f180d807dda50bac17028eda05d5722a3fecef6e98a9064e2353ea6864fd82",
+    "https://esm.sh/redis@4.6.7": "7eea8838672c6cc2d343414f06420d3011c86379471eba77973339b4d5a76554",
+    "https://esm.sh/v128/@redis/bloom@1.2.0/denonext/bloom.mjs": "7b85a53e9f33abfba9b02a19e213b92ebd7a3c4d311e81943e4ad2a9db9df2f5",
+    "https://esm.sh/v128/@redis/client@1.5.8/denonext/client.mjs": "865d2f1c2ed962fe6a75c2392b1c29871a21e24aaecffba038e9061638d2c6db",
+    "https://esm.sh/v128/@redis/client@1.5.8/denonext/dist/lib/commands/generic-transformers.js": "7ee6c46fcbd8b967b244bf1ad5d14293919acb113e2faf444e1d728aa103ef86",
+    "https://esm.sh/v128/@redis/graph@1.1.0/denonext/graph.mjs": "6079d34296b32846907c985f46c5d5af0a0a8327af5497655d1f1c206269826b",
+    "https://esm.sh/v128/@redis/json@1.0.4/denonext/json.mjs": "0000d45b296af5332a20935174585920e4d42d8c3dd0104623c362e8f6d82797",
+    "https://esm.sh/v128/@redis/search@1.1.3/denonext/search.mjs": "d697fd8a0ab9130f784ede7df24726615afbdff47861933f6765388315948b80",
+    "https://esm.sh/v128/@redis/time-series@1.0.4/denonext/time-series.mjs": "b3edef9d1332c0e33c2b8a5d1c28821549453c11da5d1c15fd07aaed6584dbea",
+    "https://esm.sh/v128/cluster-key-slot@1.1.2/denonext/cluster-key-slot.mjs": "3d7c011bacf7e1536edcaba4f7ab5b3b819267db114738fe1535fff6988c5916",
+    "https://esm.sh/v128/generic-pool@3.9.0/denonext/generic-pool.mjs": "9c8d28bdc12aaa4a5968e5ebc16f8ce9924deaac7123f557e89091ef439486af",
+    "https://esm.sh/v128/redis@4.6.7/denonext/redis.mjs": "119e22cc25c017c5cd086b20905a35afe2786290209afe5e83a374e8f2f969a5",
+    "https://esm.sh/v128/yallist@4.0.0/denonext/yallist.mjs": "61f180d807dda50bac17028eda05d5722a3fecef6e98a9064e2353ea6864fd82",
     "https://unpkg.com/@evan/wasm@0.0.93/target/ed25519/deno.js": "9728126890f17b71cee41afdab8a4bc362f6b9f409fe0a5c4f6ca9f3b510fd3a",
     "https://unpkg.com/@evan/wasm@0.0.94/target/zlib/deno.js": "e65131e1c1f45e64960f2699a0b868927ea5c9201c4b986a7cfc57b18be5cc09"
   },
   "npm": {
     "specifiers": {
-      "@discordeno/bot": "@discordeno/bot@19.0.0-next.8d1ba2a",
-      "@discordeno/utils": "@discordeno/utils@19.0.0-next.8d1ba2a",
-      "lodash@^4": "lodash@4.17.21"
+      "@discordeno/bot@19.0.0-next.8d1ba2a": "@discordeno/bot@19.0.0-next.8d1ba2a",
+      "@discordeno/utils@19.0.0-next.8d1ba2a": "@discordeno/utils@19.0.0-next.8d1ba2a",
+      "lodash@4.17.21": "lodash@4.17.21"
     },
     "packages": {
       "@discordeno/bot@19.0.0-next.8d1ba2a": {
