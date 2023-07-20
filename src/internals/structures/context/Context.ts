@@ -46,7 +46,7 @@ class Context {
       }
       | EmbedBuilder
       | EmbedBuilder[],
-    replyOptions?: { wait?: boolean; isPrivate?: boolean },
+    options?: { isPrivate?: boolean },
   ) {
     if (typeof data === "string") data = { content: data };
     else if (data instanceof EmbedBuilder) data = { embeds: [data.toJSON()] };
@@ -57,9 +57,13 @@ class Context {
         e instanceof EmbedBuilder ? e.toJSON() : e
       );
     }
-    if (replyOptions?.isPrivate && !data.flags) data.flags = 64; // private: true
+    await this.interactionRespond(data as InteractionCallbackData, options);
+  }
 
-    return await this.interactionRespond(data as InteractionCallbackData);
+  async getOriginalResponse() {
+    return await this.bot.helpers.getOriginalInteractionResponse(
+      this.interaction.token,
+    );
   }
 
   async getAuthor() {
