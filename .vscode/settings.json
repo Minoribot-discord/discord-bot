@@ -1,6 +1,5 @@
 {
   "deno.enable": true,
-  "editor.formatOnSave": true,
   "deno.config": "deno.jsonc",
   "deno.unstable": true,
   "cody.experimental.chatPredictions": true,
