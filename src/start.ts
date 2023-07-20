@@ -22,7 +22,7 @@ async function start(bot: CustomBot) {
   );
 
   bot.db = await databaseWrapper;
-  
+
   // start the bot
   bot.logger.info("Starting connection to the Discord API & gateway");
   await bot.start();

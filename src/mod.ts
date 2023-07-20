@@ -3,6 +3,7 @@ import { botConfig } from "config";
 import { customBot } from "bot";
 import { readStartupCommandLineArgs } from "internals/cli.ts";
 import { start } from "./start.ts";
+
 // read the args passed to the script at startup and handle them
 readStartupCommandLineArgs();
 

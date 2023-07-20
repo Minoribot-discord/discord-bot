@@ -6,5 +6,6 @@ export * from "./EmbedBuilder.ts";
 export * from "./Errors.ts";
 export * from "./Inhibitor.ts";
 export * from "./Locale.ts";
+export * from "./misc.ts";
 export * from "./Module.ts";
 export * from "./Task.ts";
