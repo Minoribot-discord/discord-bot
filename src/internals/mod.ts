@@ -5,4 +5,3 @@ export * from "./client.ts";
 export * from "./config.ts";
 export * from "./CustomBot.ts";
 export * from "./loadStuff.ts";
-export * from "./logger.ts";

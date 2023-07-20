@@ -1,6 +1,6 @@
-import { hasGuildPermissions, highestRole, JsonErrorCodes, Member } from "deps";
+import { Member } from "deps";
 import { createInhibitor } from "internals/loadStuff.ts";
-import { getOrFetchMember } from "utils";
+import { getOrFetchMember, hasGuildPermissions, highestRole } from "utils";
 
 createInhibitor({
   name: "isTargetMemberEditable",
@@ -14,7 +14,7 @@ createInhibitor({
       targetMemberId_,
     );
 
-    const guild = await ctx.guild;
+    const guild = await ctx.getGuild();
 
     /*
       Will try to get the member from the cache, or fetch it from Discord.
@@ -37,7 +37,7 @@ createInhibitor({
         error && (error instanceof Error) && ("message" in error) &&
         (typeof error.message === "string") &&
         (error.message.includes(
-          String(JsonErrorCodes.UnknownMember),
+          "10007",
         ))
       ) {
         ctx.bot.logger.error(error);
@@ -47,17 +47,17 @@ createInhibitor({
       }
     }
 
-    const authorMember = await ctx.authorMember;
+    const authorMember = await ctx.getAuthorMember();
 
-    if (hasGuildPermissions(ctx.bot, guild, targetMember, ["ADMINISTRATOR"])) {
+    if (hasGuildPermissions(guild, targetMember, ["ADMINISTRATOR"])) {
       return false;
     }
     if (targetMemberId === guild.ownerId) {
       return false;
     }
 
-    const highestRoleTargetMember = highestRole(ctx.bot, guild, targetMember);
-    const highestRoleAuthorMember = highestRole(ctx.bot, guild, authorMember);
+    const highestRoleTargetMember = highestRole(guild, targetMember);
+    const highestRoleAuthorMember = highestRole(guild, authorMember);
 
     if (
       highestRoleTargetMember.position >= highestRoleAuthorMember.position

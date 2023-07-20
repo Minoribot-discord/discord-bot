@@ -8,14 +8,15 @@ createModule({
   init: (bot) => {
     const { ready } = bot.events;
 
-    bot.events.ready = async (_bot, payload, rawPayload) => {
-      await ready(_bot, payload, rawPayload);
+    bot.events.ready = async (payload, rawPayload) => {
+      await ready?.(payload, rawPayload);
+
+      if ((payload.shardId !== bot.gateway.lastShardId) && bot.ready) return;
       bot.ready = true;
 
-      await bot.helpers.editBotStatus({
+      await bot.gateway.editBotStatus({
         activities: [{
           name: "Visca les llengues minoritzades",
-          createdAt: Date.now(),
           type: ActivityTypes.Game,
         }],
         status: "online",
@@ -67,7 +68,7 @@ createModule({
         `${bot.modules.size} modules\n`;
 
       string_ = string_ +
-        `${bot.locales.size} locals`;
+        `${bot.locales.size} locales`;
 
       bot.logger.info(string_);
 
@@ -81,7 +82,7 @@ createModule({
 function checkIfCommandsHaveExecuteFunction(bot: CustomBot) {
   for (const command of bot.commands.values()) {
     if (!command.execute && command.subCommands.length === 0) {
-      bot.logger.warning(
+      bot.logger.warn(
         `Command ${command.name} has no execute function and no subcommands.`,
       );
     }

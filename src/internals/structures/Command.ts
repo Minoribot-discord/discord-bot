@@ -12,8 +12,8 @@ enum CommandScope {
   GUILD,
 }
 
-type CommandExecuteFunc = <T extends Context = Context>(
-  ctx: T,
+type CommandExecuteFunc = (
+  ctx: Context,
   i18n: I18nContext,
 ) => void | Promise<void>;
 

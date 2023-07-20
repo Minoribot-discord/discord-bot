@@ -1,33 +1,44 @@
 import { CustomBot } from "internals";
+import { customCache } from "cache";
 
 async function getOrFetchUser(bot: CustomBot, userId: bigint) {
-  let user = bot.users.get(userId);
+  let user = await customCache.users.get(userId);
 
   if (!user) {
     user = await bot.helpers.getUser(userId);
-    bot.users.set(userId, user);
+    await customCache.users.set(userId, user);
   }
 
   return user;
 }
 
 async function getOrFetchGuild(bot: CustomBot, guildId: bigint) {
-  let guild = bot.guilds.get(guildId);
+  let guild = await customCache.guilds.get(guildId);
 
   if (!guild) {
     guild = await bot.helpers.getGuild(guildId);
-    bot.guilds.set(guildId, guild);
+    await customCache.guilds.set(guildId, guild);
   }
 
   return guild;
 }
 
 async function getOrFetchChannel(bot: CustomBot, channelId: bigint) {
-  let channel = bot.channels.get(channelId);
+  let channel = await customCache.channels.get(channelId);
 
   if (!channel) {
     channel = await bot.helpers.getChannel(channelId);
-    bot.channels.set(channelId, channel);
+    await customCache.channels.set(channelId, channel);
+    if (channel.guildId) {
+      const guild = await customCache.guilds.get(channel.guildId);
+      if (guild) {
+        guild.channels.set(
+          channelId,
+          channel,
+        );
+        await customCache.guilds.set(channel.guildId, guild);
+      }
+    }
   }
 
   return channel;
@@ -38,8 +49,8 @@ async function getOrFetchMember(
   guildId: bigint,
   memberId: bigint,
 ) {
-  let member = bot.members.get(
-    bot.transformers.snowflake(`${guildId}${memberId}`),
+  let member = await customCache.members.get(
+    `${guildId}${memberId}`,
   );
 
   if (!member) {
@@ -47,8 +58,8 @@ async function getOrFetchMember(
     member = await bot.helpers.getMember(guildId, memberId);
 
     guild.members.set(memberId, member);
-    bot.members.set(
-      bot.transformers.snowflake(`${guildId}${memberId}`),
+    await customCache.members.set(
+      `${guildId}${memberId}`,
       member,
     );
   }

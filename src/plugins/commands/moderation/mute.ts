@@ -23,13 +23,12 @@ const options: ApplicationCommandOption[] = [
     minLength: 2,
     required: true,
   },
-  // Unused for now, might be used some day
-  // {
-  //   name: "reason",
-  //   description: "The reason for the timeout",
-  //   type: ApplicationCommandOptionTypes.String,
-  //   required: false,
-  // },
+  {
+    name: "reason",
+    description: "The reason for the timeout",
+    type: ApplicationCommandOptionTypes.String,
+    required: false,
+  },
   {
     name: "visible",
     description: "Whether the timeout message should be visible to everyone",
@@ -70,16 +69,23 @@ createCommand({
     }
     const parsedDurationMilliseconds = parsedDurationSeconds * 1000;
 
+    const reason = ctx.args.getString("reason");
+
     const user = await getOrFetchUser(ctx.bot, userIdToMute);
 
-    await ctx.bot.helpers.editMember(ctx.guildId!, userIdToMute, {
-      communicationDisabledUntil: Date.now() + parsedDurationMilliseconds,
-    });
+    await ctx.bot.helpers.editMember(
+      ctx.guildId!,
+      userIdToMute,
+      {
+        communicationDisabledUntil: Date.now() + parsedDurationMilliseconds,
+      },
+      reason,
+    );
 
     const isMuteMessageVisible = ctx.args.getBoolean("visible") ?? false;
 
     await ctx.reply(
-      makeBasePunishmentEmbed(i18n, user)
+      makeBasePunishmentEmbed(i18n, user, reason)
         .setTitle(
           i18n.translate("COMMAND.APP.MUTE.MUTEEMBED.TITLE"),
         )
@@ -90,7 +96,7 @@ createCommand({
           `\`${formatTime(parsedDurationSeconds)}\``,
         ),
       {
-        private: !isMuteMessageVisible,
+        isPrivate: !isMuteMessageVisible,
       },
     );
   },

@@ -58,7 +58,7 @@ createCommand({
           i18n.translate("COMMAND.APP.KICK.KICKEMBED.TITLE"),
         ),
       {
-        private: !isKickMessageVisible,
+        isPrivate: !isKickMessageVisible,
       },
     );
   },

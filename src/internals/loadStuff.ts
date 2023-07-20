@@ -1,6 +1,6 @@
 import { Collection, fs } from "deps";
 import { CustomBot } from "internals/CustomBot.ts";
-import { logger } from "internals/logger.ts";
+import { logger } from "internals/client.ts";
 import {
   BaseCommand,
   Command,

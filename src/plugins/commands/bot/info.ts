@@ -1,6 +1,7 @@
 import { CommandExecuteFunc, CommandScope } from "structures";
 import { createCommand } from "internals/loadStuff.ts";
 import { makeBaseEmbed } from "utils";
+import { customCache } from "cache/createCache.ts";
 
 const execute: CommandExecuteFunc = async (
   ctx,
@@ -13,11 +14,12 @@ const execute: CommandExecuteFunc = async (
       i18n.translate("COMMAND.APP.INFO.EMBED.TITLE"),
     )
     .addFields([{
-      name: "Caches",
-      value: `**Users:** ${ctx.bot.users.size}\n` +
-        `**Channels:** ${ctx.bot.channels.size}\n` +
-        `**Guilds:** ${ctx.bot.guilds.size}\n` +
-        `**Messages:** ${ctx.bot.messages.size}\n`,
+      name: "Elements in cache",
+      value: `**Users:** ${await customCache.users.size()}\n` +
+        `**Members:** ${await customCache.members.size()}\n` +
+        `**Channels:** ${await customCache.channels.size()}\n` +
+        `**Guilds:** ${await customCache.guilds.size()}\n` +
+        `**Messages:** ${await customCache.messages.size()}\n`,
     }, {
       name: "Resource consumption",
       value: `**Ram:** ${
