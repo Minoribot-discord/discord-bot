@@ -16,6 +16,7 @@ const execute: CommandExecuteFunc = async (
     .addFields([{
       name: "Elements in cache",
       value: `**Users:** ${await customCache.users.size()}\n` +
+        `**Members:** ${await customCache.members.size()}\n` +
         `**Channels:** ${await customCache.channels.size()}\n` +
         `**Guilds:** ${await customCache.guilds.size()}\n` +
         `**Messages:** ${await customCache.messages.size()}\n`,
