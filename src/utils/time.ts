@@ -109,7 +109,7 @@ export async function parseTimeAndCheckIfCorrect(
   if (parsedTime === null) {
     await ctx.reply(
       i18n.translate("COMMAND.GLOBAL.ERRORS.PROVIDE_CORRECT_TIME"),
-      { private: true },
+      { isPrivate: true },
     );
     return null;
   }
@@ -120,7 +120,7 @@ export async function parseTimeAndCheckIfCorrect(
         formatTime(range.min),
         formatTime(range.max),
       ]),
-      { private: true },
+      { isPrivate: true },
     );
     return null;
   }

@@ -26,9 +26,6 @@ export function isNumberNegative(number: number) {
   return number < 0;
 }
 
-// I did that for something else, then I changed my mind
-// But I thought "why not keep these things here?"
-// Might be useful some day, who knows?
 export type WalkObjectEntryType =
   | "bigint"
   | "boolean"
@@ -85,8 +82,10 @@ export function* walkObject(
  * and will remove any key of which the value equals undefined
  */
 export function removeUndefinedValuesFromObject<
-  T extends object,
+  T,
 >(obj: T) {
+  if (!obj || typeof obj !== "object") return obj;
+
   const propertiesOrPathsToOmit: string[] = [];
 
   for (const entry of walkObject(obj)) {
