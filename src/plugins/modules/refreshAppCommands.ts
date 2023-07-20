@@ -2,6 +2,7 @@ import { Collection, delay } from "deps";
 import { Command, CommandScope } from "structures";
 import { createModule } from "internals/loadStuff.ts";
 import { CustomBot } from "internals/CustomBot.ts";
+import { customCache } from "cache/createCache.ts";
 
 createModule({
   name: "refreshApplicationCommands",
@@ -12,7 +13,10 @@ createModule({
     bot.events.ready = async (payload, rawPayload) => {
       await ready?.(payload, rawPayload);
 
-      if (bot.config.refreshCommands && !bot.ready) {
+      if (
+        bot.config.refreshCommands && !bot.ready &&
+        (payload.shardId === bot.gateway.lastShardId)
+      ) {
         await delay(2000);
 
         await removeNonExistentApplicationCommands(bot);
@@ -29,7 +33,7 @@ async function removeNonExistentApplicationCommands(bot: CustomBot) {
   bot.logger.info(
     "Remove non-existent application commands from the API",
   );
-  for (const guildId of bot.guilds.keys()) {
+  for (const guildId of customCache.existingGuilds.values()) {
     const guildApplicationCommands = await bot.helpers
       .getGuildApplicationCommands(guildId);
 
@@ -92,7 +96,7 @@ async function handleGlobalScopedCommands(bot: CustomBot) {
     bot.logger.warn(
       "Dev mode detected, global commands will be loaded for each guild instead of globally",
     );
-    for (const guildId of bot.guilds.keys()) {
+    for (const guildId of customCache.existingGuilds.values()) {
       await bot.helpers.upsertGuildApplicationCommands(
         guildId,
         discordAppCommands,

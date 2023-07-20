@@ -10,6 +10,8 @@ createModule({
 
     bot.events.ready = async (payload, rawPayload) => {
       await ready?.(payload, rawPayload);
+
+      if ((payload.shardId !== bot.gateway.lastShardId) && bot.ready) return;
       bot.ready = true;
 
       await bot.gateway.editBotStatus({
@@ -66,7 +68,7 @@ createModule({
         `${bot.modules.size} modules\n`;
 
       string_ = string_ +
-        `${bot.locales.size} locals`;
+        `${bot.locales.size} locales`;
 
       bot.logger.info(string_);
 

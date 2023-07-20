@@ -1,18 +1,12 @@
 import {
-  ApplicationCommandContext,
-  BaseCommand,
-  Context,
-  I18nContext,
-  Inhibitor,
-} from "structures";
-import {
   ApplicationCommandOptionTypes,
-  hasChannelPermissions,
   Interaction,
   InteractionDataOption,
   InteractionTypes,
   PermissionStrings,
 } from "deps";
+import { BaseCommand, Context, I18nContext, Inhibitor } from "structures";
+import { getMissingChannelPermissions } from "utils";
 import { createModule } from "internals/loadStuff.ts";
 import { CustomBot } from "internals/CustomBot.ts";
 
@@ -63,7 +57,7 @@ async function handleApplicationCommand(
     );
   }
 
-  const context = new ApplicationCommandContext(bot, interaction);
+  const context = new Context(bot, interaction);
   const i18nContext = await (new I18nContext(bot, interaction)).initLocale();
 
   const invalidInhibitors = await checkInhibitors(
@@ -84,7 +78,7 @@ async function handleApplicationCommand(
           }\``,
         ],
       ),
-      { private: true },
+      { isPrivate: true },
     );
     return;
   }
@@ -92,25 +86,25 @@ async function handleApplicationCommand(
   const allRequiredBotPermissions = calculateAllRequiredBotPermissions(
     commandsToExecute,
   );
-  const botHasRequiredPermissions = await checkRequiredBotPermissions(
+  const missingBotPermissions = await checkRequiredBotPermissions(
     allRequiredBotPermissions,
     context,
   );
-  if (!botHasRequiredPermissions) {
+  if (missingBotPermissions.length > 0) {
     context.reply(
       i18nContext.translate(
         "COMMAND.GLOBAL.MISSING_PERMISSIONS",
         [
-          `\n\`${allRequiredBotPermissions.join("\`, \`")}\``,
+          `\n\`${missingBotPermissions.join("\`, \`")}\``,
         ],
       ),
-      { private: true },
+      { isPrivate: true },
     );
     return;
   }
 
   for (const command of commandsToExecute) {
-    await command.execute<ApplicationCommandContext>?.(context, i18nContext);
+    await command.execute?.(context, i18nContext);
   }
 }
 
@@ -176,25 +170,21 @@ function calculateAllRequiredBotPermissions(
 
   return allRequiredBotPermissions;
 }
-
+/**
+ * Returns
+ */
 async function checkRequiredBotPermissions(
   allRequiredBotPermissions: PermissionStrings[],
   ctx: Context,
-): Promise<boolean> {
-  const botMember = await ctx.botMember;
+): Promise<PermissionStrings[]> {
+  const botMember = await ctx.getBotMember();
 
-  if (
-    hasChannelPermissions(
-      ctx.bot,
-      await ctx.channel,
-      botMember,
-      allRequiredBotPermissions,
-    )
-  ) {
-    return true;
-  }
-
-  return false;
+  return getMissingChannelPermissions(
+    await ctx.getGuild(),
+    await ctx.getChannel(),
+    botMember,
+    allRequiredBotPermissions,
+  );
 }
 
 // deno-lint-ignore require-await
