@@ -10,13 +10,13 @@ const options: ApplicationCommandOption[] = [
     type: ApplicationCommandOptionTypes.User,
     required: true,
   },
-  //   {
-  //     name: "reason",
-  //     description: "The reason for the unban",
-  //     type: ApplicationCommandOptionTypes.String,
-  //     minLength: 1,
-  //     required: false,
-  //   },
+  {
+    name: "reason",
+    description: "The reason for the unban",
+    type: ApplicationCommandOptionTypes.String,
+    minLength: 1,
+    required: false,
+  },
   {
     name: "visible",
     description: "Whether the unban message should be visible to everyone",
@@ -40,19 +40,21 @@ createCommand({
       _userIdToUnban,
     );
 
+    const reason = ctx.args.getString("reason");
+
     const user = await getOrFetchUser(ctx.bot, userIdToUnban);
 
-    await ctx.bot.helpers.unbanMember(ctx.guildId!, userIdToUnban);
+    await ctx.bot.helpers.unbanMember(ctx.guildId!, userIdToUnban, reason);
 
     const isUnbanMessageVisible = ctx.args.getBoolean("visible") ?? false;
 
     await ctx.reply(
-      makeBasePunishmentEmbed(i18n, user)
+      makeBasePunishmentEmbed(i18n, user, reason)
         .setTitle(
           i18n.translate("COMMAND.APP.UNBAN.UNBANEMBED.TITLE"),
         ),
       {
-        private: !isUnbanMessageVisible,
+        isPrivate: !isUnbanMessageVisible,
       },
     );
   },

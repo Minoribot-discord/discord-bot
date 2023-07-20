@@ -11,6 +11,13 @@ const options: ApplicationCommandOption[] = [
     required: true,
   },
   {
+    name: "reason",
+    description: "The reason for the unmute",
+    type: ApplicationCommandOptionTypes.String,
+    minLength: 1,
+    required: false,
+  },
+  {
     name: "visible",
     description: "Whether the unmute message should be visible to everyone",
     type: ApplicationCommandOptionTypes.Boolean,
@@ -34,19 +41,26 @@ createCommand({
       _userIdToUnmute,
     );
 
+    const reason = ctx.args.getString("reason");
+
     const user = await getOrFetchUser(ctx.bot, userIdToUnmute);
 
-    await ctx.bot.helpers.editMember(ctx.guildId!, userIdToUnmute, {
-      communicationDisabledUntil: 0,
-    });
+    await ctx.bot.helpers.editMember(
+      ctx.guildId!,
+      userIdToUnmute,
+      {
+        communicationDisabledUntil: 0,
+      },
+      reason,
+    );
 
     const isUnmuteMessageVisible = ctx.args.getBoolean("visible");
 
     await ctx.reply(
-      makeBasePunishmentEmbed(i18n, user)
+      makeBasePunishmentEmbed(i18n, user, reason)
         .setTitle(i18n.translate("EMBED.PUNISHMENT.FIELDS.USER.NAME")),
       {
-        private: !isUnmuteMessageVisible,
+        isPrivate: !isUnmuteMessageVisible,
       },
     );
   },

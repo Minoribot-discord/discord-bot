@@ -77,8 +77,8 @@ createCommand({
       userIdToBan,
       {
         deleteMessageSeconds: parsedDeleteMessageHistoryTime,
-        reason,
       },
+      reason,
     );
 
     const isBanMessageVisible = ctx.args.getBoolean("visible") ?? false;
@@ -89,7 +89,7 @@ createCommand({
           i18n.translate("COMMAND.APP.BAN.BANEMBED.TITLE"),
         ),
       {
-        private: !isBanMessageVisible,
+        isPrivate: !isBanMessageVisible,
       },
     );
   },

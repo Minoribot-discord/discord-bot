@@ -1,7 +1,5 @@
 import {
-  Embed,
   Interaction,
-  InteractionResponseTypes,
   MessageComponentTypes,
   SelectMenuComponent,
   SelectOption,
@@ -16,7 +14,7 @@ import {
   createSubCommand,
   locales,
 } from "internals/loadStuff.ts";
-import { awaitComponent } from "utils";
+import { awaitComponent, makeBaseEmbed } from "utils";
 
 createCommand({
   name: "settings",
@@ -60,25 +58,26 @@ createSubCommand("settings", {
       );
     }
 
-    const configEmbed: Embed = {
-      title: i18n.translate("COMMAND.APP.SETTINGS.SERVER.CONFIGEMBED.TITLE"),
-      fields: [
-        {
-          name: i18n.translate(
-            "COMMAND.APP.SETTINGS.SERVER.CONFIGEMBED.FIELDS.LANGUAGE.NAME",
-          ),
-          value: guildLanguageName,
-        },
-      ],
-    };
+    const configEmbed = makeBaseEmbed()
+      .setTitle(
+        i18n.translate("COMMAND.APP.SETTINGS.SERVER.CONFIGEMBED.TITLE"),
+      )
+      .addField(
+        i18n.translate(
+          "COMMAND.APP.SETTINGS.SERVER.CONFIGEMBED.FIELDS.LANGUAGE.NAME",
+        ),
+        guildLanguageName,
+      );
 
-    const reply = await ctx.reply({
+    await ctx.reply({
       embeds: [configEmbed],
       components: [{
         components: [selectMenuLanguages],
         type: MessageComponentTypes.ActionRow,
       }],
-    }, { wait: true });
+    });
+
+    const originalResponse = await ctx.getOriginalResponse();
 
     const filter: ComponentCollectorOptions["filter"] = (_bot, data) => {
       if (data.data?.customId) {
@@ -96,22 +95,27 @@ createSubCommand("settings", {
       await bot.db.guildConfig.setOne(guildId, { locale: newLocale.code });
 
       const formattedLocaleName = `**${newLocale.name}**`;
-      await bot.helpers.sendInteractionResponse(data.id, data.token, {
-        type: InteractionResponseTypes.ChannelMessageWithSource,
-        data: {
-          content: bot.i18n.translate(
-            newLocale,
-            "COMMAND.APP.SETTINGS.SERVER.NEWLANGUAGE",
-            [formattedLocaleName],
-          ) + "\n" +
-            i18n.translate("COMMAND.APP.SETTINGS.SERVER.NEWLANGUAGE", [
-              formattedLocaleName,
-            ]),
-        },
+
+      await data.respond({
+        content: bot.i18n.translate(
+          newLocale,
+          "COMMAND.APP.SETTINGS.SERVER.NEWLANGUAGE",
+          [formattedLocaleName],
+        ) + "\n" +
+          i18n.translate("COMMAND.APP.SETTINGS.SERVER.NEWLANGUAGE", [
+            formattedLocaleName,
+          ]),
       });
       i18n.locale = newLocale;
     };
 
-    await awaitComponent(reply!.id, { filter, collect, maxUsage: 50 });
+    await awaitComponent(
+      originalResponse.id,
+      {
+        filter,
+        collect,
+        maxUsage: 50,
+      },
+    );
   },
 });
