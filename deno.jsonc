@@ -16,6 +16,8 @@
     "zod_schemas/": "./src/internals/zodSchemas/",
     "db_structures": "./src/database/structures/mod.ts",
     "db_schemas": "./src/database/structures/databaseSchemas.ts",
+    "cache": "./src/cache/mod.ts",
+    "cache/": "./src/cache/",
     "database": "./src/database/mod.ts",
     "database/": "./src/database/",
     "i18n": "./src/internals/i18n/mod.ts"

@@ -1,5 +1,3 @@
-import { Json } from "zod_schemas/JSON.ts";
-
 // https://github.com/Microsoft/TypeScript/issues/3496#issuecomment-128553540
 // deno-lint-ignore no-empty-interface
 export interface RedisJSONArray extends Array<RedisJSON> {}
@@ -18,9 +16,10 @@ export type RedisJSON =
 
 export interface Serializer<
   // deno-lint-ignore no-explicit-any
-  TDeserialized extends any,
-  TSerialized extends Json,
+  TDeserialized extends Record<string, any>,
+  // deno-lint-ignore no-explicit-any
+  TSerialized extends Record<string, any>,
 > {
-  serialize?: (input: TDeserialized) => TSerialized;
+  serialize?: (input: TDeserialized) => Partial<TSerialized>;
   deserialize?: (input: TSerialized) => TDeserialized;
 }
