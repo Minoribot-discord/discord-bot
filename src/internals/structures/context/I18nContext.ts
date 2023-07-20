@@ -2,7 +2,7 @@ import { Interaction } from "deps";
 import { getArgsLocaleKey, Locale, LocaleKeys } from "structures";
 import { CustomBot } from "internals/CustomBot.ts";
 
-class I18nContext {
+export class I18nContext {
   locale: Locale;
 
   constructor(public bot: CustomBot, public interaction: Interaction) {
@@ -39,5 +39,3 @@ class I18nContext {
     return this.bot.i18n.translate<K>(this.locale, key, params);
   }
 }
-
-export { I18nContext };

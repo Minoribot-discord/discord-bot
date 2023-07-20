@@ -15,7 +15,7 @@ import { collectors } from "utils";
 import { DatabaseWrapper } from "database/database.ts";
 
 // custom type for the bot so we can add custom properties
-type CustomBot = Bot & {
+export type CustomBot = Bot & {
   ready: boolean;
   config: BotConfig;
   ownerId: bigint;
@@ -32,5 +32,3 @@ type CustomBot = Bot & {
   tasks: Collection<string, Task>;
   runningTasks: RunningTasks;
 };
-
-export type { CustomBot };

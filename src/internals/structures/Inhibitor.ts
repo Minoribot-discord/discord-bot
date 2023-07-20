@@ -1,17 +1,17 @@
 import { Context, I18nContext, LocaleKeys } from "internals";
 import { camelCaseToScreamingSnakeCase } from "utils";
 
-type InhibitorExecuteFunc = (
+export type InhibitorExecuteFunc = (
   context: Context,
 ) => boolean | Promise<boolean>;
 
-interface InhibitorParams {
+export interface InhibitorParams {
   name: string;
   rejectMessageKey?: LocaleKeys;
   execute: InhibitorExecuteFunc;
 }
 
-class Inhibitor {
+export class Inhibitor {
   name: string;
   rejectMessageKey: LocaleKeys | string;
 
@@ -36,6 +36,3 @@ class Inhibitor {
     return i18n.translate(this.rejectMessageKey as LocaleKeys);
   }
 }
-
-export { Inhibitor };
-export type { InhibitorParams };

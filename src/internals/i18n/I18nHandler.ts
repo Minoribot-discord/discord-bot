@@ -6,7 +6,7 @@ import {
   LocaleKeys,
 } from "internals";
 
-class I18nHandler {
+export class I18nHandler {
   globalDefaultLocale = defaultLocale;
 
   constructor(public bot: CustomBot) {}
@@ -37,5 +37,3 @@ class I18nHandler {
     return value;
   }
 }
-
-export { I18nHandler };

@@ -1,10 +1,10 @@
 import { Command } from "internals";
 
-interface CommandCategoryParams {
+export interface CommandCategoryParams {
   name: string;
   description?: string;
 }
-class CommandCategory {
+export class CommandCategory {
   name: string;
   description = "";
   commands: Command[] = [];
@@ -20,6 +20,3 @@ class CommandCategory {
     if (params.description) this.description = params.description;
   }
 }
-
-export { CommandCategory };
-export type { CommandCategoryParams };

@@ -7,17 +7,17 @@ import {
 } from "deps";
 import { Context, I18nContext, Inhibitor } from "structures";
 
-enum CommandScope {
+export enum CommandScope {
   GLOBAL,
   GUILD,
 }
 
-type CommandExecuteFunc = (
+export type CommandExecuteFunc = (
   ctx: Context,
   i18n: I18nContext,
 ) => void | Promise<void>;
 
-interface BaseCommandParams {
+export interface BaseCommandParams {
   name: string;
   description: string;
   options?: ApplicationCommandOption[];
@@ -26,11 +26,11 @@ interface BaseCommandParams {
   execute?: CommandExecuteFunc;
 }
 
-const globalRequiredBotPermissions: PermissionStrings[] = [
+export const globalRequiredBotPermissions: PermissionStrings[] = [
   "EMBED_LINKS",
 ];
 
-class BaseCommand {
+export class BaseCommand {
   name: string;
   description: string;
   options: ApplicationCommandOption[] = [];
@@ -74,9 +74,9 @@ class BaseCommand {
   }
 }
 
-const defaultCategoryName = "misc";
+export const defaultCategoryName = "misc";
 
-interface CommandParams extends BaseCommandParams {
+export interface CommandParams extends BaseCommandParams {
   /**
    * By default the category is "misc"
    */
@@ -88,7 +88,7 @@ interface CommandParams extends BaseCommandParams {
   defaultMemberPermissions?: PermissionStrings[];
 }
 
-class Command extends BaseCommand {
+export class Command extends BaseCommand {
   /**
    * By default the category is "misc"
    */
@@ -135,9 +135,8 @@ class Command extends BaseCommand {
 }
 
 // deno-lint-ignore no-empty-interface
-interface SubCommandParams extends BaseCommandParams {}
-
-class SubCommand extends BaseCommand {
+export interface SubCommandParams extends BaseCommandParams {}
+export class SubCommand extends BaseCommand {
   parent!: Command | SubCommandGroup;
   type = ApplicationCommandOptionTypes.SubCommand;
 
@@ -156,8 +155,8 @@ class SubCommand extends BaseCommand {
 }
 
 // deno-lint-ignore no-empty-interface
-interface SubCommandGroupParams extends SubCommandParams {}
-class SubCommandGroup extends SubCommand {
+export interface SubCommandGroupParams extends SubCommandParams {}
+export class SubCommandGroup extends SubCommand {
   type = ApplicationCommandOptionTypes.SubCommandGroup;
   subCommands: SubCommand[] = [];
 
@@ -165,18 +164,3 @@ class SubCommandGroup extends SubCommand {
     super(params);
   }
 }
-
-export {
-  BaseCommand,
-  Command,
-  CommandScope,
-  globalRequiredBotPermissions,
-  SubCommand,
-  SubCommandGroup,
-};
-export type {
-  CommandExecuteFunc,
-  CommandParams,
-  SubCommandGroupParams,
-  SubCommandParams,
-};

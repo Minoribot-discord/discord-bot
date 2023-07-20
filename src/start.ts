@@ -7,7 +7,7 @@ import {
 import { handleConsoleInput } from "internals/cli.ts";
 import { initDatabase } from "database";
 
-async function start(bot: CustomBot) {
+export async function start(bot: CustomBot) {
   const databaseWrapper = initDatabase(bot);
 
   await loadFolders(
@@ -29,5 +29,3 @@ async function start(bot: CustomBot) {
 
   await handleConsoleInput(bot);
 }
-
-export { start };

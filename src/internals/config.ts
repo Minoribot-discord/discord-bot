@@ -1,6 +1,6 @@
 import { dotenv, GatewayIntents } from "deps";
 
-interface BotConfig {
+export interface BotConfig {
   discordToken: string;
   ownerId: bigint;
   supportGuildId: bigint;
@@ -11,11 +11,11 @@ interface BotConfig {
   redis: RedisConfig;
 }
 
-interface MongoConfig {
+export interface MongoConfig {
   url: string;
 }
 
-interface RedisConfig {
+export interface RedisConfig {
   cacheUrl: string;
 }
 
@@ -56,15 +56,15 @@ function convertEnvVarToBoolean(envVarName: EnvKey): boolean {
   }
 }
 
-const mongoConfig: MongoConfig = {
+export const mongoConfig: MongoConfig = {
   url: env["MONGO_URL"]!,
 };
 
-const redisConfig: RedisConfig = {
+export const redisConfig: RedisConfig = {
   cacheUrl: env["REDIS_CACHE_URL"]!,
 };
 
-const botConfig: BotConfig = {
+export const botConfig: BotConfig = {
   discordToken: env["DISCORD_TOKEN"]!,
   ownerId: BigInt(env["BOT_OWNER_ID"]!),
   supportGuildId: BigInt(env["SUPPORT_GUILD_ID"]!),
@@ -74,6 +74,3 @@ const botConfig: BotConfig = {
   mongo: mongoConfig,
   redis: redisConfig,
 };
-
-export { botConfig, mongoConfig, redisConfig };
-export type { BotConfig, MongoConfig, RedisConfig };

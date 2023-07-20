@@ -1,14 +1,14 @@
 import { CustomBot } from "internals";
 
-type InitFunc = (bot: CustomBot) => CustomBot | Promise<CustomBot>;
+export type InitFunc = (bot: CustomBot) => CustomBot | Promise<CustomBot>;
 
-interface ModuleParams {
+export interface ModuleParams {
   name: string;
   priority?: number;
   init: InitFunc;
 }
 
-class Module {
+export class Module {
   name: string;
   priority = 0;
 
@@ -26,6 +26,3 @@ class Module {
     });
   }
 }
-
-export { Module };
-export type { ModuleParams };

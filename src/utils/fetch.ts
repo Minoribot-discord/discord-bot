@@ -1,7 +1,7 @@
 import { CustomBot } from "internals";
 import { customCache } from "cache";
 
-async function getOrFetchUser(bot: CustomBot, userId: bigint) {
+export async function getOrFetchUser(bot: CustomBot, userId: bigint) {
   let user = await customCache.users.get(userId);
 
   if (!user) {
@@ -12,7 +12,7 @@ async function getOrFetchUser(bot: CustomBot, userId: bigint) {
   return user;
 }
 
-async function getOrFetchGuild(bot: CustomBot, guildId: bigint) {
+export async function getOrFetchGuild(bot: CustomBot, guildId: bigint) {
   let guild = await customCache.guilds.get(guildId);
 
   if (!guild) {
@@ -23,7 +23,7 @@ async function getOrFetchGuild(bot: CustomBot, guildId: bigint) {
   return guild;
 }
 
-async function getOrFetchChannel(bot: CustomBot, channelId: bigint) {
+export async function getOrFetchChannel(bot: CustomBot, channelId: bigint) {
   let channel = await customCache.channels.get(channelId);
 
   if (!channel) {
@@ -44,7 +44,7 @@ async function getOrFetchChannel(bot: CustomBot, channelId: bigint) {
   return channel;
 }
 
-async function getOrFetchMember(
+export async function getOrFetchMember(
   bot: CustomBot,
   guildId: bigint,
   memberId: bigint,
@@ -66,5 +66,3 @@ async function getOrFetchMember(
 
   return member;
 }
-
-export { getOrFetchChannel, getOrFetchGuild, getOrFetchMember, getOrFetchUser };

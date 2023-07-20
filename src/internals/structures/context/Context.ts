@@ -8,7 +8,7 @@ import {
 } from "utils";
 import { ArgumentParser } from "structures";
 
-class Context {
+export class Context {
   authorId: bigint;
   guildId: bigint | undefined;
   channelId: bigint | undefined;
@@ -113,5 +113,3 @@ class Context {
     return this.interaction.acknowledged;
   }
 }
-
-export { Context };

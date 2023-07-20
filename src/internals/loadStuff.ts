@@ -21,14 +21,20 @@ import {
   Task,
 } from "structures";
 
-const tasks = new Collection<string, Task>();
-const runningTasks: RunningTasks = { initialTimeouts: [], intervals: [] };
-const inhibitors = new Collection<string, Inhibitor>();
-const locales = new Collection<string, Locale>();
-const modules = new Collection<string, Module>();
-const commandCategories = new Collection<string, CommandCategory>();
-const commands = new Collection<string, Command>();
-const subCommands = new Collection<string, (SubCommandGroup | SubCommand)>();
+export const tasks = new Collection<string, Task>();
+export const runningTasks: RunningTasks = {
+  initialTimeouts: [],
+  intervals: [],
+};
+export const inhibitors = new Collection<string, Inhibitor>();
+export const locales = new Collection<string, Locale>();
+export const modules = new Collection<string, Module>();
+export const commandCategories = new Collection<string, CommandCategory>();
+export const commands = new Collection<string, Command>();
+export const subCommands = new Collection<
+  string,
+  (SubCommandGroup | SubCommand)
+>();
 
 const pluginFolder = "plugins";
 
@@ -36,7 +42,7 @@ type AfterFunc =
   | (() => void | Promise<void>)
   | ((bot: CustomBot) => void | Promise<void>);
 
-async function loadFolders(
+export async function loadFolders(
   bot: CustomBot,
   subFolders: Array<{ name: string; afterFunc?: AfterFunc }>,
 ) {
@@ -56,14 +62,14 @@ async function loadFolders(
   }
 }
 
-function loadTask(task: Task): Task {
+export function loadTask(task: Task): Task {
   tasks.set(task.name, task);
 
   return task;
 }
 
 // Code ripped of from "https://github.com/AmethystFramework/framework/blob/4bd01b466d4e3435adf26c57d887a7c7416f3e42/src/utils/extra.ts"
-function initializeTasks(bot: CustomBot) {
+export function initializeTasks(bot: CustomBot) {
   for (const task of tasks.values()) {
     runningTasks.initialTimeouts.push(
       setTimeout(async () => {
@@ -84,20 +90,20 @@ function initializeTasks(bot: CustomBot) {
   }
 }
 
-function createInhibitor(params: InhibitorParams): Inhibitor {
+export function createInhibitor(params: InhibitorParams): Inhibitor {
   const inhibitor = new Inhibitor(params);
   inhibitors.set(inhibitor.name, inhibitor);
 
   return inhibitor;
 }
 
-function loadLocale(locale: Locale): Locale {
+export function loadLocale(locale: Locale): Locale {
   locales.set(locale.code, locale);
 
   return locale;
 }
 
-function createModule(params: ModuleParams): Module {
+export function createModule(params: ModuleParams): Module {
   const name = params.name;
   if (modules.has(name)) {
     throw new Error(`Module name ${name} cannot be created twice`);
@@ -109,7 +115,7 @@ function createModule(params: ModuleParams): Module {
   return module;
 }
 
-async function initializeModules(bot: CustomBot) {
+export async function initializeModules(bot: CustomBot) {
   const modulesArray = Array.from(modules.values());
   const sortedModules = modulesArray.sort((a, b) => a.priority - b.priority);
 
@@ -119,7 +125,7 @@ async function initializeModules(bot: CustomBot) {
   }
 }
 
-function createCommandCategory(
+export function createCommandCategory(
   params: CommandCategoryParams,
   mutable = false,
 ): CommandCategory {
@@ -137,7 +143,7 @@ function createCommandCategory(
   return category;
 }
 
-function checkAndAddInhibitorsToCommand(baseCommand: BaseCommand) {
+export function checkAndAddInhibitorsToCommand(baseCommand: BaseCommand) {
   if (baseCommand._inhibitors.length === 0) return;
 
   const nonExistentInhibitors: string[] = [];
@@ -160,7 +166,7 @@ function checkAndAddInhibitorsToCommand(baseCommand: BaseCommand) {
   }
 }
 
-function createCommand(params: CommandParams): Command {
+export function createCommand(params: CommandParams): Command {
   const name = params.name;
   if (commands.has(name)) {
     throw new Error(`Command named ${name} cannot be created twice.`);
@@ -187,7 +193,7 @@ function createCommand(params: CommandParams): Command {
   return command;
 }
 
-function createSubCommandGroup(
+export function createSubCommandGroup(
   parentName: string,
   params: SubCommandGroupParams,
 ): SubCommandGroup {
@@ -220,7 +226,7 @@ function createSubCommandGroup(
 /**
  * if parent is a sub command group, the parent parameter should use this format: `commandName/subCommandGroupName`
  */
-function createSubCommand(
+export function createSubCommand(
   parentName: string,
   params: SubCommandParams,
 ): SubCommand {
@@ -256,25 +262,3 @@ function createSubCommand(
 
   return subCommand;
 }
-
-export {
-  commandCategories,
-  commands,
-  createCommand,
-  createCommandCategory,
-  createInhibitor,
-  createModule,
-  createSubCommand,
-  createSubCommandGroup,
-  inhibitors,
-  initializeModules,
-  initializeTasks,
-  loadFolders,
-  loadLocale,
-  loadTask,
-  locales,
-  modules,
-  runningTasks,
-  subCommands,
-  tasks,
-};
