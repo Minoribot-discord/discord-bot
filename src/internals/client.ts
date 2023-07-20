@@ -13,20 +13,7 @@ import {
 } from "internals/loadStuff.ts";
 const { discordToken, intents } = botConfig;
 
-// const getBotIdFromDiscordToken = discordToken.split(".")[0];
-// if (!getBotIdFromDiscordToken) {
-//   throw new Error("Invalid discord token");
-// }
-// const botId = BigInt(atob(getBotIdFromDiscordToken));
-
 const baseBot = createBot({ token: discordToken, intents, events: {} });
-// const botWithCache = enableCachePlugin(baseBot);
-// enableCacheSweepers(botWithCache);
-// const botWithHelpersPlugin = enableHelpersPlugin(botWithCache);
-// const botWithPermissionsPlugin = enablePermissionsPlugin(botWithHelpersPlugin);
-// const botWithValidationsPlugin = enableValidationsPlugin(
-//   botWithPermissionsPlugin,
-// );
 
 // implement the custom properties to the bot object
 const customBot = baseBot as CustomBot;
