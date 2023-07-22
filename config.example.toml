@@ -1,0 +1,42 @@
+# Whether we refresh the slash commands on Discord
+# You can also pass the -r or --refreshcommands flag
+refreshCommands = false
+# Whether we activate the dev mode 
+# If set to true, some features may be activated
+# For example, commands that have the scope set to "GLOBAL" will be loaded for each guild individually
+# Some things may change in the future
+devMode = true
+
+# Discord related stuff
+[discord]
+# You can also pass your token in environment variables, including in an .env file
+# See the .env.example file
+# Keep it secret and secure!!!!!!! 
+token = "pass your token here"
+# The id of the bot owner
+# Mainly used for some permission related things
+ownerId = "your id on Discord"
+# The id of the support server of your bot, or any main server of your choice
+supportGuildId = "id of your support guild"
+# A list of intents, they are required for receiving certain events
+# The name of the intents have to be in PascalCase
+# I'd recommend just using the following default configuration:
+intents = [
+    "Guilds",
+    "GuildMembers",
+    "GuildPresences",
+    "GuildMessages",
+    "MessageContent",
+]
+
+# Mongo related stuff
+[mongo]
+# MongoDB url
+# Note that query strings must begin with "?authMechanism=SCRAM-SHA-1"
+url = "The url to your MongoDB database"
+
+# Redis related stuff
+# Currently unused, so it is optional
+[redis]
+# Redis url
+cacheUrl = "The url to your Redis database"

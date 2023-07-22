@@ -17,7 +17,7 @@ import {
   snowflakeToBigint,
   User,
 } from "deps";
-import { botConfig, redisConfig } from "config";
+import { discordConfig, redisConfig } from "config";
 import { Serializer } from "./types.ts";
 
 // Todo: Finish serializers and maybe implement Redis as main cache
@@ -163,7 +163,7 @@ export const customCache = {
   guilds: createCache<Guild, DiscordGuild>({
     namespace: "guilds",
     filter: (guild, cachedAt) => {
-      return (guild.id !== botConfig.supportGuildId) &&
+      return (guild.id !== discordConfig.supportGuildId) &&
         (cachedAt.has(guild.id)
           ? (Date.now() - cachedAt.get(guild.id)! > 60 * 1000 * 60)
           : true);

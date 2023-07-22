@@ -1,4 +1,4 @@
-import { lodash, User } from "deps";
+import { GatewayIntents, lodash, User } from "deps";
 
 const devModePrefix = "DEV_";
 
@@ -95,4 +95,27 @@ export function removeUndefinedValuesFromObject<
   }
 
   return lodash.omit(obj, propertiesOrPathsToOmit);
+}
+
+function verifyGatewayIntentKeys(
+  gatewayIntentKeys: unknown[],
+): asserts gatewayIntentKeys is (keyof typeof GatewayIntents)[] {
+  for (const key of gatewayIntentKeys) {
+    if (
+      typeof key !== "string" || !Object.keys(GatewayIntents).includes(key)
+    ) {
+      throw new Error(`Incorrect intent key: ${key}`);
+    }
+  }
+}
+export function transformGatewayIntentKeysToBitfield(
+  gatewayIntentKeys: unknown[],
+): GatewayIntents {
+  verifyGatewayIntentKeys(gatewayIntentKeys);
+
+  let intents = 0;
+  (gatewayIntentKeys)
+    .map((intent) => intents |= GatewayIntents[intent]);
+
+  return intents;
 }

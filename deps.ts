@@ -2,6 +2,8 @@ export * as fs from "https://deno.land/std@0.192.0/fs/mod.ts";
 export * as log from "https://deno.land/std@0.192.0/log/mod.ts";
 export * as dotenv from "https://deno.land/std@0.192.0/dotenv/mod.ts";
 export * as flags from "https://deno.land/std@0.192.0/flags/mod.ts";
+export * as toml from "https://deno.land/std@0.192.0/toml/mod.ts";
+
 export * from "npm:@discordeno/utils@19.0.0-next.8d1ba2a";
 export * from "npm:@discordeno/bot@19.0.0-next.8d1ba2a";
 // export * from "https://deno.land/x/discordeno@18.0.1/mod.ts";

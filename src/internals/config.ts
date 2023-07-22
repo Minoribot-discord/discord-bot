@@ -1,76 +1,86 @@
-import { dotenv, GatewayIntents } from "deps";
+// deno-lint-ignore-file no-explicit-any
+import { dotenv, snowflakeToBigint, toml } from "deps";
+import { RecursivePartial } from "structures";
+import {
+  GlobalConfig,
+  globalConfigSchema,
+  Json,
+  jsonSchema,
+} from "zod_schemas";
+import { transformGatewayIntentKeysToBitfield } from "../utils/misc.ts";
 
-export interface BotConfig {
-  discordToken: string;
-  ownerId: bigint;
-  supportGuildId: bigint;
-  intents: GatewayIntents;
-  refreshCommands: boolean;
-  devMode: boolean;
-  mongo: MongoConfig;
-  redis: RedisConfig;
-}
-
-export interface MongoConfig {
-  url: string;
-}
-
-export interface RedisConfig {
-  cacheUrl: string;
-}
-
-// @ts-ignore:
-let intents: BotConfig["intents"] = 0;
-([
-  "Guilds",
-  "GuildMembers",
-  "GuildPresences",
-  "GuildMessages",
-  "DirectMessages",
-  "MessageContent",
-] as Array<keyof typeof GatewayIntents>) //
-  .map((intent) => intents |= GatewayIntents[intent]);
-
-type EnvKey =
-  | "DISCORD_TOKEN"
-  | "BOT_OWNER_ID"
-  | "SUPPORT_GUILD_ID"
-  | "REFRESH_COMMANDS"
-  | "DEV_MODE"
-  | "MONGO_URL"
-  | "REDIS_CACHE_URL";
-
-type EnvKeys = {
-  [key in EnvKey]: string;
-};
-const env = await dotenv.load() as EnvKeys;
-
-function convertEnvVarToBoolean(envVarName: EnvKey): boolean {
-  const envVar = env[envVarName];
-  if (!envVar || envVar === "false") return false;
-  else if (envVar === "true") return true;
-  else {
-    throw new Error(
-      `${envVarName} environment variable needs to be a boolean value`,
-    );
-  }
-}
-
-export const mongoConfig: MongoConfig = {
-  url: env["MONGO_URL"]!,
+const rawToml = await Deno.readTextFile("./config.toml");
+const parsedToml = jsonSchema.parse(toml.parse(rawToml)) as {
+  [key: string]: Json;
 };
 
-export const redisConfig: RedisConfig = {
-  cacheUrl: env["REDIS_CACHE_URL"]!,
-};
+// type EnvKey =
+//   | "DISCORD_TOKEN"
+//   | "MONGO_URL"
+//   | "REDIS_CACHE_URL";
+// type EnvKeys = {
+//   [key in EnvKey]?: string;
+// };
+await dotenv.load({
+  export: true,
+  examplePath: null,
+});
 
-export const botConfig: BotConfig = {
-  discordToken: env["DISCORD_TOKEN"]!,
-  ownerId: BigInt(env["BOT_OWNER_ID"]!),
-  supportGuildId: BigInt(env["SUPPORT_GUILD_ID"]!),
-  intents,
-  refreshCommands: convertEnvVarToBoolean("REFRESH_COMMANDS"),
-  devMode: convertEnvVarToBoolean("DEV_MODE"),
-  mongo: mongoConfig,
-  redis: redisConfig,
+const unparsedDiscordConfig: Record<string, unknown> | undefined =
+  "discord" in parsedToml && typeof parsedToml.discord === "object"
+    ? {
+      token: Deno.env.get("DISCORD_TOKEN") ||
+        (parsedToml.discord as any)?.token,
+      ownerId: (parsedToml.discord as any)?.ownerId &&
+          typeof (parsedToml.discord as any).ownerId === "string"
+        ? snowflakeToBigint((parsedToml.discord as any).ownerId as string)
+        : undefined,
+      supportGuildId: (parsedToml.discord as any)?.supportGuildId &&
+          typeof (parsedToml.discord as any).supportGuildId === "string"
+        ? snowflakeToBigint(
+          (parsedToml.discord as any).supportGuildId as string,
+        )
+        : undefined,
+      intents: "intents" in (parsedToml.discord as any) &&
+          Array.isArray((parsedToml.discord as any).intents)
+        ? transformGatewayIntentKeysToBitfield(
+          (parsedToml.discord as any).intents,
+        )
+        : undefined,
+    }
+    : undefined;
+const unparsedMongoConfig: Record<string, unknown> | undefined =
+  "mongo" in parsedToml && typeof parsedToml.mongo === "object"
+    ? {
+      url: Deno.env.get("MONGO_URL") || (parsedToml.mongo as any)?.url,
+    }
+    : undefined;
+const unparsedRedisConfig: Record<string, unknown> | undefined =
+  "redis" in parsedToml && typeof parsedToml.redis === "object"
+    ? {
+      cacheUrl: Deno.env.get("REDIS_CACHE_URL") ||
+        (parsedToml.redis as any)?.cacheUrl,
+    }
+    : undefined;
+
+const unparsedBotConfig: RecursivePartial<GlobalConfig> = {
+  refreshCommands: parsedToml.refreshCommands as boolean | undefined,
+  devMode: parsedToml.devMode as boolean | undefined,
+  discord: unparsedDiscordConfig,
+  mongo: unparsedMongoConfig,
+  redis: unparsedRedisConfig,
 };
+export const botConfig = globalConfigSchema.parse(unparsedBotConfig);
+export const discordConfig = botConfig.discord;
+export const mongoConfig = botConfig.mongo;
+export const redisConfig = botConfig.redis;
+
+// function convertEnvVarToBoolean(envVarStringValue: string): boolean {
+//   if (!envVarStringValue || envVarStringValue === "false") return false;
+//   else if (envVarStringValue === "true") return true;
+//   else {
+//     throw new Error(
+//       `This environment variable needs to have a boolean value`,
+//     );
+//   }
+// }

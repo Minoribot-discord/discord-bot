@@ -1,5 +1,5 @@
 import { createBot } from "deps";
-import { botConfig } from "config";
+import { botConfig, discordConfig } from "config";
 import { CustomBot, I18nHandler, tasks } from "internals";
 import { collectors, getOrFetchUser } from "utils";
 import {
@@ -11,15 +11,15 @@ import {
   runningTasks,
   subCommands,
 } from "internals/loadStuff.ts";
-const { discordToken, intents } = botConfig;
+const { token, intents } = discordConfig;
 
-const baseBot = createBot({ token: discordToken, intents, events: {} });
+const baseBot = createBot({ token, intents, events: {} });
 
 // implement the custom properties to the bot object
 const customBot = baseBot as CustomBot;
 customBot.ready = false;
 customBot.config = botConfig;
-customBot.ownerId = botConfig.ownerId;
+customBot.ownerId = discordConfig.ownerId;
 customBot.getBotUser = () => getOrFetchUser(customBot, customBot.id);
 customBot.i18n = new I18nHandler(customBot);
 customBot.collectors = collectors;
