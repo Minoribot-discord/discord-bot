@@ -13,9 +13,11 @@ export const mongoConfigSchema = z.object({
 });
 export type MongoConfig = z.infer<typeof mongoConfigSchema>;
 
-export const redisConfigSchema = z.object({
-  cacheUrl: z.string(),
-});
+export const redisConfigSchema = z
+  .object({
+    cacheUrl: z.string().optional(),
+  })
+  .optional();
 export type RedisConfig = z.infer<typeof redisConfigSchema>;
 
 export const globalConfigSchema = z.object({
