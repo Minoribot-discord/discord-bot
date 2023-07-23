@@ -3,7 +3,6 @@ export * from "./Collector.ts";
 export * from "./Command.ts";
 export * from "./CommandCategory.ts";
 export * from "./EmbedBuilder.ts";
-export * from "./Errors.ts";
 export * from "./Inhibitor.ts";
 export * from "./Locale.ts";
 export * from "./misc.ts";
