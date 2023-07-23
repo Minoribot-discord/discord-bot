@@ -10,14 +10,14 @@ import {
   SubCommandGroup,
   Task,
 } from "structures";
-import { BotConfig, I18nHandler } from "internals";
+import { GlobalConfig, I18nHandler } from "internals";
 import { collectors } from "utils";
 import { DatabaseWrapper } from "database/database.ts";
 
 // custom type for the bot so we can add custom properties
 export type CustomBot = Bot & {
   ready: boolean;
-  config: BotConfig;
+  config: GlobalConfig;
   ownerId: bigint;
   getBotUser: () => Promise<User>;
   db: DatabaseWrapper;
