@@ -28,6 +28,17 @@ export function makeBasePunishmentEmbed(
   return embed;
 }
 
+export function makeBaseErrorEmbed(error: Error | string) {
+  return makeBaseEmbed()
+    .setTitle("An error has occured")
+    .setDescription(
+      error instanceof Error ? `${error.message}\n${error.stack}` : error,
+    )
+    .setColor(
+      0xff0000,
+    );
+}
+
 export function makeBaseEmbed(): EmbedBuilder {
   return new EmbedBuilder(baseEmbed);
 }

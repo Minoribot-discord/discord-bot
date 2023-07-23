@@ -34,9 +34,13 @@ intents = [
 # MongoDB url
 # Note that query strings must begin with "?authMechanism=SCRAM-SHA-1"
 url = "The url to your MongoDB database"
-
 # Redis related stuff
 # Currently unused, so it is optional
 [redis]
 # Redis url
 cacheUrl = "The url to your Redis database"
+
+[webhooks]
+[webhooks.error]
+id = "The id of your webhook"
+token = "The token of your webhook"
