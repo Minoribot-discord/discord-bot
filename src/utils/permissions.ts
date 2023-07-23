@@ -10,18 +10,6 @@ import {
 
 // Some code stolen or inspired from "https://github.com/discordeno/discordeno/blob/1a717ddc7d97e31d3775747df9df153729d2925d/plugins/permissions/src/permissions.ts"
 
-/** Returns the permissions that are not in the given permissionBits */
-export function missingPermissions(
-  permissionBits: bigint,
-  permissions: PermissionStrings[],
-) {
-  if (permissionBits & 8n) return [];
-
-  return permissions.filter((permission) =>
-    !(permissionBits & BigInt(BitwisePermissionFlags[permission]))
-  );
-}
-
 /** Calculates the permissions this member has in the given guild */
 export function calculateBasePermissions(
   guild: Guild,
@@ -151,6 +139,18 @@ export function hasChannelPermissions(
   );
   // Second use the validatePermissions function to check if the member has every permission
   return validatePermissions(channelOverwrites, permissions);
+}
+
+/** Returns the permissions that are not in the given permissionBits */
+export function missingPermissions(
+  permissionBits: bigint,
+  permissions: PermissionStrings[],
+) {
+  if (permissionBits & 8n) return [];
+
+  return permissions.filter((permission) =>
+    !(permissionBits & BigInt(BitwisePermissionFlags[permission]))
+  );
 }
 
 /** Get the missing Guild permissions this member has */

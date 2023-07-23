@@ -24,36 +24,7 @@ createModule({
 
       bot.logger.info("Bot is ready");
 
-      /*
-        the commented code below is some old code that i conserve for some reason
-        might delete it in the future tho
-      */
-
-      // show a list of loaded commands, modules and inhibitors
-
-      // let string_ = "";
-
-      // string_ = string_ +
-      //   `${bot.loadedCmdCategories.size} command categories:\n   ${
-      //     bot.loadedCmdCategories.map((category) => category.name).join(" - ")
-      //   }\n`;
-
-      // string_ = string_ +
-      //   `${bot.loadedCommands.size} commands (${bot.loadedSubCommands.size} subcommands/groups):\n    ${
-      //     bot.loadedCommands.map((command) => command.name).join(" - ")
-      //   }\n`;
-
-      // string_ = string_ +
-      //   `${bot.loadedInhibitors.size} inhibitors:\n   ${
-      //     bot.loadedInhibitors.map((inhibitor) => inhibitor.name).join(" - ")
-      //   }\n`;
-
-      // string_ = string_ +
-      //   `${bot.loadedModules.size} modules:\n   ${
-      //     bot.loadedModules.map((module) => module.name).join(" - ")
-      //   }`;
-
-      let string_ = "";
+      let string_ = "\n";
 
       string_ = string_ +
         `${bot.cmdCategories.size} command categories\n`;
