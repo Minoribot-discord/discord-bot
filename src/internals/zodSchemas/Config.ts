@@ -1,4 +1,5 @@
 import { z } from "deps";
+import { webhookIdAndTokenSchema } from "zod_schemas/Webhook.ts";
 
 export const discordConfigSchema = z.object({
   token: z.string(),
@@ -26,5 +27,6 @@ export const globalConfigSchema = z.object({
   discord: discordConfigSchema,
   mongo: mongoConfigSchema,
   redis: redisConfigSchema,
+  webhooks: z.record(webhookIdAndTokenSchema),
 });
 export type GlobalConfig = z.infer<typeof globalConfigSchema>;

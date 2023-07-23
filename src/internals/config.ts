@@ -6,6 +6,7 @@ import {
   globalConfigSchema,
   Json,
   jsonSchema,
+  WebhookIdAndToken,
 } from "zod_schemas";
 import { transformGatewayIntentKeysToBitfield } from "../utils/misc.ts";
 
@@ -46,7 +47,6 @@ const unparsedDiscordConfig: Record<string, unknown> | undefined = {
     )
     : undefined,
 };
-
 const unparsedMongoConfig: Record<string, unknown> | undefined = {
   url: Deno.env.get("MONGO_URL") || (parsedToml?.mongo as any)?.url,
 };
@@ -54,6 +54,21 @@ const unparsedRedisConfig: Record<string, unknown> | undefined = {
   cacheUrl: Deno.env.get("REDIS_CACHE_URL") ||
     (parsedToml.redis as any)?.cacheUrl,
 };
+const unparsedWebhooks:
+  | Record<string, RecursivePartial<WebhookIdAndToken>>
+  | undefined = {};
+if ("webhooks" in parsedToml && typeof parsedToml.webhooks === "object") {
+  for (const [key, value] of Object.entries(parsedToml.webhooks as object)) {
+    if (typeof value === "object") {
+      unparsedWebhooks[key] = {
+        id: typeof value.id === "string"
+          ? snowflakeToBigint(value.id)
+          : undefined,
+        token: value.token,
+      };
+    }
+  }
+}
 
 const unparsedBotConfig: RecursivePartial<GlobalConfig> = {
   refreshCommands: parsedToml.refreshCommands as boolean | undefined,
@@ -61,11 +76,14 @@ const unparsedBotConfig: RecursivePartial<GlobalConfig> = {
   discord: unparsedDiscordConfig,
   mongo: unparsedMongoConfig,
   redis: unparsedRedisConfig,
+  webhooks: unparsedWebhooks,
 };
+
 export const botConfig = globalConfigSchema.parse(unparsedBotConfig);
 export const discordConfig = botConfig.discord;
 export const mongoConfig = botConfig.mongo;
 export const redisConfig = botConfig.redis;
+export const webhooks = botConfig.webhooks;
 
 // function convertEnvVarToBoolean(envVarStringValue: string): boolean {
 //   if (!envVarStringValue || envVarStringValue === "false") return false;
