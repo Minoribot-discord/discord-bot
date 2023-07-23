@@ -1,12 +1,20 @@
 import {
   ApplicationCommandOptionTypes,
+  Channel,
+  Guild,
   Interaction,
   InteractionDataOption,
   InteractionTypes,
   PermissionStrings,
 } from "deps";
 import { BaseCommand, Context, I18nContext, Inhibitor } from "structures";
-import { getMissingChannelPermissions } from "utils";
+import {
+  getMissingChannelPermissions,
+  getOrFetchChannel,
+  getOrFetchGuild,
+  makeBaseErrorEmbed,
+  sendErrorWebhook,
+} from "utils";
 import { createModule } from "internals/loadStuff.ts";
 import { CustomBot } from "internals/CustomBot.ts";
 
@@ -187,14 +195,70 @@ async function checkRequiredBotPermissions(
   );
 }
 
-// deno-lint-ignore require-await
 async function handleApplicationCommandError(
   bot: CustomBot,
-  _interaction: Interaction,
-  error: unknown,
+  interaction: Interaction,
+  error: Error,
 ) {
-  // const context = new ApplicationCommandContext(bot, interaction);
-  // const i18nContext = await (new I18nContext(bot, interaction)).initLocale();
-
   bot.logger.error(error);
+  const author = interaction.user;
+  const guild: Guild | undefined = interaction.guildId
+    ? await getOrFetchGuild(bot, interaction.guildId)
+    : undefined;
+  const channel: Channel | undefined = interaction.channelId
+    ? await getOrFetchChannel(bot, interaction.channelId)
+    : undefined;
+
+  const embed = makeBaseErrorEmbed(error)
+    .setTitle("An error occurred while executing a command.")
+    .addField(
+      "Interaction",
+      `${
+        interaction.data
+          ? `${interaction.data.name} (${interaction.data.id})`
+          : "Unknown interaction"
+      }`,
+    )
+    .addField(
+      "Info",
+      `Author: ${
+        author.globalName ? `${author.globalName} - ` : ""
+      }${author.username} (id: ${author.id})\n` +
+        `Guild: ${
+          guild ? `${guild.name} (id: ${guild.id})` : "Unknown (or in DM)"
+        }\n` +
+        `Channel: ${
+          channel ? `${channel.name} (id: ${channel.id})` : "Unknown"
+        }`,
+    )
+    .addField(
+      "Arguments",
+      `${
+        interaction.data && interaction.data.options
+          ? `${
+            interaction.data.options
+              .map((o) =>
+                `${o.name}${
+                  !([
+                      ApplicationCommandOptionTypes.SubCommand,
+                      ApplicationCommandOptionTypes.SubCommandGroup,
+                      ApplicationCommandOptionTypes.Attachment,
+                    ]
+                      .includes(o.type))
+                    ? `: ${o.value}`
+                    : ""
+                }`
+              )
+              .join(
+                "\n",
+              )
+          }`
+          : "None"
+      }`,
+    );
+    
+  await sendErrorWebhook(bot, embed);
+  await interaction.respond({
+    embeds: [embed.toDiscordEmbed(bot)],
+  });
 }
