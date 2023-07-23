@@ -21,7 +21,7 @@ import { discordConfig, redisConfig } from "config";
 import { Serializer } from "./types.ts";
 
 // Todo: Finish serializers and maybe implement Redis as main cache
-export const redisCacheClient = createClient({ url: redisConfig.cacheUrl });
+export const redisCacheClient = createClient({ url: redisConfig?.cacheUrl });
 // export async function initRedisCacheClient() {
 //   logger.info("Connecting to the Redis cache database");
 //   await redisCacheClient.connect();
