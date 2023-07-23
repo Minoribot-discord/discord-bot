@@ -26,6 +26,10 @@ export async function start(bot: CustomBot) {
   // start the bot
   bot.logger.info("Starting connection to the Discord API & gateway");
   await bot.start();
+  const botUser = await bot.getBotUser();
+  bot.logger.info(
+    `Logged in as ${botUser.username}#${botUser.discriminator} (${botUser.id})`,
+  );
 
   await handleConsoleInput(bot);
 }
