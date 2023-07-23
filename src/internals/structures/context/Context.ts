@@ -1,4 +1,9 @@
-import { Embed, Interaction, InteractionCallbackData } from "deps";
+import {
+  Camelize,
+  DiscordEmbed,
+  Interaction,
+  InteractionCallbackData,
+} from "deps";
 import { CustomBot, EmbedBuilder } from "internals";
 import {
   getOrFetchChannel,
@@ -42,19 +47,24 @@ export class Context {
     data:
       | string
       | (Omit<InteractionCallbackData, "embeds">) & {
-        embeds?: (Embed | EmbedBuilder)[];
+        embeds?: (Camelize<DiscordEmbed> | EmbedBuilder)[];
       }
       | EmbedBuilder
       | EmbedBuilder[],
     options?: { isPrivate?: boolean },
   ) {
     if (typeof data === "string") data = { content: data };
-    else if (data instanceof EmbedBuilder) data = { embeds: [data.toJSON()] };
-    else if (Array.isArray(data)) {
-      data = { embeds: data.map((embedBuilder) => embedBuilder.toJSON()) };
+    else if (data instanceof EmbedBuilder) {
+      data = { embeds: [data.toDiscordEmbed(this.bot)] };
+    } else if (Array.isArray(data)) {
+      data = {
+        embeds: data.map((embedBuilder) =>
+          embedBuilder.toDiscordEmbed(this.bot)
+        ),
+      };
     } else {
       data.embeds = data.embeds?.map((e) =>
-        e instanceof EmbedBuilder ? e.toJSON() : e
+        e instanceof EmbedBuilder ? e.toDiscordEmbed(this.bot) : e
       );
     }
     await this.interactionRespond(data as InteractionCallbackData, options);

@@ -1,4 +1,5 @@
-import { Embed, lodash } from "deps";
+import { DiscordEmbed, Embed, lodash } from "deps";
+import { CustomBot } from "internals/CustomBot.ts";
 
 export class EmbedBuilder {
   embed: Embed = {};
@@ -110,5 +111,9 @@ export class EmbedBuilder {
 
   toJSON(): Embed {
     return lodash.cloneDeep(this.embed);
+  }
+
+  toDiscordEmbed(bot: CustomBot): DiscordEmbed {
+    return bot.transformers.reverse.embed(bot, this.toJSON());
   }
 }
