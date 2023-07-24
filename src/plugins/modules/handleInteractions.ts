@@ -256,7 +256,7 @@ async function handleApplicationCommandError(
           : "None"
       }`,
     );
-    
+
   await sendErrorWebhook(bot, embed);
   await interaction.respond({
     embeds: [embed.toDiscordEmbed(bot)],

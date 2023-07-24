@@ -7,7 +7,6 @@ export type InhibitorExecuteFunc = (
 
 export interface InhibitorParams {
   name: string;
-  rejectMessageKey?: LocaleKeys;
   execute: InhibitorExecuteFunc;
 }
 
@@ -18,7 +17,7 @@ export class Inhibitor {
   execute: InhibitorExecuteFunc;
 
   constructor(params: InhibitorParams) {
-    const { name, rejectMessageKey, execute } = params;
+    const { name, execute } = params;
 
     this.name = name;
     this.execute = execute.bind(this) ||
@@ -26,8 +25,9 @@ export class Inhibitor {
         return false;
       });
 
-    this.rejectMessageKey = rejectMessageKey ??
-      camelCaseToScreamingSnakeCase(this.name);
+    this.rejectMessageKey = `INHIBITOR.${
+      camelCaseToScreamingSnakeCase(this.name)
+    }.REJECT`;
   }
 
   rejectMessage(i18n: I18nContext): string {
