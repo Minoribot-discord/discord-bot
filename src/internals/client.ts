@@ -1,7 +1,8 @@
 import { Bot, createBot } from "deps";
 import { botConfig, discordConfig } from "config";
-import { CustomBot, I18nHandler, tasks } from "internals";
+import { CustomBot, tasks } from "internals";
 import { collectors, getOrFetchUser, sendErrorWebhook } from "utils";
+import * as i18n from "utils/i18n.ts";
 import {
   commandCategories,
   commands,
@@ -28,7 +29,7 @@ function createCustomBot(bot: Bot): CustomBot {
   customBot.config = botConfig;
   customBot.ownerId = discordConfig.ownerId;
   customBot.getBotUser = () => getOrFetchUser(customBot, customBot.id);
-  customBot.i18n = new I18nHandler(customBot);
+  customBot.i18n = i18n;
   customBot.collectors = collectors;
   customBot.modules = modules;
   customBot.commands = commands;
@@ -38,7 +39,7 @@ function createCustomBot(bot: Bot): CustomBot {
   customBot.inhibitors = inhibitors;
   customBot.tasks = tasks;
   customBot.runningTasks = runningTasks;
-
+  
   // Override the logger
   const { error } = bot.logger;
   customBot.logger.error = (sendToWebhook = true, ...args) => {

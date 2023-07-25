@@ -1,4 +1,3 @@
-export * from "./i18n/mod.ts";
 export * from "./structures/mod.ts";
 export * from "./zodSchemas/mod.ts";
 export * from "./cli.ts";

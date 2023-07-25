@@ -10,6 +10,7 @@
     "internals": "./src/internals/mod.ts",
     "internals/": "./src/internals/",
     "utils": "./src/utils/mod.ts",
+    "utils/": "./src/utils/",
     "structures": "./src/internals/structures/mod.ts",
     "structures/": "./src/internals/structures/",
     "zod_schemas": "./src/internals/zodSchemas/mod.ts",
@@ -19,8 +20,7 @@
     "cache": "./src/cache/mod.ts",
     "cache/": "./src/cache/",
     "database": "./src/database/mod.ts",
-    "database/": "./src/database/",
-    "i18n": "./src/internals/i18n/mod.ts"
+    "database/": "./src/database/"
   },
   "compilerOptions": {
     "noUncheckedIndexedAccess": true

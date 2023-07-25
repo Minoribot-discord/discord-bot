@@ -10,8 +10,9 @@ import {
   SubCommandGroup,
   Task,
 } from "structures";
-import { GlobalConfig, I18nHandler } from "internals";
+import { GlobalConfig } from "internals";
 import { collectors } from "utils";
+import * as i18n from "utils/i18n.ts";
 import { DatabaseWrapper } from "database/database.ts";
 
 type CustomLogger = Omit<typeof logger, "error"> & {
@@ -26,7 +27,7 @@ export type CustomBot = Omit<Bot, "logger"> & { logger: CustomLogger } & {
   ownerId: bigint;
   getBotUser: () => Promise<User>;
   db: DatabaseWrapper;
-  i18n: I18nHandler;
+  i18n: typeof i18n;
   collectors: typeof collectors;
   modules: Collection<string, Module>;
   commands: Collection<string, Command>;

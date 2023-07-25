@@ -8,4 +8,3 @@ export type getArgsLocaleKey<K extends LocaleKeys> =
     : [];
 
 export type Locale = typeof cat_central;
-export const defaultLocale = cat_central;

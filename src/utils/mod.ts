@@ -1,6 +1,7 @@
 export * from "./collectors.ts";
 export * from "./embed.ts";
 export * from "./fetch.ts";
+export * from "./i18n.ts";
 export * from "./misc.ts";
 export * from "./permissions.ts";
 export * from "./time.ts";
