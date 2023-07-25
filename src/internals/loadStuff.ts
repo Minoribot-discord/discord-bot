@@ -159,9 +159,7 @@ export function checkAndAddInhibitorsToCommand(baseCommand: BaseCommand) {
   if (nonExistentInhibitors.length > 0) {
     const errorString =
       `Cannot continue, incorrect or missing inhibitors detected for the command/subcommand/subcommand group ${baseCommand.name}`;
-    logger.error(
-      `${errorString}:\n${nonExistentInhibitors.join(" - ")}`,
-    );
+    logger.error(`${errorString}:\n${nonExistentInhibitors.join(" - ")}`);
     throw new Error(errorString);
   }
 }

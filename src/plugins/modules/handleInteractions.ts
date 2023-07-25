@@ -200,7 +200,7 @@ async function handleApplicationCommandError(
   interaction: Interaction,
   error: Error,
 ) {
-  bot.logger.error(false, error);
+  bot.logger.error(error);
 
   const author = interaction.user;
   const guild: Guild | undefined = interaction.guildId
