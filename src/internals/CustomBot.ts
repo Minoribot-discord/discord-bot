@@ -1,4 +1,4 @@
-import { Bot, Collection, User } from "deps";
+import { Bot, Collection, logger, User } from "deps";
 import {
   Command,
   CommandCategory,
@@ -14,8 +14,13 @@ import { GlobalConfig, I18nHandler } from "internals";
 import { collectors } from "utils";
 import { DatabaseWrapper } from "database/database.ts";
 
+type CustomLogger = Omit<typeof logger, "error"> & {
+  // deno-lint-ignore no-explicit-any
+  error: (sendToWebhook: boolean, ...args: any[]) => void;
+};
+
 // custom type for the bot so we can add custom properties
-export type CustomBot = Bot & {
+export type CustomBot = Omit<Bot, "logger"> & { logger: CustomLogger } & {
   ready: boolean;
   config: GlobalConfig;
   ownerId: bigint;

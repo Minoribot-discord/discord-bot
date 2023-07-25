@@ -40,9 +40,9 @@ function createCustomBot(bot: Bot): CustomBot {
   customBot.runningTasks = runningTasks;
 
   // Override the logger
-  const { error } = customBot.logger;
-  customBot.logger.error = (...args) => {
-    sendErrorWebhook(customBot, args[0]).catch(error);
+  const { error } = bot.logger;
+  customBot.logger.error = (sendToWebhook = true, ...args) => {
+    if (sendToWebhook) sendErrorWebhook(customBot, args[0]).catch(error);
     error(...args);
   };
 

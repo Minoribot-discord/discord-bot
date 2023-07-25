@@ -200,7 +200,8 @@ async function handleApplicationCommandError(
   interaction: Interaction,
   error: Error,
 ) {
-  bot.logger.error(error);
+  bot.logger.error(false, error);
+
   const author = interaction.user;
   const guild: Guild | undefined = interaction.guildId
     ? await getOrFetchGuild(bot, interaction.guildId)
