@@ -1,4 +1,4 @@
-import { GatewayIntents, lodash, User } from "deps";
+import { GatewayIntents, lodash, User, camelToSnakeCase } from "deps";
 
 const devModePrefix = "DEV_";
 
@@ -14,12 +14,9 @@ export function userUsernameAndDiscriminator(user: User) {
   }
 }
 
-export function camelCaseToSnakeCase(str: string) {
-  return str.replace(/([A-Z])/g, "_$1");
-}
 
-export function camelCaseToScreamingSnakeCase(str: string) {
-  return camelCaseToSnakeCase(str).toUpperCase();
+export function camelToScreamingSnakeCase(str: string) {
+  return camelToSnakeCase(str).toUpperCase();
 }
 
 export function isNumberNegative(number: number) {

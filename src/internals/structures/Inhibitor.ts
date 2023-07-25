@@ -1,5 +1,5 @@
 import { Context, I18nContext, LocaleKeys } from "internals";
-import { camelCaseToScreamingSnakeCase } from "utils";
+import { camelToScreamingSnakeCase } from "utils";
 
 export type InhibitorExecuteFunc = (
   context: Context,
@@ -26,7 +26,7 @@ export class Inhibitor {
       });
 
     this.rejectMessageKey = `INHIBITOR.${
-      camelCaseToScreamingSnakeCase(this.name)
+      camelToScreamingSnakeCase(this.name)
     }.REJECT`;
   }
 
