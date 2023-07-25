@@ -30,7 +30,7 @@ const execute: CommandExecuteFunc = async (
 };
 
 createCommand({
-  name: "info",
+  name: "botinfo",
   category: "bot",
   description: "Show some info about the bot",
   scope: CommandScope.GLOBAL,
