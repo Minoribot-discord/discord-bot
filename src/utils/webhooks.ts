@@ -14,7 +14,7 @@ export function sendWebhook(
   return bot.helpers.executeWebhook(webhook.id, webhook.token!, options);
 }
 
-export function sendErrorWebhook(
+export async function sendErrorWebhook(
   bot: CustomBot,
   error: Error | string | EmbedBuilder,
 ) {
@@ -27,7 +27,7 @@ export function sendErrorWebhook(
     error = makeBaseErrorEmbed(error);
   }
 
-  return sendWebhook(bot, bot.config.webhooks.error, {
+  return await sendWebhook(bot, bot.config.webhooks.error, {
     allowedMentions: {
       parse: [AllowedMentionsTypes.UserMentions],
     },
