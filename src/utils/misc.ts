@@ -1,4 +1,4 @@
-import { GatewayIntents, lodash, User, camelToSnakeCase } from "deps";
+import { camelToSnakeCase, GatewayIntents, lodash, User } from "deps";
 
 const devModePrefix = "DEV_";
 
@@ -13,7 +13,6 @@ export function userUsernameAndDiscriminator(user: User) {
     return user.username;
   }
 }
-
 
 export function camelToScreamingSnakeCase(str: string) {
   return camelToSnakeCase(str).toUpperCase();
