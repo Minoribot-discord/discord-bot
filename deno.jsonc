@@ -1,7 +1,7 @@
 {
   "tasks": {
     "start": "deno fmt && deno run --unstable --allow-sys --allow-net --allow-read --allow-write='./' --allow-env ./mod.ts",
-    "r-deps": "deno cache -r ./deps.ts" 
+    "r-deps": "deno cache -r ./deps.ts"
   },
   "imports": {
     "deps": "./deps.ts",
