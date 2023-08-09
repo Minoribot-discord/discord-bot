@@ -29,6 +29,12 @@ intents = [
     "MessageContent",
 ]
 
+[openWeather]
+apikey = "your api key here"
+apiUrl = "(optional) the url that is used as the api url"
+# defaultUnits has to be either "standard", "metric" or "imperial"
+defaultUnits = "(optional) the default units used for weather data"
+
 # Mongo related stuff
 [mongo]
 # MongoDB url

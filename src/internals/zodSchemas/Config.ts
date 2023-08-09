@@ -1,4 +1,4 @@
-import { z } from "deps";
+import { unitsSchema, z } from "deps";
 import { webhookIdAndTokenSchema } from "zod_schemas/Webhook.ts";
 
 export const discordConfigSchema = z.object({
@@ -8,6 +8,13 @@ export const discordConfigSchema = z.object({
   intents: z.number(),
 });
 export type DiscordConfig = z.infer<typeof discordConfigSchema>;
+
+export const openWeatherConfigSchema = z.object({
+  apiKey: z.string(),
+  apiUrl: z.string().optional(),
+  defaultUnits: unitsSchema.optional(),
+});
+export type OpenWeatherConfig = z.infer<typeof openWeatherConfigSchema>;
 
 export const mongoConfigSchema = z.object({
   url: z.string(),
@@ -25,6 +32,7 @@ export const globalConfigSchema = z.object({
   refreshCommands: z.boolean(),
   devMode: z.boolean(),
   discord: discordConfigSchema,
+  openWeather: openWeatherConfigSchema,
   mongo: mongoConfigSchema,
   redis: redisConfigSchema,
   webhooks: z.record(webhookIdAndTokenSchema),

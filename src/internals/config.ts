@@ -4,16 +4,9 @@ import { RecursivePartial } from "structures";
 import {
   GlobalConfig,
   globalConfigSchema,
-  Json,
-  jsonSchema,
   WebhookIdAndToken,
 } from "zod_schemas";
 import { transformGatewayIntentKeysToBitfield } from "../utils/misc.ts";
-
-const rawToml = await Deno.readTextFile("./config.toml");
-const parsedToml = jsonSchema.parse(toml.parse(rawToml)) as {
-  [key: string]: Json;
-};
 
 // type EnvKey =
 //   | "DISCORD_TOKEN"
@@ -27,7 +20,10 @@ await dotenv.load({
   examplePath: null,
 });
 
-const unparsedDiscordConfig: Record<string, unknown> | undefined = {
+const rawToml = await Deno.readTextFile("./config.toml");
+const parsedToml = toml.parse(rawToml);
+
+const unparsedDiscordConfig: Record<string, unknown> = {
   token: Deno.env.get("DISCORD_TOKEN") ||
     (parsedToml?.discord as any)?.token,
   ownerId: (parsedToml?.discord as any)?.ownerId &&
@@ -47,10 +43,16 @@ const unparsedDiscordConfig: Record<string, unknown> | undefined = {
     )
     : undefined,
 };
-const unparsedMongoConfig: Record<string, unknown> | undefined = {
+const unparsedOpenWeatherConfig: Record<string, unknown> = {
+  apiKey: Deno.env.get("OPENWEATHER_API_KEY") ||
+    (parsedToml?.openWeather as any)?.apiKey,
+  apiUrl: (parsedToml?.openWeather as any)?.apiUrl,
+  defaultUnits: (parsedToml?.openWeather as any)?.defaultUnits,
+};
+const unparsedMongoConfig: Record<string, unknown> = {
   url: Deno.env.get("MONGO_URL") || (parsedToml?.mongo as any)?.url,
 };
-const unparsedRedisConfig: Record<string, unknown> | undefined = {
+const unparsedRedisConfig: Record<string, unknown> = {
   cacheUrl: Deno.env.get("REDIS_CACHE_URL") ||
     (parsedToml.redis as any)?.cacheUrl,
 };
@@ -74,6 +76,7 @@ const unparsedBotConfig: RecursivePartial<GlobalConfig> = {
   refreshCommands: parsedToml.refreshCommands as boolean | undefined,
   devMode: parsedToml.devMode as boolean | undefined,
   discord: unparsedDiscordConfig,
+  openWeather: unparsedOpenWeatherConfig,
   mongo: unparsedMongoConfig,
   redis: unparsedRedisConfig,
   webhooks: unparsedWebhooks,
@@ -81,6 +84,7 @@ const unparsedBotConfig: RecursivePartial<GlobalConfig> = {
 
 export const botConfig = globalConfigSchema.parse(unparsedBotConfig);
 export const discordConfig = botConfig.discord;
+export const openWeatherConfig = botConfig.openWeather;
 export const mongoConfig = botConfig.mongo;
 export const redisConfig = botConfig.redis;
 export const webhooks = botConfig.webhooks;
