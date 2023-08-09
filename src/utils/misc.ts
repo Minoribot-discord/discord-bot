@@ -106,7 +106,7 @@ function verifyGatewayIntentKeys(
 }
 export function transformGatewayIntentKeysToBitfield(
   gatewayIntentKeys: unknown[],
-): GatewayIntents {
+): number {
   verifyGatewayIntentKeys(gatewayIntentKeys);
 
   let intents = 0;
