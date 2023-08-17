@@ -110,7 +110,7 @@ export function transformGatewayIntentKeysToBitfield(
   verifyGatewayIntentKeys(gatewayIntentKeys);
 
   let intents = 0;
-  (gatewayIntentKeys)
+  gatewayIntentKeys
     .map((intent) => intents |= GatewayIntents[intent]);
 
   return intents;
