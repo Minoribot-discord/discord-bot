@@ -182,6 +182,18 @@
     "https://esm.sh/v130/cluster-key-slot@1.1.2/denonext/cluster-key-slot.mjs": "3d7c011bacf7e1536edcaba4f7ab5b3b819267db114738fe1535fff6988c5916",
     "https://esm.sh/v130/generic-pool@3.9.0/denonext/generic-pool.mjs": "9c8d28bdc12aaa4a5968e5ebc16f8ce9924deaac7123f557e89091ef439486af",
     "https://esm.sh/v130/redis@4.6.7/denonext/redis.mjs": "bf8bf9db7813f841f8991a7d6ca77779908a7f251989a0f51837050969c0c418",
+    "https://esm.sh/v130/yallist@4.0.0/denonext/yallist.mjs": "61f180d807dda50bac17028eda05d5722a3fecef6e98a9064e2353ea6864fd82",
+    "https://esm.sh/redis@4.6.7": "36b9199f047fa31cb7ed14488639891f3b3903f2c2a4213a8014dcb2bc55844c",
+    "https://esm.sh/v130/@redis/bloom@1.2.0/denonext/bloom.mjs": "92592f70a5783d5d38b29d4c8052a9cb1b8ec3a9addb4cb111c1f660184511a2",
+    "https://esm.sh/v130/@redis/client@1.5.8/denonext/client.mjs": "b2ae4ad83f82ecca7a0f4a16794a452b2d973f1442480a515af81cc364e2f6bc",
+    "https://esm.sh/v130/@redis/client@1.5.8/denonext/dist/lib/commands/generic-transformers.js": "7ee6c46fcbd8b967b244bf1ad5d14293919acb113e2faf444e1d728aa103ef86",
+    "https://esm.sh/v130/@redis/graph@1.1.0/denonext/graph.mjs": "6079d34296b32846907c985f46c5d5af0a0a8327af5497655d1f1c206269826b",
+    "https://esm.sh/v130/@redis/json@1.0.4/denonext/json.mjs": "f34af1020d30573862aa91ac12b33793e5060c7bedf21e42b1424d93ad6ccdb0",
+    "https://esm.sh/v130/@redis/search@1.1.3/denonext/search.mjs": "9b3eab8c502a81604e2e839dbef2928a85b1f32919e5f011579e1d0870a07fe6",
+    "https://esm.sh/v130/@redis/time-series@1.0.4/denonext/time-series.mjs": "ee068e3315bfbdf959d7749dde84e326cf48a01f675818a49f276c82ab2d1d78",
+    "https://esm.sh/v130/cluster-key-slot@1.1.2/denonext/cluster-key-slot.mjs": "3d7c011bacf7e1536edcaba4f7ab5b3b819267db114738fe1535fff6988c5916",
+    "https://esm.sh/v130/generic-pool@3.9.0/denonext/generic-pool.mjs": "9c8d28bdc12aaa4a5968e5ebc16f8ce9924deaac7123f557e89091ef439486af",
+    "https://esm.sh/v130/redis@4.6.7/denonext/redis.mjs": "bf8bf9db7813f841f8991a7d6ca77779908a7f251989a0f51837050969c0c418",
     "https://esm.sh/v130/yallist@4.0.0/denonext/yallist.mjs": "61f180d807dda50bac17028eda05d5722a3fecef6e98a9064e2353ea6864fd82"
   },
   "npm": {
@@ -227,10 +239,6 @@
           "@discordeno/types": "@discordeno/types@19.0.0-next.2d0f76e",
           "tweetnacl": "tweetnacl@1.0.3"
         }
-      },
-      "@types/lodash@4.14.195": {
-        "integrity": "sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==",
-        "dependencies": {}
       },
       "dotenv@16.3.1": {
         "integrity": "sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==",
