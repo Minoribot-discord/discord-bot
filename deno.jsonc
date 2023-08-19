@@ -6,7 +6,7 @@
   "imports": {
     "deps": "./deps.ts",
     "plugins/": "./src/plugins/",
-    "config": "./src/internals/config.ts",
+    "config": "./src/config.ts",
     "bot": "./src/internals/client.ts",
     "internals": "./src/internals/mod.ts",
     "internals/": "./src/internals/",

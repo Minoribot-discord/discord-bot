@@ -6,7 +6,7 @@ import {
   globalConfigSchema,
   WebhookIdAndToken,
 } from "zod_schemas";
-import { transformGatewayIntentKeysToBitfield } from "../utils/misc.ts";
+import { transformGatewayIntentKeysToBitfield } from "./utils/misc.ts";
 
 // type EnvKey =
 //   | "DISCORD_TOKEN"

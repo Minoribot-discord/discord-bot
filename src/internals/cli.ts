@@ -1,5 +1,5 @@
 import { flags } from "deps";
-import { botConfig } from "internals/config.ts";
+import { botConfig } from "config";
 import { CustomBot } from "internals/CustomBot.ts";
 
 type args = flags.Args & {
