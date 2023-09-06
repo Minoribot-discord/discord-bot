@@ -1,5 +1,5 @@
-import { Bot, createBot, OpenWeatherClient } from "deps";
-import { botConfig, discordConfig, openWeatherConfig } from "config";
+import { Bot, createBot } from "deps";
+import { botConfig, discordConfig } from "config";
 import { CustomBot, tasks } from "internals";
 import { collectors, getOrFetchUser } from "utils";
 import * as i18n from "utils/i18n.ts";
@@ -42,11 +42,3 @@ function createCustomBot(bot: Bot): CustomBot {
 
   return customBot;
 }
-
-export const openWeatherClient = new OpenWeatherClient({
-  apiKey: openWeatherConfig.apiKey,
-  apiUrl: openWeatherConfig.apiUrl,
-  defaults: {
-    units: "metric",
-  },
-});

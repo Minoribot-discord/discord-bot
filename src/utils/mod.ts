@@ -6,4 +6,5 @@ export * from "./misc.ts";
 export * from "./permissions.ts";
 export * from "./time.ts";
 export * from "./transformers.ts";
+export * from "./weather.ts";
 export * from "./webhooks.ts";
