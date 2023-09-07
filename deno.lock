@@ -143,20 +143,20 @@
     "https://deno.land/x/mongo@v0.31.2/src/utils/saslprep/sparse_bitfield.ts": "07d6fe2ecd4ba5f711c44c1ae409bb9c1fe3a3cfc09e27434d231d4aae46dd2d",
     "https://deno.land/x/mongo@v0.31.2/src/utils/srv.ts": "ed5f78ffe6480faac68291a87e51e3674eff5f28aec937ee97248e99e1317b16",
     "https://deno.land/x/mongo@v0.31.2/src/utils/uri.ts": "dcfab8e1dcfcc875c75ada1d9f366664480c03b65594990d6342ed88925452e5",
-    "https://deno.land/x/openweather_apis_wrapper@v0.4.3/deps_test.ts": "231e847115959726048f1b4e9aeebd68e2a0e35f0643a604cd03aca93bbe2df4",
-    "https://deno.land/x/openweather_apis_wrapper@v0.4.3/mod.ts": "207c5d259b9396e1412c59fb2a049bc997e9b88703e074633846c464bd9c2691",
-    "https://deno.land/x/openweather_apis_wrapper@v0.4.3/src/Client.ts": "cea90b808e9810e032e00645e65e366a234b1fdc64dd2abfae6c0277f8f1d9a7",
-    "https://deno.land/x/openweather_apis_wrapper@v0.4.3/src/apis.ts": "a3228f914491bc64185be4702693fd17d88da453a314ab2f2be3c7c167d3cc87",
-    "https://deno.land/x/openweather_apis_wrapper@v0.4.3/src/cache/cache.ts": "d0e8e1f8cc0f8738c00521896db218bac283680ce53f3b47db9aca0df4a32aea",
-    "https://deno.land/x/openweather_apis_wrapper@v0.4.3/src/cache/caches/memoryCache.ts": "ec7dd559dfc27fdd16166c083a8a8238d1c8533b07e88bbd98737cb911e423b3",
-    "https://deno.land/x/openweather_apis_wrapper@v0.4.3/src/cache/caches/mod.ts": "1ba65ce2fdd432e0caafe29a03cba5944981bc1d0443a4c10cb2d8f200f45331",
-    "https://deno.land/x/openweather_apis_wrapper@v0.4.3/src/customError.ts": "0cfb8e714a8a925c5a2d31b535a69118cb04347a9ea1747def9136e31638a40a",
-    "https://deno.land/x/openweather_apis_wrapper@v0.4.3/src/endpoints.ts": "6166494c7fd73b8f867dd974804665d1292fdb368873b24ad296a8e4da951fc3",
-    "https://deno.land/x/openweather_apis_wrapper@v0.4.3/src/mod.ts": "55e706b27fb9d9abc5bc4d366ba50077fdb26495a69d5ebfcb398dbf2c8b84ae",
-    "https://deno.land/x/openweather_apis_wrapper@v0.4.3/src/paramValidation.ts": "527f84ba7bd4eff2437c2ae3ba349f26c15b4c5b03a122be2e55ac3639144989",
-    "https://deno.land/x/openweather_apis_wrapper@v0.4.3/src/types.ts": "3796e71c3f9cedf1889100b5e4865e97d5694c80ed4a7f4cbd523c709b88be27",
-    "https://deno.land/x/openweather_apis_wrapper@v0.4.3/src/utils.ts": "87992855f153a0c07b6d585f719e7d42a4452b2f1fbd155df8a306005bc2e409",
-    "https://deno.land/x/openweather_apis_wrapper@v0.4.3/test_schemas.ts": "2a93a3d1842c90f59319a7f355358312689e8462d1f6726978fe70e70ceec74a",
+    "https://deno.land/x/openweather_apis_wrapper@v0.4.4/deps_test.ts": "231e847115959726048f1b4e9aeebd68e2a0e35f0643a604cd03aca93bbe2df4",
+    "https://deno.land/x/openweather_apis_wrapper@v0.4.4/mod.ts": "207c5d259b9396e1412c59fb2a049bc997e9b88703e074633846c464bd9c2691",
+    "https://deno.land/x/openweather_apis_wrapper@v0.4.4/src/Client.ts": "7867c5e270efc52d9e0bd01f726122516abfb0c7a141dd48452540feddc7aebe",
+    "https://deno.land/x/openweather_apis_wrapper@v0.4.4/src/apis.ts": "a3228f914491bc64185be4702693fd17d88da453a314ab2f2be3c7c167d3cc87",
+    "https://deno.land/x/openweather_apis_wrapper@v0.4.4/src/cache/cache.ts": "d0e8e1f8cc0f8738c00521896db218bac283680ce53f3b47db9aca0df4a32aea",
+    "https://deno.land/x/openweather_apis_wrapper@v0.4.4/src/cache/caches/memoryCache.ts": "ec7dd559dfc27fdd16166c083a8a8238d1c8533b07e88bbd98737cb911e423b3",
+    "https://deno.land/x/openweather_apis_wrapper@v0.4.4/src/cache/caches/mod.ts": "1ba65ce2fdd432e0caafe29a03cba5944981bc1d0443a4c10cb2d8f200f45331",
+    "https://deno.land/x/openweather_apis_wrapper@v0.4.4/src/customError.ts": "0cfb8e714a8a925c5a2d31b535a69118cb04347a9ea1747def9136e31638a40a",
+    "https://deno.land/x/openweather_apis_wrapper@v0.4.4/src/endpoints.ts": "6166494c7fd73b8f867dd974804665d1292fdb368873b24ad296a8e4da951fc3",
+    "https://deno.land/x/openweather_apis_wrapper@v0.4.4/src/mod.ts": "2756524c7d77e40d48d70d481a64ca4396bd3af66cae121195d1ace8507dfa22",
+    "https://deno.land/x/openweather_apis_wrapper@v0.4.4/src/paramValidation.ts": "527f84ba7bd4eff2437c2ae3ba349f26c15b4c5b03a122be2e55ac3639144989",
+    "https://deno.land/x/openweather_apis_wrapper@v0.4.4/src/types.ts": "3796e71c3f9cedf1889100b5e4865e97d5694c80ed4a7f4cbd523c709b88be27",
+    "https://deno.land/x/openweather_apis_wrapper@v0.4.4/src/utils.ts": "87992855f153a0c07b6d585f719e7d42a4452b2f1fbd155df8a306005bc2e409",
+    "https://deno.land/x/openweather_apis_wrapper@v0.4.4/test_schemas.ts": "2a93a3d1842c90f59319a7f355358312689e8462d1f6726978fe70e70ceec74a",
     "https://deno.land/x/web_bson@v0.3.0/mod.js": "8e14aecd31ee63abd30e2dbaa284b4b67abb7ba51fcef5b96af74727cb7c7940",
     "https://deno.land/x/zod@v3.21.4/ZodError.ts": "4de18ff525e75a0315f2c12066b77b5c2ae18c7c15ef7df7e165d63536fdf2ea",
     "https://deno.land/x/zod@v3.21.4/errors.ts": "5285922d2be9700cc0c70c95e4858952b07ae193aa0224be3cbd5cd5567eabef",
@@ -171,18 +171,18 @@
     "https://deno.land/x/zod@v3.21.4/locales/en.ts": "a7a25cd23563ccb5e0eed214d9b31846305ddbcdb9c5c8f508b108943366ab4c",
     "https://deno.land/x/zod@v3.21.4/mod.ts": "64e55237cb4410e17d968cd08975566059f27638ebb0b86048031b987ba251c4",
     "https://deno.land/x/zod@v3.21.4/types.ts": "b5d061babea250de14fc63764df5b3afa24f2b088a1d797fc060ba49a0ddff28",
-    "https://esm.sh/redis@4.6.7": "36b9199f047fa31cb7ed14488639891f3b3903f2c2a4213a8014dcb2bc55844c",
-    "https://esm.sh/v130/@redis/bloom@1.2.0/denonext/bloom.mjs": "92592f70a5783d5d38b29d4c8052a9cb1b8ec3a9addb4cb111c1f660184511a2",
-    "https://esm.sh/v130/@redis/client@1.5.8/denonext/client.mjs": "b2ae4ad83f82ecca7a0f4a16794a452b2d973f1442480a515af81cc364e2f6bc",
-    "https://esm.sh/v130/@redis/client@1.5.8/denonext/dist/lib/commands/generic-transformers.js": "7ee6c46fcbd8b967b244bf1ad5d14293919acb113e2faf444e1d728aa103ef86",
-    "https://esm.sh/v130/@redis/graph@1.1.0/denonext/graph.mjs": "6079d34296b32846907c985f46c5d5af0a0a8327af5497655d1f1c206269826b",
-    "https://esm.sh/v130/@redis/json@1.0.4/denonext/json.mjs": "f34af1020d30573862aa91ac12b33793e5060c7bedf21e42b1424d93ad6ccdb0",
-    "https://esm.sh/v130/@redis/search@1.1.3/denonext/search.mjs": "9b3eab8c502a81604e2e839dbef2928a85b1f32919e5f011579e1d0870a07fe6",
-    "https://esm.sh/v130/@redis/time-series@1.0.4/denonext/time-series.mjs": "ee068e3315bfbdf959d7749dde84e326cf48a01f675818a49f276c82ab2d1d78",
-    "https://esm.sh/v130/cluster-key-slot@1.1.2/denonext/cluster-key-slot.mjs": "3d7c011bacf7e1536edcaba4f7ab5b3b819267db114738fe1535fff6988c5916",
-    "https://esm.sh/v130/generic-pool@3.9.0/denonext/generic-pool.mjs": "9c8d28bdc12aaa4a5968e5ebc16f8ce9924deaac7123f557e89091ef439486af",
-    "https://esm.sh/v130/redis@4.6.7/denonext/redis.mjs": "bf8bf9db7813f841f8991a7d6ca77779908a7f251989a0f51837050969c0c418",
-    "https://esm.sh/v130/yallist@4.0.0/denonext/yallist.mjs": "61f180d807dda50bac17028eda05d5722a3fecef6e98a9064e2353ea6864fd82"
+    "https://esm.sh/redis@4.6.7": "ebbfdbf8edbb1ceadfa8e922a69ba85e52ad62e7fffc0d9ce00ff6f012eeb816",
+    "https://esm.sh/v132/@redis/bloom@1.2.0/denonext/bloom.mjs": "8ee1393042ff6b2aa577160ffe77e10a933f6881a7201317951827b9702e8eaf",
+    "https://esm.sh/v132/@redis/client@1.5.8/denonext/client.mjs": "2b09b79f8fdd7c12e0b4b6cfecf8b694d902dc59a33af009dd3313b4eb6c4d07",
+    "https://esm.sh/v132/@redis/client@1.5.9/denonext/dist/lib/commands/generic-transformers.js": "1c045ec3d4e35de3ccba68886e8c4b3641cdc371960d6b6d61bb4d739797cee3",
+    "https://esm.sh/v132/@redis/graph@1.1.0/denonext/graph.mjs": "6079d34296b32846907c985f46c5d5af0a0a8327af5497655d1f1c206269826b",
+    "https://esm.sh/v132/@redis/json@1.0.4/denonext/json.mjs": "e281df174ca9d035a3bc82df937587029aed50e15b382bd627463e82f311cb30",
+    "https://esm.sh/v132/@redis/search@1.1.3/denonext/search.mjs": "6e6744abb41b35c8a8d2fba041982e82886f13884a6312e5a4e6ec1010fb9b06",
+    "https://esm.sh/v132/@redis/time-series@1.0.4/denonext/time-series.mjs": "c89936a7a405d13555f06f2673f3914884583115882f79bcc946f19581cea45a",
+    "https://esm.sh/v132/cluster-key-slot@1.1.2/denonext/cluster-key-slot.mjs": "3d7c011bacf7e1536edcaba4f7ab5b3b819267db114738fe1535fff6988c5916",
+    "https://esm.sh/v132/generic-pool@3.9.0/denonext/generic-pool.mjs": "9c8d28bdc12aaa4a5968e5ebc16f8ce9924deaac7123f557e89091ef439486af",
+    "https://esm.sh/v132/redis@4.6.7/denonext/redis.mjs": "f618e6dba212d33b759d08d88f2d5330e8f28586b5cc3d7d4c58a3f3fa53f618",
+    "https://esm.sh/v132/yallist@4.0.0/denonext/yallist.mjs": "61f180d807dda50bac17028eda05d5722a3fecef6e98a9064e2353ea6864fd82"
   },
   "npm": {
     "specifiers": {
@@ -206,7 +206,7 @@
         "dependencies": {
           "@discordeno/types": "@discordeno/types@19.0.0-next.2d0f76e",
           "@discordeno/utils": "@discordeno/utils@19.0.0-next.2d0f76e",
-          "ws": "ws@8.13.0"
+          "ws": "ws@8.14.0"
         }
       },
       "@discordeno/rest@19.0.0-next.2d0f76e": {
@@ -244,8 +244,8 @@
         "integrity": "sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==",
         "dependencies": {}
       },
-      "ws@8.13.0": {
-        "integrity": "sha512-x9vcZYTrFPC7aSIbj7sRCYo7L/Xb8Iy+pW0ng0wt2vCJv7M9HOMy0UoN3rr+IFC7hb7vXoqS+P9ktyLLLhO+LA==",
+      "ws@8.14.0": {
+        "integrity": "sha512-WR0RJE9Ehsio6U4TuM+LmunEsjQ5ncHlw4sn9ihD6RoJKZrVyH9FWV3dmnwu8B2aNib1OvG2X6adUCyFpQyWcg==",
         "dependencies": {}
       }
     }

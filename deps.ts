@@ -3,8 +3,8 @@ export * as log from "https://deno.land/std@0.192.0/log/mod.ts";
 export * as dotenv from "https://deno.land/std@0.192.0/dotenv/mod.ts";
 export * as flags from "https://deno.land/std@0.192.0/flags/mod.ts";
 export * as toml from "https://deno.land/std@0.192.0/toml/mod.ts";
-export * from "https://deno.land/x/openweather_apis_wrapper@v0.4.3/mod.ts";
-export * from "https://deno.land/x/openweather_apis_wrapper@v0.4.3/test_schemas.ts";
+export * from "https://deno.land/x/openweather_apis_wrapper@v0.4.4/mod.ts";
+export * from "https://deno.land/x/openweather_apis_wrapper@v0.4.4/test_schemas.ts";
 
 export * from "npm:@discordeno/utils@19.0.0-next.2d0f76e";
 export * from "npm:@discordeno/bot@19.0.0-next.2d0f76e";
