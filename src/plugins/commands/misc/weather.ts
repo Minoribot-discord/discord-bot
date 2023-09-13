@@ -1,7 +1,11 @@
 import { ApplicationCommandOptionTypes, Coordinates, unitsSchema } from "deps";
-import { CommandScope, EmbedBuilder } from "structures";
+import { CommandScope } from "structures";
 import { createCommand, createSubCommand } from "internals/loadStuff.ts";
-import { convertTemperatureIntoString, openWeatherClient } from "utils";
+import {
+  convertTemperatureIntoString,
+  makeBaseEmbed,
+  openWeatherClient,
+} from "utils";
 
 createCommand({
   name: "weather",
@@ -78,7 +82,7 @@ createSubCommand("weather", {
 
     console.log(currentWeather);
     await ctx.reply(
-      new EmbedBuilder()
+      makeBaseEmbed()
         .setTitle(
           i18n.translate("COMMAND.APP.WEATHER.CURRENT.EMBED.TITLE", [
             currentWeather.name,
