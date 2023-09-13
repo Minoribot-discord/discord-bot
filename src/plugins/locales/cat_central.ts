@@ -24,11 +24,13 @@ export const cat_central = {
     "EMBED.PUNISHMENT.FIELDS.REASON.VALUE.NO_REASON": "Cap",
     // Global command namespace
     "COMMAND.GLOBAL.ERRORS.PROVIDE_CORRECT_TIME":
-      "Has de fornir un temps/una duració correcte. (per exemple: 1d, 10m, 4h)",
+      "Has de proveir un temps/una duració correcte. (per exemple: 1d, 10m, 4h)",
     "COMMAND.GLOBAL.ERRORS.PROVIDE_CORRECT_TIME_RANGE": (
       min: string,
       max: string,
     ) => `El temps/la duració ha de ser entre **${min}** i **${max}**`,
+    "COMMAND.GLOBAL.ERRORS.PROVIDE_CORRECT_LOCATION_OR_POST_CODE":
+      "Has de proveir una ubicació o un codi postal correcte",
     "COMMAND.GLOBAL.MISSING_PERMISSIONS": (
       formattedMissingPermissions: string,
     ) =>
@@ -56,6 +58,12 @@ export const cat_central = {
     "COMMAND.APP.UNMUTE.UNMUTEEMBED.TITLE": "L'usuari ja no és silenciat",
     // Unban command
     "COMMAND.APP.UNBAN.UNBANEMBED.TITLE": "L'usuari ja no és bandejat",
+    "COMMAND.APP.WEATHER.CURRENT.EMBED.TITLE": (locationName: string) =>
+      `El temps actual per ${locationName}`,
+    "COMMAND.APP.WEATHER.CURRENT.EMBED.FIELDS.MAX_TEMP.NAME":
+      "Temperatura màxima",
+    "COMMAND.APP.WEATHER.CURRENT.EMBED.FIELDS.MIN_TEMP.NAME":
+      "Temperatura mínima",
     // // Discord permissions
     // "PERMISSION.CREATE_INSTANT_INVITE": "Crear invitacions",
     // "PERMISSION.KICK_MEMBERS": "Expulsar membres",
