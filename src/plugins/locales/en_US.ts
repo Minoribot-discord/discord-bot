@@ -29,6 +29,8 @@ loadLocale({
       min: string,
       max: string,
     ) => `The time/duration needs to be between **${min}** and **${max}**`,
+    "COMMAND.GLOBAL.ERRORS.PROVIDE_CORRECT_LOCATION_OR_POST_CODE":
+      "You need to provide a correct location or post code",
     "COMMAND.GLOBAL.MISSING_PERMISSIONS": (
       formattedMissingPermissions: string,
     ) =>
@@ -55,5 +57,11 @@ loadLocale({
     "COMMAND.APP.UNMUTE.UNMUTEEMBED.TITLE": "User unmuted",
     // Unban command
     "COMMAND.APP.UNBAN.UNBANEMBED.TITLE": "User unbanned",
+    "COMMAND.APP.WEATHER.CURRENT.EMBED.TITLE": (locationName: string) =>
+      `Current weather for ${locationName}`,
+    "COMMAND.APP.WEATHER.CURRENT.EMBED.FIELDS.MAX_TEMP.NAME":
+      "Maximum temperature",
+    "COMMAND.APP.WEATHER.CURRENT.EMBED.FIELDS.MIN_TEMP.NAME":
+      "Minimum temperature",
   },
 });
