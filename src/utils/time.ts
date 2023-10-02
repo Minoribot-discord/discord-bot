@@ -1,29 +1,6 @@
 import { Context, I18nContext } from "structures";
 import { isNumberNegative } from "utils";
 
-export function formatDate(date: Date, separator = "_"): string {
-  const timePart = formatDateIntoHourMinuteSecond(date);
-  const datePart = formatDateIntoDayMonthYear(date);
-
-  return `${timePart}${separator}${datePart}`;
-}
-
-export function formatDateIntoHourMinuteSecond(date: Date): string {
-  const hour = date.getHours().toString().padStart(2, "0");
-  const minute = date.getMinutes().toString().padStart(2, "0");
-  const second = date.getSeconds().toString().padStart(2, "0");
-
-  return `${hour}-${minute}-${second}`;
-}
-
-export function formatDateIntoDayMonthYear(date: Date): string {
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const year = date.getFullYear().toString();
-
-  return `${day}-${month}-${year}`;
-}
-
 export const timeUnitsParseTime = {
   y: 365 * 24 * 60 * 60,
   d: 24 * 60 * 60,
