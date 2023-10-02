@@ -6,8 +6,8 @@ export * as toml from "https://deno.land/std@0.192.0/toml/mod.ts";
 export * from "https://deno.land/x/openweather_apis_wrapper@v0.4.4/mod.ts";
 export * from "https://deno.land/x/openweather_apis_wrapper@v0.4.4/test_schemas.ts";
 
-export * from "npm:@discordeno/utils@19.0.0-next.2d0f76e";
-export * from "npm:@discordeno/bot@19.0.0-next.2d0f76e";
+export * from "npm:@discordeno/utils@19.0.0-next.832df16";
+export * from "npm:@discordeno/bot@19.0.0-next.832df16";
 // export * from "https://deno.land/x/discordeno@18.0.1/mod.ts";
 // export {
 //   enableCachePlugin,
